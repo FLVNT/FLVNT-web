@@ -1,0 +1,26 @@
+node_modules
+*~
+*.DS_STORE
+.demeteorized
+npm-debug.log
+*.pid*
+*.pyc
+*.pyo
+*.log
+
+# redis
+dump.rdb
+
+phantomjs*
+docs/*/*.json
+convert
+
+# supervisor output
+supervisord.conf
+supervisord.log
+supervisord.pid
+
+.travis.yml
+circle.yml
+cron.txt
+CRON_FILE

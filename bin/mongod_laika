@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#
+# mongod start command for the laika test runner
+#
+
+mongod --smallfiles --noprealloc --nojournal
