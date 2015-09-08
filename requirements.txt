@@ -14,3 +14,4 @@ pyyaml==3.10
 pypackager
 packaging
 python-ddp
+keybump
