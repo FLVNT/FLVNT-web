@@ -1,0 +1,54 @@
+#: customize the virtual machine..
+machine:
+  timezone:
+    Europe/London
+  node:
+    version: 0.10.26
+  python:
+    version: 2.7.10
+
+  # override /etc/hosts
+  hosts:
+    unvael.fm: 127.0.0.1
+    app.unvael.fm: 127.0.0.1
+
+  services:
+    - mongodb
+
+  environment:
+    PYTHONPATH: /home/ubuntu/virtualenvs/venv-2.7.3/google_appengine/:/home/ubuntu/virtualenvs/venv-2.7.3/google_appengine/lib/docker:/home/ubuntu/virtualenvs/venv-2.7.3/google_appengine/lib/cherrypy:/home/ubuntu/virtualenvs/venv-2.7.3/google_appengine/lib/concurrent:/home/ubuntu/virtualenvs/venv-2.7.3/google_appengine/lib/websocket
+
+
+#: customize dependencies..
+dependencies:
+  cache_directories:
+    - "~/.npm"
+    - "lib"
+    - "ui/node_modules"
+    - ".gae_version"
+    - ".bootstrap.json"
+
+  pre:
+    - npm config set loglevel warn # set logging only to warning or errors..
+    - npm install -g brunch@1.7.13 mocha-phantomjs@3.0.0
+    - npm install -g coffee-script@1.8.0
+  post:
+    - paver bootstrap
+    - paver bootstrap_gaedata
+    # - paver bootstrap_casperjs
+    - paver build
+
+    - paver serve
+    - paver dbseed
+    - paver stop_server
+
+test:
+  override:
+    # execute frontend functional & unit tests..
+    - paver test_frontend
+
+    # execute python functional & integration tests..
+    - paver test_backend --mode integration
+
+    # execute casperjs end-to-end tests..
+    - paver test_casperjs

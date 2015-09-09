@@ -1,0 +1,1 @@
+#0 19 * * * /usr/bin/curl {{ app_url }}/email/send/invites >> {{ root }}/cron.log
