@@ -7,19 +7,18 @@
 
 """
 from __future__ import unicode_literals
+from pprint import pformat
 from functools import wraps
 from fabric.api import env
 from fabric.api import run, cd
 from fabric.api import local
 from fabric.colors import blue, green, red, yellow
 from fabctx import ctx, virtualenv
-from fab import environ, nvm
+from fab import environ
 
 
-__all__ = [
-  'execute', 'env_context', 'approot', 'print_command', 'log_call',
-  'ensure_remote_host', 'ensure_test_environ',
-]
+__all__ = ['execute', 'env_context', 'approot', 'print_command', 'log_call',
+'ensure_remote_host', 'ensure_test_environ']
 
 
 def execute(command, *args, **kwargs):
@@ -41,6 +40,7 @@ def env_context(host):
   """
   with shell_env_id():
     with virtualenv.workon(host['workon']):
+      from fab import nvm
       with nvm.nvm_use(host['node_version']):
         with approot(host):
           yield

@@ -7,9 +7,13 @@
 
 """
 from __future__ import unicode_literals
+from pprint import pformat
 from fabric.api import env, local
+from fabric.colors import blue, green, red, yellow
 from fabctx import ctx, http
+from fab.environ import get_host
 from fab.environ import task
+from fab.utils import execute
 
 
 __all__ = ['meteor_app_deployed', 'email', 'terminal']
@@ -34,7 +38,7 @@ def terminal(msg):
   """
   ping the terminal prompt (osx only)..
 
-    :param msg:
+    :param msg: string message body
   """
   with ctx.quiet():
     local('say "{}"'.format(msg.replace('"', '\"')))
@@ -43,8 +47,8 @@ def terminal(msg):
 @task
 def meteor_app_deployed(*args, **kwargs):
   """
-  sends deployment notifications by email and terminal.
+  sends deployment notifications by email + terminal
   """
-  recipient = 'deployments-{id}@unvael.com'.format(**env.config)
+  recipient = 'deployments-{id}@flvnt.com'.format(**env.config)
   email(recipient, 'meteor-app-deployed')
   terminal('deployment completed')

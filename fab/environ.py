@@ -11,15 +11,12 @@ from pprint import pformat
 from os import getenv, environ
 import simplejson as json
 from fabric.api import env
-from fabric.colors import yellow, blue
+from fabric.colors import blue, green, red, yellow
 from fabric.api import task as _task
 
 
-__all__ = ['develop', 'test', 'stage', 'prod', 'get_host',
-'_set_env', 'task']
-
-
-env.use_ssh_config = True
+__all__ = ['test', 'stage', 'prod', 'get_host',
+'_set_env', 'task', 'env']
 
 
 # environment specific host settings. SHOULD be named `HOSTS` - but that
@@ -28,6 +25,7 @@ env.use_ssh_config = True
 env.ENVS = {
   'test': {
     'hostname'     : None,
+    'hostname_ip'  : '127.0.0.1',
     'branch'       : None,
     'root'         : None,
     'workon'       : None,
@@ -45,6 +43,7 @@ env.ENVS = {
   },
   'local': {
     'hostname'     : None,
+    'hostname_ip'  : '127.0.0.1',
     'branch'       : None,
     'root'         : None,
     'workon'       : None,
@@ -60,28 +59,12 @@ env.ENVS = {
       MONGO_URL='',
     ),
   },
-  'develop': {
-    'hostname'     : 'unvael-web-develop',
-    'branch'       : 'develop',
-    'root'         : '/home/ubuntu/web',
-    'workon'       : 'unvael-web-develop',
-    'node_version' : '0.10.26',
-    'home'         : '/home/ubuntu',
-    'npm_libs'     : 'coffee-script jade stylus node-inspector laika',
-    'loglevel'     : 'debug',
-    'app_root'     : 'app',
-    'stdout'       : 'logs/app.log',
-    'env_vars'     : dict(
-      ENV_ID='develop',
-      ROOT_URL='',
-      MONGO_URL='',
-    ),
-  },
   'stage': {
-    'hostname'     : 'unvael-web-stage',
+    'hostname'     : 'flvnt-web-stage-01',
+    'hostname_ip'  : '54.xx.xxx.xx',
     'branch'       : 'develop',
     'root'         : '/home/ubuntu/web',
-    'workon'       : 'unvael-mvp-web-stage',
+    'workon'       : 'flvnt-dev',
     'node_version' : '0.10.26',
     'home'         : '/home/ubuntu',
     'npm_libs'     : 'coffee-script jade stylus node-inspector laika',
@@ -95,10 +78,11 @@ env.ENVS = {
     ),
   },
   'prod': {
-    'hostname'     : 'unvael-web-prod-02',
+    'hostname'     : 'flvnt-web-prod-01',
+    'hostname_ip'  : '54.xx.xxx.xx',
     'branch'       : 'develop',
     'root'         : '/home/ubuntu/web',
-    'workon'       : 'unvael-mvp-web-prod',
+    'workon'       : 'flvnt-dev',
     'node_version' : '0.10.26',
     'home'         : '/home/ubuntu',
     'npm_libs'     : 'coffee-script jade stylus node-inspector laika',
@@ -182,16 +166,6 @@ def test():
   env.env_id = 'test'
   _set_env()
   print(blue('[TEST]'))
-
-
-@task(display=None)
-def develop():
-  """
-  sets the env_id to `develop`
-  """
-  env.env_id = 'develop'
-  _set_env()
-  print(blue('[DEVELOP]'))
 
 
 @task(display=None)

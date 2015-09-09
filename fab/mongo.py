@@ -7,14 +7,16 @@
 
 """
 from __future__ import unicode_literals
+from pprint import pformat
 from fabric.api import env
-from fabric.api import cd, lcd
+from fabric.colors import blue, green, red, yellow
 from fabctx import ctx
+from fab.environ import get_host
 from fab.environ import task
 from fab.utils import execute
 
 
-__all__ = ['start', 'construct_mongo_url']
+__all__ = ['start', 'shell']
 
 
 @task
@@ -31,8 +33,17 @@ def start(env_id):
     pass
 
 
-def construct_mongo_url():
+def _construct_mongo_url():
   """
   formats a mongodb connection url.
   """
   # TODO
+
+
+@task
+def shell(*args, **kwargs):
+  """
+  runs the mongodb console locally with the development db.
+  """
+  local('mongo -u {db_user} -p {db_pswd} {db_host}/{db_name}'.format(
+    **env.config))

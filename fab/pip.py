@@ -7,10 +7,12 @@
 
 """
 from __future__ import unicode_literals
+from pprint import pformat
 from fabric.api import env
-from fabric.colors import blue
-from fab.environ import task
+from fabric.colors import blue, green, red, yellow
 from fabctx import ctx
+from fab.environ import get_host
+from fab.environ import task
 from fab.utils import execute
 
 
@@ -23,5 +25,8 @@ def update(*args, **kwargs):
   installs python pip requirements
   """
   print(blue("updating pip installs.."))
+
   with ctx.warn_only():
     execute('pip install -r requirements.txt')
+
+    print(green(" ---> pip python dependencies installed.."))

@@ -7,11 +7,13 @@
 
 """
 from __future__ import unicode_literals
+from pprint import pformat
 import os
 from fabric.api import env
-from fab.environ import task
-from fabric.colors import blue
+from fabric.colors import blue, green, red, yellow
 from fabctx import ctx
+from fab.environ import get_host
+from fab.environ import task
 from fab.utils import execute
 from fab.environ import *
 from jinja2 import Environment
@@ -19,19 +21,24 @@ from jinja2.loaders import DictLoader
 
 
 __all__ = [
-  'setup', 'conf', 'start', 'stop', 'update_config',
+  # supervisorctl
+  'setup', 'conf', 'start', 'stop', 'reload_config',
+  # meteor
   'start_meteor', 'stop_meteor', 'restart_meteor',
+  # mongod
   'start_mongod', 'stop_mongod',
 ]
 
 
-def init_socket():
+def _init_socket():
   """
   initalizes the supervisor socket
   """
   with ctx.warn_only():
     sock_path = '/tmp/{}'.format(get_host()['supervisord_sock'])
     execute('touch {}'.format(sock_path))
+
+    print green(' ---> supervisord: socket initialized..')
 
 
 def _render_conf(name, template, context, out_path):
@@ -44,6 +51,8 @@ def _render_conf(name, template, context, out_path):
   """
   with open(out_path, 'w') as f:
     f.write(template.render(**context))
+
+    print green(' ---> supervisord: conf rendered: {}..'.format(out_path))
 
 
 def _load_conf(conf_path="supervisord.template.conf"):
@@ -83,7 +92,7 @@ def setup(*args, **kwargs):
   """
   configures supervisord socket + conf template.
   """
-  init_socket()
+  _init_socket()
   conf()
 
 
@@ -107,11 +116,11 @@ def stop(*args, **kwargs):
 
 
 @task
-def update_config(*args, **kwargs):
+def reload_config(*args, **kwargs):
   """
   updates supervisord config
   """
-  print(blue("re-reading supervisord conf.."))
+  print(blue("reloading supervisord.conf.."))
   with ctx.warn_only():
     execute("supervisorctl -c supervisord.conf update")
 

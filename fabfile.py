@@ -4,10 +4,12 @@
   ~~~~~~~
 
   automate everything.
-  see: github.com/unvael/web/wiki/04.-aws-deployment
+
+  see: github.com/FLVNT/FLVNT-web/wiki/04.-aws-deployment
 
 """
 from __future__ import unicode_literals
+from pprint import pformat
 import os
 import time
 from fabric.api import local
@@ -22,7 +24,9 @@ from fab import meteor
 from fab import mongo
 from fab import notify
 from fab import npm
+from fab import nvm
 from fab import pip
+from fab import ssh
 from fab import supervisord
 from fab import velocity
 from fab import tinytest
@@ -34,37 +38,20 @@ from fab.utils import approot
 from fab.utils import ensure_remote_host
 
 
-# commands
-
-@task
-def ssh(*args, **kwargs):
-  """
-  ssh onto the ec2 machine for a specified environ id.
-  """
-  local('ssh {hostname}'.format(**get_host()))
-
-
 @task
 def tail(*args, **kwargs):
   """
-  tail meteor app log output.
+  tail meteor-app log output.
   """
-  execute('tail -f {root}/logs/meteor-{env_id}.log'.format(**get_host()))
-
-
-@task
-def mongo(*args, **kwargs):
-  """
-  runs the mongodb console locally with the development db.
-  """
-  local('mongo -u {db_user} -p {db_pswd} {db_host}/{db_name}'.format(
-    **env.config))
+  host = get_host()
+  with approot(host):
+    execute('tail -f logs/app.log'.format(**host))
 
 
 @task
 def start(*args, **kwargs):
   """
-  starts supervisord, meteor, crontab
+  starts supervisord, meteor, crontabs
   """
   host = get_host()
   with approot(host):
@@ -84,7 +71,7 @@ def start(*args, **kwargs):
 @task
 def stop(*args, **kwargs):
   """
-  stops supervisord, crontabs
+  stops supervisord, meteor, crontabs
   """
   supervisord.stop()
   cron.remove()
