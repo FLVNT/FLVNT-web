@@ -9,6 +9,7 @@
 from __future__ import unicode_literals
 from pprint import pformat
 from fabric.api import env
+from fabric.api import local
 from fabric.colors import blue, green, red, yellow
 from fabctx import ctx
 from fab.environ import get_host

@@ -15,8 +15,7 @@ from fabric.colors import blue, green, red, yellow
 from fabric.api import task as _task
 
 
-__all__ = ['test', 'stage', 'prod', 'get_host',
-'_set_env', 'task', 'env']
+__all__ = ['test', 'stage', 'prod', 'get_host', 'task', 'env', 'set_env']
 
 
 # environment specific host settings. SHOULD be named `HOSTS` - but that
@@ -79,7 +78,8 @@ env.ENVS = {
   },
   'prod': {
     'hostname'     : 'flvnt-web-prod-01',
-    'hostname_ip'  : '54.xx.xxx.xx',
+    'hostname_ip'  : '52.26.88.253',
+    'hostname_id'  : 'i-2532aee3',
     'branch'       : 'develop',
     'root'         : '/home/ubuntu/web',
     'workon'       : 'flvnt-dev',
@@ -103,7 +103,7 @@ env.config = dict(env_id=env.env_id)
 env.use_ssh_config = True
 
 
-def _set_env():
+def set_env():
   environ['ENV_ID'] = env.env_id
   host = get_host()
   env.config.update(host)
@@ -130,7 +130,7 @@ def task(*a, **kw):
   """
   method decorator run a fabric task ensuring set_env wraps the inner call
   """
-  _set_env()
+  set_env()
   return _task(*a, **kw)
 
 
@@ -164,7 +164,7 @@ def test():
   sets the env_id to `test`
   """
   env.env_id = 'test'
-  _set_env()
+  set_env()
   print(blue('[TEST]'))
 
 
@@ -174,7 +174,7 @@ def stage():
   sets the env_id to `stage`
   """
   env.env_id = 'stage'
-  _set_env()
+  set_env()
   print(blue('[STAGE]'))
 
 
@@ -184,5 +184,5 @@ def prod():
   sets the env_id to `prod`
   """
   env.env_id = 'prod'
-  _set_env()
+  set_env()
   print(blue('[PROD]'))
