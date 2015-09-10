@@ -31,7 +31,13 @@ __all__ = ['install', 'update', 'meteor_release_version', 'meteor_shell',
 
 def _load_json(filepath):
   with open(filepath) as f:
-    result = loads(f.read().strip())
+    _json = f.read().strip()
+    if len(_json) < 1:
+      raise EnvironmentError("{} is empty..".format(filepath))
+    try:
+      result = loads(_json)
+    except Exception, e:
+      raise EnvironmentError(e)
     del f
   return result
 
@@ -79,7 +85,7 @@ def clean_build_cache(*args, **kwargs):
   """
   removes the '.meteor/local' dir
   """
-  print(blue("cleaning meteor build-cache.."))
+  print(blue("\ncleaning meteor build-cache.."))
   with ctx.warn_only():
     execute('rm -rf {}'.format('./app/.meteor/local/*'))
     print(green(" ---> meteor: build-cache cleaned: './app/.meteor/local/'"))
@@ -212,7 +218,7 @@ def run(*args, **kwargs):
   supervisord.conf()
   render_packages_file()
   with meteor_shell():
-    print(blue("starting meteor-app.."))
+    print(blue("\nstarting meteor-app.."))
     execute(
       "meteor "
       "--port {app_port} "
@@ -248,7 +254,7 @@ def render_packages_file(*args, **kwargs):
 
   packages delcared in a nested structure allows for a natural self-documenting.
   """
-  print(blue("rendering ./.meteor/packages.."))
+  print(blue("\nrendering ./.meteor/packages.."))
 
   host = get_host()
   packages_file = '{app_root}/.meteor/packages'.format(**host)
@@ -291,4 +297,4 @@ def render_packages_file(*args, **kwargs):
   with open(packages_file, 'w') as f:
     f.write('\n'.join(ln))
 
-  print(green(" ---> meteor: {} file rendered..\n".format(packages_file)))
+  print(green(" ---> meteor: {} file rendered..".format(packages_file)))

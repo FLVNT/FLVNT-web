@@ -85,7 +85,7 @@ def _write_cron_txt(name, template, context):
   """
   contents = template.render(**context)
 
-  print(blue('writing {}..'.format(name)))
+  print(blue('\nwriting {}..'.format(name)))
 
   if env.env_id in ('local', 'test'):
     with open(name, 'w') as f:

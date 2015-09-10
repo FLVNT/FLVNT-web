@@ -24,7 +24,7 @@ def update(*args, **kwargs):
   """
   installs python pip requirements
   """
-  print(blue("updating pip installs.."))
+  print(blue("\nupdating pip installs.."))
 
   with ctx.warn_only():
     execute('pip install -r requirements.txt')

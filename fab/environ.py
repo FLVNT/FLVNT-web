@@ -105,14 +105,20 @@ env.use_ssh_config = True
 
 def set_env():
   environ['ENV_ID'] = env.env_id
-  host = get_host()
-  env.config.update(host)
+  _ctx = get_host()
+  env.config.update(_ctx)
+  env_json_path = '{app_root}/private/env-{env_id}.json'.format(**env.config)
 
-  with open('{app_root}/private/env-{env_id}.json'.format(**env.config), 'r') as f:
-    env.config = json.loads(f.read())
+  with open(env_json_path, 'r') as f:
+    _json = f.read()
+    if _json is None or len(_json) < 1:
+      print(red('set_env failed, {} is empty..'.format(env_json_path)))
+      return
+    _json = json.loads(_json)
+    env.config.update(_json)
 
-  if host['hostname'] is not None:
-    env.hosts = [host['hostname']]
+  if env.hosts is None and _ctx['hostname'] is not None:
+    env.hosts = [_ctx['hostname']]
 
   # build the mongo url
   # TOOD: needs to be a list for replica-sets, and read-vs-write slaves

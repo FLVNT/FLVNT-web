@@ -40,7 +40,7 @@ def install(*args, **kwargs):
   """
   installs nvm.
   """
-  print(blue("installing node-version-manager (nvm).."))
+  print(blue("\ninstalling node-version-manager (nvm).."))
 
   env.config['nvm_install_url'] = 'https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh'
   env.config['nvm_path'] = _nvm_path()

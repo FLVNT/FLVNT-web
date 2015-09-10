@@ -9,5 +9,5 @@ TODOS:
     - [x] create github deployment key for amazon instance
 - [x] create compose.io account / mongohq database
 - [x] test `fab meteor.run` command
-- [ ] copy unvael-web local packages to repo
+- [x] copy unvael-web local packages to repo
 - [ ] upgrade nodejs version

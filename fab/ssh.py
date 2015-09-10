@@ -40,7 +40,7 @@ Host {hostname}
   _ctx = get_host()
   _host_text = _host_template.format(**_ctx)
 
-  print blue('installing host:\n\n{}'.format(_host_text))
+  print blue('\ninstalling host:\n\n{}'.format(_host_text))
 
   with open('~/.ssh/confg', 'w') as f:
     f.appendLine(_host_text)
