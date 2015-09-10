@@ -47,7 +47,7 @@ Package.on_test(function (api, where) {
 
 
   // import the package..
-  api.imply('flvnt:schema', where, {bare: true});
+  api.imply('flvnt:subs-manager', where, {bare: true});
 
 
   api.add_files([

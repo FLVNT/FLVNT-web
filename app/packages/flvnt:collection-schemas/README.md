@@ -1,5 +1,5 @@
 flvnt:collection-schemas
 ========================
 
-flvnt schema helpers package
+flvnt-web schema helpers package.
 

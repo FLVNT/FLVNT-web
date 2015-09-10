@@ -1,4 +1,4 @@
-flvnt:api-utils
-================
+flvnt:app-beta-invites
+======================
 
-flvnt:api-utils: common methods used by the server `Meteor.method()` functions.
+flvnt-web app beta invites for meteor.js

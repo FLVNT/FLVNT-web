@@ -13,6 +13,7 @@ Package.on_use(function (api, where) {
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
     'underscore',
     'jquery',
     'templating',
@@ -24,6 +25,7 @@ Package.on_use(function (api, where) {
 
 
   api.add_files([
+    'lib/client/hotkeys.jade',
     'lib/client/hotkeys.coffee'
   ], where);
 

@@ -13,12 +13,13 @@ Npm.depends({
 
 
 Package.on_use(function (api, where) {
-  api.versionsFrom('1.0');
+  api.versionsFrom('1.1.0.2');
   where = where || ['server'];
 
   api.use('coffeescript', where);
 
-  api.add_files('lib/node-btoa.coffee', where);
+  api.add_files('lib/server/node-btoa.coffee', where);
 
   api.export('btoa');
+
 });

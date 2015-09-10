@@ -15,7 +15,10 @@ Package.on_use(function (api, where) {
     'coffeescript',
     'underscore',
     'jquery',
-    'session'
+    'templating',
+    'ui',
+    'session',
+    'check',
   ], ['client', 'server']);
 
   api.use([

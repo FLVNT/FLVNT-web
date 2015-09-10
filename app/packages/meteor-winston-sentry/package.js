@@ -12,10 +12,12 @@ Npm.depends({
 });
 
 
-Package.on_use(function(api) {
+Package.on_use(function(api, where) {
+  api.versionsFrom('1.1.0.2');
+  where = where || ['server'];
 
-  api.use('coffeescript', 'server');
-  api.add_files('winston-sentry.coffee', 'server');
+  api.use('coffeescript', where);
+  api.add_files('lib/winston-sentry.coffee', where);
 
   api.export('Winston');
   api.export('WinstonSentry');

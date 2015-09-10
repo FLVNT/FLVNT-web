@@ -1,7 +1,7 @@
 
 Package.describe({
   name    : 'flvnt:iron-router',
-  summary : 'flvnt-web bridge to the iron-router package.',
+  summary : 'flvnt-web bridge for the iron-router meteor.js package',
   version : '0.0.1',
   documentation: 'README.md'
 });
@@ -17,6 +17,14 @@ Package.on_use(function (api, where) {
     'jquery',
     'session'
   ], ['client', 'server']);
+
+  api.add_files([
+    'lib/client/routes-config.coffee'
+  ], 'client');
+
+  api.add_files([
+    'lib/server/routes/unsubscribe-hook.coffee'
+  ], 'server');
 
   api.use([
     'ui', 'spacebars', 'blaze', 'templating'

@@ -10,4 +10,4 @@ TODOS:
 - [x] create compose.io account / mongohq database
 - [x] test `fab meteor.run` command
 - [x] copy unvael-web local packages to repo
-- [ ] upgrade nodejs version
+- [ ] upgrade nodejs version to 10.3x.x

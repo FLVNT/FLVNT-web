@@ -1,3 +1,4 @@
+
 Package.describe({
   name    : 'event-hooks',
   summary : "Provides hooks for various user-triggered events",
@@ -5,12 +6,15 @@ Package.describe({
   documentation: 'README.md'
 });
 
-var both = ['client', 'server']
 
-Package.on_use(function (api) {
-  api.add_files(['client.js'], 'client');
-  api.add_files(['server.js'], 'server');
-  api.add_files(['common.js'], both);
+Package.on_use(function (api, where) {
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client', 'server'];
 
-  api.export(['Hooks', 'EventHooksMonitoringCollection'], both);
+  api.add_files(['lib/client/event-hooks.js'], 'client');
+  api.add_files(['lib/server/event-hooks.js'], 'server');
+  api.add_files(['lib/event-hooks.js'], where);
+
+  api.export(['Hooks', 'EventHooksMonitoringCollection'], where);
+
 });

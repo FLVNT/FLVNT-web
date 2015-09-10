@@ -1,7 +1,7 @@
 
 Package.describe({
   name    : 'flvnt:app-beta-invites',
-  summary : 'flvnt-web common methods used by the server Meteor.method() functions',
+  summary : 'flvnt-web app beta invites for meteor.js',
   version : '0.0.1',
   documentation: 'README.md'
 });
@@ -14,21 +14,21 @@ Package.on_use(function (api, where) {
   api.use([
     'coffeescript',
     'underscore',
+    'jquery',
+    'templating',
+    'ui',
+    'session',
     'check',
     'flvnt:logger@0.0.1'
   ], where);
 
 
   api.add_files([
-    'lib/server/api.coffee'
   ], 'server');
 
   api.add_files([
-    'lib/client/api.coffee'
   ], 'client');
 
-
-  api.export('ApiUtils');
 
 });
 
@@ -51,7 +51,6 @@ Package.on_test(function (api, where) {
 
 
   // import the package..
-  api.imply('flvnt:api-utils', where, {bare: true});
 
 
   api.add_files([
