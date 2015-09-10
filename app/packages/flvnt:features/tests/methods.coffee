@@ -1,0 +1,3 @@
+
+Tinytest.add 'method: {}', (test) ->
+

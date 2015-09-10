@@ -1,0 +1,2 @@
+
+btoa = Npm.require 'btoa'

@@ -1,0 +1,3 @@
+--compilers coffee:coffee-script/register
+--verbose
+--settings private/env-test.json
