@@ -39,7 +39,7 @@ def hotcodereload(*args, **kwargs):
   updates app from github to quick deploy via meteor 'hot-code-reload'
   """
   ensure_remote_host()
-  print blue('hotcodereloading meteor-app..'.format(_host_text))
+  print blue('\nhotcodereloading meteor-app..'.format(_host_text))
 
   host = get_host()
   with approot(host):
@@ -58,7 +58,7 @@ def full(*args, **kwargs):
   full-deploy of the app to amazon-aws, including pip + mrt updates.
   """
   ensure_remote_host()
-  print blue('full-deploying meteor-app..'.format(_host_text))
+  print blue('\nfull-deploying meteor-app..'.format(_host_text))
 
   pip.update()
   # update_mrt()

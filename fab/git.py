@@ -25,7 +25,7 @@ def update(host):
   """
   updates the application from git
   """
-  print(blue("updating app from git.."))
+  print(blue("\nupdating app from git.."))
 
   # TODO: change to execute() vs run() ..?
 

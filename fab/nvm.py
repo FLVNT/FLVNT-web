@@ -17,7 +17,7 @@ from fab.environ import task
 from fab.utils import execute
 
 
-__all__ = ['nvm_use', 'nvm_install']
+__all__ = ['install', 'nvm_use']
 
 
 def _nvm_path():
@@ -36,18 +36,19 @@ def nvm_use(version):
 
 
 @task
-def nvm_install(*args, **kwargs):
+def install(*args, **kwargs):
   """
   installs nvm.
   """
-  print(blue("installing node-version-manager (nvm).."))
+  print(blue("\ninstalling node-version-manager (nvm).."))
 
   env.config['nvm_install_url'] = 'https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh'
+  env.config['nvm_path'] = _nvm_path()
   execute("""
   curl {nvm_install_url} | sh
-  echo '[ -s "{home}/.nvm/nvm.sh" ] && . "{home}/.nvm/nvm.sh"' >> {home}/.bashrc
+  echo '[ -s "{nvm_path}/nvm.sh" ] && . "{nvm_path}/nvm.sh"' >> {home}/.bashrc
   echo "nvm use {node_version}" >> {home}/.bashrc
-  [ -s "{home}/.nvm/nvm.sh" ] && . "{home}/.nvm/nvm.sh"
+  [ -s "{nvm_path}/nvm.sh" ] && . "{nvm_path}/nvm.sh"
   nvm install {node_version}
   """.format(**env.config))
 

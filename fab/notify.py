@@ -26,12 +26,12 @@ def email(recipient, template_id):
     :param recipient:
     :param template_id:
   """
-  data = env.config.copy()
+  _ctx = env.config.copy()
   # set template context args..
-  data['env_id'] = env.env_id
-  data['recipient'] = recipient
-  data['template_id'] = template_id
-  http.post('http://gae.unvael.com/api/mail/send', data)
+  _ctx['env_id'] = env.env_id
+  _ctx['recipient'] = recipient
+  _ctx['template_id'] = template_id
+  http.post('http://gae.unvael.com/api/mail/send', _ctx)
 
 
 def terminal(msg):

@@ -101,7 +101,7 @@ def start(*args, **kwargs):
   """
   starts supervisord
   """
-  print(blue("starting supervisor.."))
+  print(blue("\nstarting supervisor.."))
   execute("supervisord -c supervisord.conf")
 
 
@@ -110,7 +110,7 @@ def stop(*args, **kwargs):
   """
   stops supervisord
   """
-  print(blue("stopping supervisord.."))
+  print(blue("\nstopping supervisord.."))
   with ctx.warn_only():
     execute("supervisorctl -c supervisord.conf shutdown")
 
@@ -120,7 +120,7 @@ def reload_config(*args, **kwargs):
   """
   updates supervisord config
   """
-  print(blue("reloading supervisord.conf.."))
+  print(blue("\nreloading supervisord.conf.."))
   with ctx.warn_only():
     execute("supervisorctl -c supervisord.conf update")
 
@@ -132,7 +132,7 @@ def start_meteor(*args, **kwargs):
   """
   starts the supervisor meteor-app
   """
-  print(blue("starting meteor.."))
+  print(blue("\nstarting meteor-app.."))
   execute("supervisorctl start meteor-{id}".format(**env.config))
 
 
@@ -141,7 +141,7 @@ def stop_meteor(*args, **kwargs):
   """
   stops the supervisor meteor-app
   """
-  print(blue("stopping meteor.."))
+  print(blue("\nstopping meteor-app.."))
   with ctx.warn_only():
     execute("supervisorctl stop meteor-{id}".format(**env.config))
 
@@ -150,7 +150,7 @@ def restart_meteor(*args, **kwargs):
   """
   restarts the supervisor meteor-app
   """
-  print(blue("restarting meteor.."))
+  print(blue("\nrestarting meteor-app.."))
   with ctx.warn_only():
     execute("supervisorctl restart meteor-{id}".format(**env.config))
 
@@ -162,7 +162,7 @@ def start_mongod(*args, **kwargs):
   """
   starts the supervisor mongod
   """
-  print(blue("starting mongod.."))
+  print(blue("\nstarting mongod.."))
   execute("supervisorctl start mongod-{id}".format(**env.config))
 
 @task
@@ -170,6 +170,6 @@ def stop_mongod(*args, **kwargs):
   """
   stops the supervisor mongod
   """
-  print(blue("stopping mongod.."))
+  print(blue("\nstopping mongod.."))
   with ctx.warn_only():
     execute("supervisorctl stop mongod-{id}".format(**env.config))

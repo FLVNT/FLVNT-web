@@ -32,8 +32,9 @@ for getting up and running, then developing:
     $ echo "nvm use 0.10.26" >> ~/.bashrc
     $ source ~/.bashrc
 
-    $ mkvirtualenv flvnt-mvp-web-stage
-    $ workon flvnt-mvp-web-stage
+    $ mkvirtualenv flvnt-dev
+    $ workon flvnt-dev
+    $ pip install --upgrade pip
     $ pip install -r requirements.txt
     $ fab meteor_install  # installs: nvm, meteor.js
 
@@ -76,7 +77,7 @@ try removing the directory: `./app/node_modules`.
   $ nvm use 0.10.26
 
   # activate python virtualenv
-  $ workon flvnt-mvp-web-stage
+  $ workon flvnt-dev
 
 
 currently, the project uses fabric commands to help ensure speed and consistency
@@ -123,8 +124,8 @@ ubuntu/aws machine setup
 ### 1. setup python env + development tools
 
     $ sudo apt-get install python-pip python-dev
-    $ mkvirtualenv flvnt-mvp-web-stage
-    $ workon flvnt-mvp-web-stage
+    $ mkvirtualenv flvnt-dev
+    $ workon flvnt-dev
     $ pip install -r requirements.txt
 
 

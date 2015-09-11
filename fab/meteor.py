@@ -11,31 +11,45 @@ from pprint import pformat
 from fabric.api import env
 from fabric.api import cd, lcd
 from fabric.api import env
-from fab.environ import task, _set_env
+from fab.environ import task, set_env
 from fabric.colors import blue, green, red, yellow
 from fabctx import ctx
 from simplejson import loads
 from fab import environ
 from fab import supervisord
-from fab.nvm import nvm_install
+from fab import nvm
 from fab.environ import meteor_release_version
 from fab.environ import get_host
 from fab.utils import execute
 from DDPClient import DDPClient
 
 
-__all__ = [
-  'meteor_release_version', 'meteor_shell', 'meteor_env',
-  'install', 'update', 'set_accounts_config', 'clean_build_cache',
-  'run', 'run_local', 'render_packages_file', 'create_package',
-]
+__all__ = ['install', 'update', 'meteor_release_version', 'meteor_shell',
+'meteor_env', 'set_accounts_config', 'clean_build_cache', 'render_packages_file',
+'run', 'run_local', 'create_package']
 
 
 def _load_json(filepath):
   with open(filepath) as f:
-    result = loads(f.read().strip())
+    _json = f.read().strip()
+    if len(_json) < 1:
+      raise EnvironmentError("{} is empty..".format(filepath))
+    try:
+      result = loads(_json)
+    except Exception, e:
+      raise EnvironmentError(e)
     del f
   return result
+
+
+def meteor_env():
+  set_env()
+  return {
+    "ENV_ID"    : env.env_id,
+    "ROOT_URL"  : env.config['root_url'],
+    "MONGO_URL" : env.config['mongo_url'],
+    # "KADIRA_PROFILE_LOCALLY": '1',
+  }
 
 
 @ctx.contextmanager
@@ -49,16 +63,6 @@ def meteor_approot():
 
   with fn("./app/"):
     yield
-
-
-def meteor_env():
-  _set_env()
-  return {
-    "ENV_ID"    : env.env_id,
-    "ROOT_URL"  : env.config['root_url'],
-    "MONGO_URL" : env.config['mongo_url'],
-    # "KADIRA_PROFILE_LOCALLY": '1',
-  }
 
 
 @ctx.contextmanager
@@ -81,7 +85,7 @@ def clean_build_cache(*args, **kwargs):
   """
   removes the '.meteor/local' dir
   """
-  print(blue("cleaning meteor build-cache.."))
+  print(blue("\ncleaning meteor build-cache.."))
   with ctx.warn_only():
     execute('rm -rf {}'.format('./app/.meteor/local/*'))
     print(green(" ---> meteor: build-cache cleaned: './app/.meteor/local/'"))
@@ -113,7 +117,7 @@ def set_accounts_config(*args, **kwargs):
     else:
       print data
 
-  _set_env()
+  set_env()
   _ctx = env.config.copy()
   _ctx.update(get_host())
 
@@ -135,17 +139,11 @@ def install(*args, **kwargs):
   """
   installs nvm, meteor, npm global dependencies
   """
+  nvm.install()
+
   _ctx = env.config.copy()
   _ctx.update(get_host())
-
-  # TODO: run command to get $HOME dir, instead of passing that from config..
-  execute("""
-  curl https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh | sh
-  echo '[ -s "{home}/.nvm/nvm.sh" ] && . "{home}/.nvm/nvm.sh"' >> {home}/.bashrc
-  echo "nvm use {node_version}" >> {home}/.bashrc
-  [ -s "{home}/.nvm/nvm.sh" ] && . "{home}/.nvm/nvm.sh"
-  nvm install {node_version}
-  """.format(**_ctx))
+  _ctx['meteor_install_url'] = 'https://install.meteor.com/'
 
   # install npm-libs
   execute("""
@@ -154,9 +152,10 @@ def install(*args, **kwargs):
   """.format(**_ctx))
 
   # install meteor..
-  execute("curl https://install.meteor.com/ | sh".format(**_ctx))
+  execute("curl {meteor_install_url} | sh".format(**_ctx))
 
   # install laika test-runner..
+  laika.install()
   with meteor_shell():
     execute("""
     nvm use {node_version}
@@ -189,7 +188,7 @@ def run_local(*args, **kwargs):
   supervisord.start()
   supervisord.start_mongod()
 
-  _set_env()
+  set_env()
   _ctx = env.config.copy()
   _ctx.update(get_host())
 
@@ -219,7 +218,7 @@ def run(*args, **kwargs):
   supervisord.conf()
   render_packages_file()
   with meteor_shell():
-    print(blue("starting meteor-app.."))
+    print(blue("\nstarting meteor-app.."))
     execute(
       "meteor "
       "--port {app_port} "
@@ -255,7 +254,7 @@ def render_packages_file(*args, **kwargs):
 
   packages delcared in a nested structure allows for a natural self-documenting.
   """
-  print(blue("rendering ./.meteor/packages.."))
+  print(blue("\nrendering ./.meteor/packages.."))
 
   host = get_host()
   packages_file = '{app_root}/.meteor/packages'.format(**host)
@@ -298,4 +297,4 @@ def render_packages_file(*args, **kwargs):
   with open(packages_file, 'w') as f:
     f.write('\n'.join(ln))
 
-  print(green(" ---> meteor: {} file rendered..\n".format(packages_file)))
+  print(green(" ---> meteor: {} file rendered..".format(packages_file)))
