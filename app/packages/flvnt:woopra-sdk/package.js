@@ -18,8 +18,18 @@ Package.on_use(function (api, where) {
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
     'underscore',
-    'flvnt:logger@0.0.1'
+    'jquery',
+    'templating',
+    'spacebars',
+    'blaze',
+    'ui',
+    'session',
+    'flvnt:logger@0.0.1',
+    'flvnt:api-utils@0.0.1',
+    'flvnt:lazyload@0.0.1',
+    'flvnt:app-features@0.0.1'
   ], ['server', 'client']);
 
   api.use([
@@ -29,12 +39,13 @@ Package.on_use(function (api, where) {
   ], where);
 
   api.add_files([
-    'lib/woopra.jade',
-    'lib/woopra-client.js'
-  ], where);
+    'lib/client/woopra-sdk.js'
+    'lib/client/woopra-sdk.jade'
+  ], 'client');
 
-  api.add_files('lib/woopra-server.coffee', 'server');
-
+  api.add_files([
+    'lib/server/woopra-sdk.coffee'
+  ], 'server');
 
   api.export('Woopra');
 
