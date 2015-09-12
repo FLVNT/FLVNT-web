@@ -1,0 +1,33 @@
+
+//- form for the user to create thurr account
+template(name='invite-signup-complete')
+  .page-wrapper
+    #bgVideo-container
+    #bgVideo.background
+      iframe#vimeo_embed(src="{{ vimeo_url }}", width="100%", height="100%", frameborder="0", webkitallowfullscreen="webkitallowfullscreen", mozallowfullscreen="mozallowfullscreen", allowfullscreen="allowfullscreen")
+
+    .header-23-sub
+      #intro-container.container
+        .row
+          .col-sm-12
+            .hero-unit
+              strong(style="margin-bottom: 15px;") an enigma for art
+              span A PLATFORM FOR ARTISTS + DESIGNERS TO COLLABORATE
+
+              #invite-signup-complete.container
+                .row
+                  .col-sm-12.col-md-12
+                    input.form-control(type='text', name='name', value="{{ lower user.profile.name }}", placeholder='your name')
+                .row
+                  .col-sm-12.col-md-12
+                    input.form-control(type='email', name='email', value="{{ lower user.services.facebook.email }}", placeholder='your email @', data-content="make sure this is your current email, then set a password to create your account.", data-toggle="popover", data-placement="right", data-trigger="manual")
+                .row
+                  .col-sm-12.col-md-12
+                    input.form-control(type='password', placeholder='create your password', name='password')
+
+                .row(style="margin-bottom:0;")
+                  .col-sm-12.col-md-12
+                    #btn-complete-account-setup.btn create account
+
+              span#footer FLVNT
+              a.logo(href="http://app.flvnt.com/login") login to FLVNT

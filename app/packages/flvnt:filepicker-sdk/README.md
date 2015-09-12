@@ -4,7 +4,7 @@ flvnt:filepicker-sdk
 filepicker.io js sdk packaged for meteor.js.
 
 
-* meteor.js (0.7.2.0): https://github.com/meteor/meteor
+* meteor.js (1.0.1.2): https://github.com/meteor/meteor
 * filepicker js api (v1): https://www.inkfilepicker.com
 
 

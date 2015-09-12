@@ -14,18 +14,16 @@ Package.on_use(function (api, where) {
   api.use([
     'coffeescript',
     'underscore',
-    'check',
     'flvnt:lazyload@0.0.1',
     'flvnt:logger@0.0.1'
   ], where);
 
 
   api.add_files([
-    // 'lib/client/api.coffee'
+    // 'public/fonts/didot.otf'
+    // 'public/fonts/lane-e.otf'
+    // 'public/fonts/helvetica-nueue.otf'
   ], 'client');
-
-
-  api.export('ApiUtils');
 
 });
 
@@ -37,7 +35,6 @@ Package.on_test(function (api, where) {
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'check',
     'flvnt:app-fixtures'
   ], where);
 
@@ -49,7 +46,6 @@ Package.on_test(function (api, where) {
     'ui',
     'blaze',
     'templating',
-    'session',
     'flvnt:logger@0.0.1'
   ], where);
 

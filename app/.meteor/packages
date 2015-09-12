@@ -41,6 +41,7 @@ accounts-base
 # client_libs
 # -------------
 jquery@1.10.2
+flvnt:bootstrap@0.0.1
 awatson1978:browser-detection@1.0.4
 mrt:modernizr-meteor@2.6.2
 

@@ -135,7 +135,8 @@
   "client_libs": {
       "jquery"                        : "1.10.2",
       "mrt:modernizr-meteor"          : "2.6.2",
-      "awatson1978:browser-detection" : "1.0.4"
+      "awatson1978:browser-detection" : "1.0.4",
+      "flvnt:bootstrap"               : "0.0.1"
   },
 
 

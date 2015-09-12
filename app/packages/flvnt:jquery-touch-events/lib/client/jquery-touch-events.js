@@ -854,12 +854,12 @@
 
     // Correctly on anything we've overloaded:
     $.each({
-        scrollend: 'scrollstart',
-        swipeup: 'swipe',
+        scrollend:  'scrollstart',
+        swipeup:    'swipe',
         swiperight: 'swipe',
-        swipedown: 'swipe',
-        swipeleft: 'swipe',
-        swipeend: 'swipe',
+        swipedown:  'swipe',
+        swipeleft:  'swipe',
+        swipeend:   'swipe',
     tap2: 'tap'
     }, function (e, srcE, touchData) {
         $.event.special[e] = {

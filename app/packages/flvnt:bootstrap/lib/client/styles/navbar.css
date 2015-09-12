@@ -1,0 +1,42 @@
+
+.navbar {
+  position: relative;
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+.navbar:before,
+.navbar:after {
+  content: " ";
+  display: table;
+}
+.navbar:after {
+  clear: both;
+}
+.navbar:before,
+.navbar:after {
+  content: " ";
+  display: table;
+}
+.navbar:after {
+  clear: both;
+}
+@media (min-width: 768px) {
+  .navbar {
+    /*
+    border-radius: 4px;
+    */
+  }
+}
+
+/* navbar-header.css */
+/* navbar-collapse.css */
+/* navbar-fixed.css */
+/* navbar-toggle.css */
+/* navbar-form.css */
+/* navbar-nav.css */
+/* navbar-btn.css */
+/* navbar-text.css */
+
+/* navbar-style-default.css */
+/* navbar-style-inverse.css */

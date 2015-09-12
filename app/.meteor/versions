@@ -36,6 +36,7 @@ flvnt:app-features@0.0.1
 flvnt:app-fixtures@0.0.1
 flvnt:app-hotkeys@0.0.1
 flvnt:app-layouts@0.0.1
+flvnt:bootstrap@0.0.1
 flvnt:collection-schemas@0.0.1
 flvnt:cron@0.0.1
 flvnt:db-migrations@0.0.1

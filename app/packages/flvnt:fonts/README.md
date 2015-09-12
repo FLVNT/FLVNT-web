@@ -1,4 +1,4 @@
-flvnt:api-utils
-================
+flvnt:fonts
+===========
 
-flvnt:api-utils: common methods used by the server `Meteor.method()` functions.
+flvnt-web public fonts
