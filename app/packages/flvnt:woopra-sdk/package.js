@@ -13,7 +13,7 @@ Npm.depends({
 
 
 Package.on_use(function (api, where) {
-  // api.versionsFrom('1.1.0.2');
+  api.versionsFrom('1.1.0.2');
   where = where || 'client';
 
   api.use([

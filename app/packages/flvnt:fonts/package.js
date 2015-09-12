@@ -1,29 +1,27 @@
 
 Package.describe({
-  name    : 'flvnt:api-utils',
-  summary : 'flvnt-web common methods used by the server Meteor.method() functions',
-  version : '0.0.1'
+  name    : 'flvnt:fonts',
+  summary : 'flvnt-web public fonts',
+  version : '0.0.1',
+  documentation : 'README.md'
 });
 
 
 Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
+  where = where || ['client'];
 
   api.use([
     'coffeescript',
     'underscore',
     'check',
+    'flvnt:lazyload@0.0.1',
     'flvnt:logger@0.0.1'
   ], where);
 
 
   api.add_files([
-    'lib/server/api.coffee'
-  ], 'server');
-
-  api.add_files([
-    'lib/client/api.coffee'
+    // 'lib/client/api.coffee'
   ], 'client');
 
 
@@ -33,24 +31,33 @@ Package.on_use(function (api, where) {
 
 
 Package.on_test(function (api, where) {
-  where = where || ['client', 'server'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures', 'check'
+    'check',
+    'flvnt:app-fixtures'
   ], where);
 
 
   // package specific..
   api.use([
+    'underscore',
+    'jquery',
     'ui',
+    'blaze',
     'templating',
-  ], ['client']);
+    'session',
+    'flvnt:logger@0.0.1'
+  ], where);
 
 
   // import the package..
-  api.imply('flvnt:api-utils', where, {bare: true});
+  api.imply([
+    'flvnt:fonts'
+  ], where, {bare: true});
 
 
   api.add_files([

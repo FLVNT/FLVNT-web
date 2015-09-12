@@ -8,7 +8,7 @@ Package.describe({
 
 
 Package.on_use(function (api, where) {
-  // api.versionsFrom('1.1.0.2');
+  api.versionsFrom('1.1.0.2');
   where = where || ['client'];
 
   api.use([
@@ -45,24 +45,32 @@ Package.on_use(function (api, where) {
 
 
 Package.on_test(function (api, where) {
-  where = where || ['client', 'server'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures', 'check'
+    'check',
+    'flvnt:app-fixtures'
   ], where);
 
 
   // package specific..
   api.use([
+    'underscore',
+    'jquery',
     'ui',
-    'templating'
-  ], ['client']);
+    'blaze',
+    'templating',
+    'session'
+  ], where);
 
 
   // import the package..
-  api.imply('flvnt:app-hotkeys', where, {bare: true});
+  api.imply([
+    'flvnt:app-hotkeys'
+  ], where, {bare: true});
 
 
   api.add_files([

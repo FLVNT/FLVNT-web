@@ -61,7 +61,7 @@
     "twitter_client_id"   : "GzWOXMVeqzbuKZeX9DIcEpBsZ",
     "google_client_id"    : "",
     "vimeo_client_id"     : "",
-    "vine_client_id"     : "",
+    "vine_client_id"      : "",
     "snapchat_client_id"  : "",
     "pinterest_client_id" : "",
     "app_url"             : "http://localhost:3300",

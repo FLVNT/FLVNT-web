@@ -11,6 +11,10 @@ Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
   where = where || ['client'];
 
+  api.use([
+    'jquery'
+  ], where);
+
   api.add_files([
     'lib/client/jquery-touch-events.js'
   ], where);
@@ -19,24 +23,32 @@ Package.on_use(function (api, where) {
 
 
 Package.on_test(function (api, where) {
+  api.versionsFrom('1.1.0.2');
   where = where || ['client'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures'
-  ]);
+    'check',
+    'flvnt:app-fixtures'
+  ], where);
 
 
   // package specific..
   api.use([
+    'underscore',
+    'jquery',
     'ui',
-    'templating'
+    'blaze',
+    'templating',
+    'session'
   ], where);
 
 
   // import the package..
-  api.imply('flvnt:jquery-touch-events', where, {bare: true});
+  api.imply([
+    'flvnt:jquery-touch-events'
+  ], where, {bare: true});
 
 
   api.add_files([

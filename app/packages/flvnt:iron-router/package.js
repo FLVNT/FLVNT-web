@@ -3,7 +3,7 @@ Package.describe({
   name    : 'flvnt:iron-router',
   summary : 'flvnt-web bridge for the iron-router meteor.js package',
   version : '0.0.1',
-  documentation: 'README.md'
+  documentation : 'README.md'
 });
 
 
@@ -31,6 +31,7 @@ Package.on_use(function (api, where) {
     'flvnt:app-features@0.0.1'
   ], ['client', 'server']);
 
+
   api.add_files([
     'lib/client/routes-config.coffee'
   ], 'client');
@@ -47,24 +48,36 @@ Package.on_use(function (api, where) {
 
 
 Package.on_test(function (api, where) {
-  where = where || ['client'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client', 'server'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures'
-  ]);
+    'check',
+    'flvnt:app-fixtures'
+  ], where);
 
 
   // package specific..
   api.use([
+    'underscore',
+    'jquery',
     'ui',
-    'templating'
+    'blaze',
+    'templating',
+    'session',
+    'tracker',
+    'iron:router',
+    'meteorhacks:fast-render',
+    'flvnt:subs-manager@0.0.1'
   ], where);
 
 
   // import the package..
-  api.imply('flvnt:iron-router', where, {bare: true});
+  api.imply([
+    'flvnt:iron-router'
+  ], where, {bare: true});
 
 
   api.add_files([

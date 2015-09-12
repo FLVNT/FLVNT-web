@@ -9,7 +9,7 @@ Package.describe({
 
 Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['server', 'client'];
+  where = where || ['client', 'server'];
 
   api.use([
     'coffeescript',
@@ -65,24 +65,49 @@ Package.on_use(function (api, where) {
 
 
 Package.on_test(function (api, where) {
-  where = where || ['client'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client', 'server'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures'
-  ]);
+    'check',
+    'flvnt:app-fixtures'
+  ], where);
 
 
   // package specific..
   api.use([
+    'underscore',
     'ui',
-    'templating'
+    'blaze',
+    'templating',
+    'session',
+    'mquandalle:jade@0.4.2',
+    'stylus',
+    'jquery',
+    'mongo',
+    'http',
+    'deps',
+    'tracker',
+    'flvnt:logger@0.0.1',
+    'flvnt:env@0.0.1',
+    'aldeed:collection2',
+    'aldeed:simple-schema',
+    'dburles:collection-helpers',
+    'flvnt:collection-schemas@0.0.1',
+    'flvnt:api-utils@0.0.1',
+    'flvnt:app-features@0.0.1',
+    'tmeasday:publish-counts@0.4.0',
+    'meteorhacks:subs-manager@1.3.0',
+    'meteorhacks:unblock@1.1.0'
   ], where);
 
 
   // import the package..
-  api.imply('flvnt:activity-feeds', where, {bare: true});
+  api.imply([
+    'flvnt:activity-feeds'
+  ], where, {bare: true});
 
 
   api.add_files([

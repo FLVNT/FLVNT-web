@@ -3,7 +3,7 @@ Package.describe({
   name    : 'flvnt:collection-schemas',
   summary : 'flvnt-web collections schema helpers package',
   version : '0.0.1',
-  documentation: 'README.md'
+  documentation : 'README.md'
 });
 
 
@@ -15,11 +15,11 @@ Package.on_use(function (api, where) {
   api.use([
     'coffeescript',
     'underscore',
+    'mongo',
     'flvnt:logger@0.0.1',
     'aldeed:simple-schema',
     'aldeed:collection2',
-    'dburles:collection-helpers',
-    'mongo'
+    'dburles:collection-helpers'
   ]);
 
   api.imply([
@@ -40,24 +40,32 @@ Package.on_use(function (api, where) {
 
 
 Package.on_test(function (api, where) {
-  where = where || ['client'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client', 'server'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures'
-  ]);
+    'check',
+    'flvnt:app-fixtures'
+  ], where);
 
 
   // package specific..
   api.use([
-    'ui',
-    'templating'
+    'underscore',
+    'mongo',
+    'flvnt:logger@0.0.1',
+    'aldeed:simple-schema',
+    'aldeed:collection2',
+    'dburles:collection-helpers'
   ], where);
 
 
   // import the package..
-  api.imply('flvnt:collection-schemas', where, {bare: true});
+  api.imply([
+    'flvnt:collection-schemas'
+  ], where, {bare: true});
 
 
   api.add_files([

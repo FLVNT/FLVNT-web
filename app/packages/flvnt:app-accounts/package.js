@@ -59,33 +59,39 @@ Package.on_use(function (api, where) {
   ], 'client');
 
 
-  api.export('FLVNTAccounts', ['client', 'server']);
-  api.export('config', ['client', 'server']);
+  api.export('FLVNTAccounts', where);
+  api.export('config', where);
   // api.export('load_accounts_services_config');
 
 });
 
 
 Package.on_test(function (api, where) {
-  where = where || ['client'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client', 'server'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures'
+    'flvnt:app-fixtures'
   ]);
 
 
   // package specific..
   api.use([
+    'underscore',
+    'jquery',
     'ui',
     'blaze',
-    'templating'
+    'templating',
+    'session'
   ], where);
 
 
   // import the package..
-  api.imply('flvnt:app-accounts', where, {bare: true});
+  api.imply([
+    'flvnt:app-accounts'
+  ], where, {bare: true});
 
 
   api.add_files([

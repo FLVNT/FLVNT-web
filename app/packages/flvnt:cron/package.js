@@ -3,7 +3,7 @@ Package.describe({
   name    : 'flvnt:cron',
   summary : 'flvnt:web bridge to the mrt:cron package',
   version : '0.0.1',
-  documentation: 'README.md'
+  documentation : 'README.md'
 });
 
 

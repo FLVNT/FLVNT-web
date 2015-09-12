@@ -3,7 +3,7 @@ Package.describe({
   name    : 'flvnt:handlebars',
   summary : 'flvnt-web templating + UI helpers',
   version : '0.0.1',
-  documentation: 'README.md'
+  documentation : 'README.md'
 });
 
 
@@ -18,6 +18,7 @@ Package.on_use(function (api, where) {
     'templating',
     'ui',
     'session',
+    'tracker',
     'check',
   ], ['client', 'server']);
 
@@ -46,24 +47,33 @@ Package.on_use(function (api, where) {
 
 
 Package.on_test(function (api, where) {
+  api.versionsFrom('1.1.0.2');
   where = where || ['client'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures'
-  ]);
+    'check',
+    'flvnt:app-fixtures'
+  ], where);
 
 
   // package specific..
   api.use([
+    'underscore',
+    'jquery',
     'ui',
-    'templating'
+    'blaze',
+    'templating',
+    'session',
+    'tracker'
   ], where);
 
 
   // import the package..
-  api.imply('flvnt:handlebars', where, {bare: true});
+  api.imply([
+    'flvnt:handlebars'
+  ], where, {bare: true});
 
 
   api.add_files([
