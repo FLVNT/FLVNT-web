@@ -1,29 +1,19 @@
 
 Package.describe({
-  name    : 'flvnt:features',
-  summary : 'flvnt:web feature toggles',
-  version : '0.0.1'
+  name    : 'flvnt:jquery-touch-events',
+  summary : 'jquery-touch-events packaged for meteor',
+  version : '0.0.1',
+  documentation : 'README.md'
 });
 
 
 Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['server', 'client'];
-
-  api.use([
-    'coffeescript',
-    'underscore',
-    'flvnt:logger@0.0.1',
-    'flvnt:env@0.0.1'
-  ], where);
-
+  where = where || ['client'];
 
   api.add_files([
-    'lib/features.coffee'
+    'lib/client/jquery-touch-events.js'
   ], where);
-
-
-  api.export('Features');
 
 });
 
@@ -46,7 +36,7 @@ Package.on_test(function (api, where) {
 
 
   // import the package..
-  api.imply('flvnt:features', where, {bare: true});
+  api.imply('flvnt:jquery-touch-events', where, {bare: true});
 
 
   api.add_files([

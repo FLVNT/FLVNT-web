@@ -3,7 +3,7 @@ Package.describe({
   name    : 'flvnt:app-hotkeys',
   summary : 'flvnt-web hotkey bindings',
   version : '0.0.1',
-  documentation: 'README.md'
+  documentation : 'README.md'
 });
 
 
@@ -13,14 +13,25 @@ Package.on_use(function (api, where) {
 
   api.use([
     'coffeescript',
+    'stylus',
     'mquandalle:jade@0.4.2',
     'underscore',
     'jquery',
     'templating',
+    'spacebars',
+    'blaze',
     'ui',
     'session',
     'check',
-    'flvnt:logger@0.0.1'
+    'tracker',
+    'iron:router',
+    'flvnt:iron-router@0.0.1',
+    'flvnt:subs-manager@0.0.1',,
+    'meteorhacks:subs-manager@1.3.0',
+    'flvnt:logger@0.0.1',
+    'flvnt:api-utils@0.0.1',
+    'flvnt:app-features@0.0.1',
+    'flvnt:jquery-touch-events@0.0.1'
   ], where);
 
 

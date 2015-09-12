@@ -1,7 +1,7 @@
 
 Package.describe({
-  name    : 'flvnt:subs-manager',
-  summary : 'flvnt-web bridge to meteorhacks:subs-manager',
+  name    : 'flvnt:jquery-easing',
+  summary : 'jquery-easing packaged for meteor',
   version : '0.0.1',
   documentation : 'README.md'
 });
@@ -9,23 +9,16 @@ Package.describe({
 
 Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
-
+  where = where || ['client'];
 
   api.use([
-    'coffeescript',
-    'underscore',
-    'flvnt:logger@0.0.1',
-    'meteorhacks:subs-manager@1.3.0'
-  ]);
-
-  api.add_files([
-    'lib/client/subs-manager.coffee'
+    'jquery'
   ], where);
 
-
-  api.export('subs');
-  api.export('notifications_subs');
+  api.add_files([
+    'lib/client/jquery.easing.css',
+    'lib/client/jquery.easing.js'
+  ], where);
 
 });
 
@@ -48,7 +41,7 @@ Package.on_test(function (api, where) {
 
 
   // import the package..
-  api.imply('flvnt:subs-manager', where, {bare: true});
+  api.imply('flvnt:jquery-easing', where, {bare: true});
 
 
   api.add_files([

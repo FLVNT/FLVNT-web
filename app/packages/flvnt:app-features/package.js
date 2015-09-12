@@ -1,31 +1,29 @@
 
 Package.describe({
-  name    : 'flvnt:subs-manager',
-  summary : 'flvnt-web bridge to meteorhacks:subs-manager',
-  version : '0.0.1',
-  documentation : 'README.md'
+  name    : 'flvnt:app-features',
+  summary : 'flvnt:web feature toggles',
+  version : '0.0.1'
 });
 
 
 Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
-
+  where = where || ['server', 'client'];
 
   api.use([
     'coffeescript',
     'underscore',
     'flvnt:logger@0.0.1',
-    'meteorhacks:subs-manager@1.3.0'
-  ]);
-
-  api.add_files([
-    'lib/client/subs-manager.coffee'
+    'flvnt:env@0.0.1'
   ], where);
 
 
-  api.export('subs');
-  api.export('notifications_subs');
+  api.add_files([
+    'lib/features.coffee'
+  ], where);
+
+
+  api.export('Features');
 
 });
 
@@ -48,7 +46,7 @@ Package.on_test(function (api, where) {
 
 
   // import the package..
-  api.imply('flvnt:subs-manager', where, {bare: true});
+  api.imply('flvnt:features', where, {bare: true});
 
 
   api.add_files([

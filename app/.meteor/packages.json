@@ -90,8 +90,6 @@
   },
 
   "third_party_analytics": {
-      "mixpanel"         : "0.0.0",
-      "flvnt:mixpanel"   : "0.0.1",
       "flvnt:woopra-sdk" : "0.0.1"
   },
 
@@ -104,7 +102,6 @@
   },
 
   "search_autocomplete": {
-      "flvnt:lazyfingers" : "0.0.1"
   },
 
   "api_search": {
@@ -124,7 +121,7 @@
       "flvnt:filepicker-sdk"    : "0.0.1",
       "flvnt:facebook-sdk"      : "0.0.1",
       "flvnt:google-sdk"        : "0.0.1",
-      "flvnt:youtube-frame-sdk" : "0.0.1",
+      "flvnt:youtube-frame-sdk" : "0.0.1"
   },
 
   "underscore_exts": {

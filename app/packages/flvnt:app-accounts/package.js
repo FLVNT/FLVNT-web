@@ -1,6 +1,6 @@
 
 Package.describe({
-  name    : 'flvnt:accounts',
+  name    : 'flvnt:app-accounts',
   summary : 'flvnt-web bridge to the meteor-accounts framework.',
   version : '0.0.1',
   documentation : 'README.md'

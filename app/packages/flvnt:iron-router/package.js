@@ -13,9 +13,22 @@ Package.on_use(function (api, where) {
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
     'underscore',
     'jquery',
-    'session'
+    'templating',
+    'spacebars',
+    'blaze',
+    'ui',
+    'session',
+    'check',
+    'tracker',
+    'iron:router',
+    'meteorhacks:fast-render',
+    'flvnt:subs-manager@0.0.1',
+    'flvnt:logger@0.0.1',
+    'flvnt:api-utils@0.0.1',
+    'flvnt:app-features@0.0.1'
   ], ['client', 'server']);
 
   api.add_files([
