@@ -8,7 +8,7 @@ Package.describe({
 
 
 Package.on_use(function (api, where) {
-  api.versionsFrom('1.1.0.2');
+  // api.versionsFrom('1.1.0.2');
   where = where || ['client'];
 
   api.use([
@@ -26,7 +26,7 @@ Package.on_use(function (api, where) {
     'tracker',
     'iron:router',
     'flvnt:iron-router@0.0.1',
-    'flvnt:subs-manager@0.0.1',,
+    'flvnt:subs-manager@0.0.1',
     'meteorhacks:subs-manager@1.3.0',
     'flvnt:logger@0.0.1',
     'flvnt:api-utils@0.0.1',
@@ -57,7 +57,7 @@ Package.on_test(function (api, where) {
   // package specific..
   api.use([
     'ui',
-    'templating',
+    'templating'
   ], ['client']);
 
 

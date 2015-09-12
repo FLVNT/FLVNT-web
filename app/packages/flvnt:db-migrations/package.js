@@ -23,7 +23,7 @@ Package.on_use(function (api, where) {
     'dburles:collection-helpers',
     'flvnt:logger@0.0.1',
     'flvnt:env@0.0.1',
-    'flvnt:features@0.0.1',
+    'flvnt:app-features@0.0.1',
     'flvnt:collection-schemas@0.0.1',
     'flvnt:api-utils@0.0.1',
     'tmeasday:publish-counts@0.4.0',

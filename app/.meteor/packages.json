@@ -113,15 +113,13 @@
       "accounts-password"  : null,
       "accounts-facebook"  : null,
       "accounts-google"    : null,
+      "bozhao:accounts-instagram"    : null,
       "flvnt:app-accounts" : "0.0.1"
   },
 
   "third_party_sdks": {
       "flvnt:lazyload"          : "0.0.1",
-      "flvnt:filepicker-sdk"    : "0.0.1",
-      "flvnt:facebook-sdk"      : "0.0.1",
-      "flvnt:google-sdk"        : "0.0.1",
-      "flvnt:youtube-frame-sdk" : "0.0.1"
+      "flvnt:filepicker-sdk"    : "0.0.1"
   },
 
   "underscore_exts": {
@@ -152,7 +150,6 @@
 
   "flvnt_app_client": {
       "flvnt:app-hotkeys"   : "0.0.1",
-      "flvnt:bootstrap"     : "0.0.1",
       "flvnt:jquery-easing" : "0.0.1",
       "flvnt:handlebars"    : "0.0.1",
       "flvnt:app-hotkeys"   : "0.0.1"

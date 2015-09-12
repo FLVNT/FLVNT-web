@@ -13,7 +13,7 @@ Npm.depends({
 
 
 Package.on_use(function (api, where) {
-  api.versionsFrom('1.1.0.2');
+  // api.versionsFrom('1.1.0.2');
   where = where || 'client';
 
   api.use([
@@ -39,13 +39,14 @@ Package.on_use(function (api, where) {
   ], where);
 
   api.add_files([
+    'lib/client/woopra-sdk.jade',
     'lib/client/woopra-sdk.js'
-    'lib/client/woopra-sdk.jade'
   ], 'client');
 
   api.add_files([
     'lib/server/woopra-sdk.coffee'
   ], 'server');
+
 
   api.export('Woopra');
 

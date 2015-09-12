@@ -10,10 +10,7 @@ reactive-dict
 
 # third_party_sdks
 # ------------------
-flvnt:facebook-sdk@0.0.1
-flvnt:youtube-frame-sdk@0.0.1
 flvnt:lazyload@0.0.1
-flvnt:google-sdk@0.0.1
 flvnt:filepicker-sdk@0.0.1
 
 
@@ -34,6 +31,7 @@ hipstersmoothie:scrollmagic
 # ----------
 accounts-google
 accounts-password
+bozhao:accounts-instagram
 flvnt:app-accounts@0.0.1
 accounts-facebook
 email
@@ -155,7 +153,6 @@ node-btoa@0.0.1
 # flvnt_app_client
 # ------------------
 flvnt:handlebars@0.0.1
-flvnt:bootstrap@0.0.1
 flvnt:app-hotkeys@0.0.1
 flvnt:jquery-easing@0.0.1
 

@@ -46,7 +46,7 @@ Package.on_test(function (api, where) {
 
 
   // import the package..
-  api.imply('flvnt:features', where, {bare: true});
+  api.imply('flvnt:app-features', where, {bare: true});
 
 
   api.add_files([

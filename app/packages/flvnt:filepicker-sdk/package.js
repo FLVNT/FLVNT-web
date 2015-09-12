@@ -1,33 +1,29 @@
 
 Package.describe({
-  name    : 'flvnt:nodepkg',
-  summary : 'generic node package wrapper',
+  name    : 'flvnt:filepicker-sdk',
+  summary : 'filepicker.io javascript sdk loader',
   version : '0.0.1',
-  documentation: 'README.md'
-});
-
-
-Npm.depends({
-  util: "0.10.2"
+  documentation : 'README.md'
 });
 
 
 Package.on_use(function (api, where) {
-  api.versionsFrom('1.0');
-  where = where || ['server'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client'];
 
-  api.add_files([
-    'lib/server/main.coffee'
+  api.use([
+    'coffeescript',
+    'underscore',
+    'flvnt:lazyload@0.0.1',
+    'flvnt:logger@0.0.1'
   ], where);
 
+  api.add_files([
+    'client/lib/filepicker-sdk.coffee'
+  ], where);
 
-  api.export('Util');
-  api.export('Sys');
-  api.export('Fs');
-  api.export('Exec');
-  api.export('Path');
+  api.export('load_filepicker_sdk');
 });
-
 
 
 Package.on_test(function (api, where) {
@@ -48,7 +44,7 @@ Package.on_test(function (api, where) {
 
 
   // import the package..
-  api.imply('unvael:nodepkg', where, {bare: true});
+  api.imply('flvnt:filepicker-sdk', where, {bare: true});
 
 
   api.add_files([

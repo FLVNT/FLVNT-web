@@ -1,0 +1,10 @@
+node_modules
+.build
+.build*
+.npm*
+
+*.swp
+.meteor
+smart.lock
+.build*
+`

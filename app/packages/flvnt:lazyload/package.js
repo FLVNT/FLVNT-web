@@ -25,7 +25,7 @@ Package.on_use(function (api, where) {
   ], where);
 
   api.add_files([
-    'client/lib/lazyload.coffee'
+    'lib/client/lazyload.coffee'
   ], where);
 
   api.export('LazyLoad');
