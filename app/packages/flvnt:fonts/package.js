@@ -1,56 +1,59 @@
 
 Package.describe({
-  name    : 'flvnt:api-utils',
-  summary : 'flvnt-web common methods used by the server Meteor.method() functions',
-  version : '0.0.1'
+  name    : 'flvnt:fonts',
+  summary : 'flvnt-web public fonts',
+  version : '0.0.1',
+  documentation : 'README.md'
 });
 
 
 Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
+  where = where || ['client'];
 
   api.use([
     'coffeescript',
     'underscore',
-    'check',
+    'flvnt:lazyload@0.0.1',
     'flvnt:logger@0.0.1'
   ], where);
 
 
   api.add_files([
-    'lib/server/api.coffee'
-  ], 'server');
-
-  api.add_files([
-    'lib/client/api.coffee'
+    // 'public/fonts/didot.otf'
+    // 'public/fonts/lane-e.otf'
+    // 'public/fonts/helvetica-nueue.otf'
   ], 'client');
-
-
-  api.export('ApiUtils');
 
 });
 
 
 Package.on_test(function (api, where) {
-  where = where || ['client', 'server'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures', 'check'
+    'flvnt:app-fixtures'
   ], where);
 
 
   // package specific..
   api.use([
+    'underscore',
+    'jquery',
     'ui',
+    'blaze',
     'templating',
-  ], ['client']);
+    'flvnt:logger@0.0.1'
+  ], where);
 
 
   // import the package..
-  api.imply('flvnt:api-utils', where, {bare: true});
+  api.imply([
+    'flvnt:fonts'
+  ], where, {bare: true});
 
 
   api.add_files([

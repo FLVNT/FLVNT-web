@@ -3,7 +3,7 @@ Package.describe({
   name    : 'flvnt:db-migrations',
   summary : 'run, manage db schema migrations in a meteor app',
   version : '0.0.1',
-  documentation: 'README.md'
+  documentation : 'README.md'
 });
 
 
@@ -18,18 +18,19 @@ Package.on_use(function (api, where) {
     'mongo',
     'http',
     'deps',
+    'tracker',
     'aldeed:collection2',
     'aldeed:simple-schema',
     'dburles:collection-helpers',
     'flvnt:logger@0.0.1',
     'flvnt:env@0.0.1',
-    'flvnt:features@0.0.1',
+    'flvnt:app-features@0.0.1',
     'flvnt:collection-schemas@0.0.1',
     'flvnt:api-utils@0.0.1',
     'tmeasday:publish-counts@0.4.0',
     'meteorhacks:subs-manager@1.3.0',
     'meteorhacks:unblock@1.1.0'
-  ]);
+  ], where);
 
   api.imply([
     'mongo',
@@ -37,7 +38,7 @@ Package.on_use(function (api, where) {
     'aldeed:simple-schema',
     'dburles:collection-helpers',
     'flvnt:collection-schemas@0.0.1'
-  ]);
+  ], where);
 
 
   api.add_files([
@@ -59,17 +60,43 @@ Package.on_use(function (api, where) {
 
 
 Package.on_test(function (api, where) {
-  where = where || ['client'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client', 'server'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures'
-  ]);
+    'check',
+    'flvnt:app-fixtures'
+  ], where);
+
+
+  // package specific..
+  api.use([
+    'underscore',
+    'jquery',
+    'mongo',
+    'http',
+    'deps',
+    'tracker',
+    'aldeed:collection2',
+    'aldeed:simple-schema',
+    'dburles:collection-helpers',
+    'flvnt:logger@0.0.1',
+    'flvnt:env@0.0.1',
+    'flvnt:app-features@0.0.1',
+    'flvnt:collection-schemas@0.0.1',
+    'flvnt:api-utils@0.0.1',
+    'tmeasday:publish-counts@0.4.0',
+    'meteorhacks:subs-manager@1.3.0',
+    'meteorhacks:unblock@1.1.0'
+  ], where);
 
 
   // import the package..
-  api.imply('flvnt:db-migrations', where, {bare: true});
+  api.imply([
+    'flvnt:db-migrations'
+  ], where, {bare: true});
 
 
   api.add_files([

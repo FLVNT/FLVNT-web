@@ -3,7 +3,7 @@ Package.describe({
   name    : 'flvnt:cron',
   summary : 'flvnt:web bridge to the mrt:cron package',
   version : '0.0.1',
-  documentation: 'README.md'
+  documentation : 'README.md'
 });
 
 
@@ -17,7 +17,7 @@ Package.on_use(function (api, where) {
     'underscore',
     'livedata',
     'flvnt:logger@0.0.1',
-    'flvnt:features@0.0.1',
+    'flvnt:app-features@0.0.1',
     'mrt:cron@0.0.1'
   ], where);
 

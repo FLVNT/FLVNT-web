@@ -1,4 +1,10 @@
-flvnt:api-utils
-================
+flvnt-nodepkg
+=============
 
-flvnt:api-utils: common methods used by the server `Meteor.method()` functions.
+generic node.js package wrapper for exporting server-side libs:
+
+- Util
+- Sys
+- Fs
+- Exec
+- Path

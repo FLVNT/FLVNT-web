@@ -1,0 +1,85 @@
+
+social-link-width = 53px
+social-link-height = 44px
+banner-height = 850px
+
+
+#invite-accept
+
+  &.disabled
+    opacity 0.6
+
+    *:hover
+      cursor default !important
+
+  width 100%
+  min-height banner-height
+  // to create the fixed header -- we set a body {padding-top}
+  // undo this for this view..
+  // margin-top -(header-height)
+
+  .btn
+    margin-top 100px
+    width 264px
+    padding-top 17px
+    padding-bottom 17px
+    background transparent
+    vertical-align middle
+    color #fff
+    text-align center
+    border-color #fff
+    border-width 1px
+    font-family FONT-LIGHT
+    font-size 10px
+    letter-spacing 3px
+    line-height 2em
+
+  button:hover
+  .btn:hover
+    color UNVAEL-GOLD
+    border-color UNVAEL-GOLD
+
+
+#invite-signup-complete
+#app-login
+  width 350px
+
+  .row
+    margin-bottom 10px
+
+    input
+      width 100%
+
+    .btn
+      font-family FONT-SANS-SERIF
+      padding-top 15px
+      padding-bottom 15px
+
+    .btn:hover
+      color UNVAEL-GOLD
+
+  .btn-row
+    margin-top 20px
+    margin-bottom 20px
+
+
+  // popover styling
+  .popover
+    background #000
+    color #fff
+    opacity 0.85
+    box-shadow(0px 2px 6px #000)
+    font-size 10px
+    min-width 200px
+    letter-spacing 0
+    margin-left 0
+
+    &.right
+      .arrow:after
+        border-right-color #000
+
+    .arrow:before
+      border-left-color #000
+
+    .popover-content
+      padding 14px 14px

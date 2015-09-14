@@ -1,9 +1,9 @@
 
 Package.describe({
   name    : 'flvnt:nodepkg',
-  summary : 'generic node package wrapper',
+  summary : 'flvnt-web generic node package wrapper',
   version : '0.0.1',
-  documentation: 'README.md'
+  documentation : 'README.md'
 });
 
 
@@ -13,12 +13,17 @@ Npm.depends({
 
 
 Package.on_use(function (api, where) {
-  api.versionsFrom('1.0');
+  api.versionsFrom('1.1.0.2');
   where = where || ['server'];
 
-  api.add_files([
-    'main.js'
+  api.use([
+    'coffeescript'
   ], where);
+
+  api.add_files([
+    'lib/server/nodepkg.coffee'
+  ], where);
+
 
   api.export('Util');
   api.export('Sys');
@@ -29,25 +34,24 @@ Package.on_use(function (api, where) {
 });
 
 
+
 Package.on_test(function (api, where) {
-  where = where || ['client'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['server'];
 
   // standard test helpers..
   api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures'
+    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper'
   ]);
 
 
   // package specific..
   api.use([
-    'ui',
-    'templating'
   ], where);
 
 
   // import the package..
-  api.imply('unvael:nodepkg', where, {bare: true});
+  api.imply('flvnt:nodepkg', where, {bare: true});
 
 
   api.add_files([

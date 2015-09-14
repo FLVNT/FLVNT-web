@@ -3,7 +3,7 @@ Package.describe({
   name    : 'flvnt:api-utils',
   summary : 'flvnt-web common methods used by the server Meteor.method() functions',
   version : '0.0.1',
-  documentation: 'README.md'
+  documentation : 'README.md'
 });
 
 
@@ -34,20 +34,20 @@ Package.on_use(function (api, where) {
 
 
 Package.on_test(function (api, where) {
+  api.versionsFrom('1.1.0.2');
   where = where || ['client', 'server'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures', 'check'
+    'flvnt:app-fixtures',
+    'check'
   ], where);
 
 
   // package specific..
   api.use([
-    'ui',
-    'templating',
-  ], ['client']);
+  ], where);
 
 
   // import the package..

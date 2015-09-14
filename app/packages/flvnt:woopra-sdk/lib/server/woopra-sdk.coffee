@@ -1,0 +1,2 @@
+
+Woopra = Npm.require 'woopra'

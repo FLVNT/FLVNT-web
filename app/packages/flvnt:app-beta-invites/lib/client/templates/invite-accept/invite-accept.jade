@@ -1,0 +1,37 @@
+
+//- form for someone to accept a unique invitation link tocreate thurr account
+template(name='invite-accept')
+  .page-wrapper
+    #bgVideo-container
+    #bgVideo.background
+      iframe#vimeo_embed(src="{{ vimeo_url }}", width="100%", height="100%", frameborder="0", webkitallowfullscreen="webkitallowfullscreen", mozallowfullscreen="mozallowfullscreen", allowfullscreen="allowfullscreen")
+
+    .header-23-sub
+      #intro-container.container
+        .row
+          .col-sm-12
+            .hero-unit.login
+              strong(style="margin-bottom: 15px;") an enigma for art
+              span A PLATFORM FOR ARTISTS + DESIGNERS TO COLLABORATE
+
+              div.header-intro
+                if has_invited_by
+                  | {{ invited_by }}
+                  br
+                  | you with a unique invitation to
+                  br
+                  | join a community for artist + designer product collaborations
+                else
+                  | get started with your special invitation to&nbsp;
+                  | join a community for artist + designer product collaborations
+
+              #invite-accept.container
+                .row
+                  .col-sm-12.col-md-12
+
+                .row(style="margin-bottom:0;")
+                  .col-sm-12.col-md-12
+                    button(data-event="facebook-connect") create your account
+
+                span#unvael-footer UNVAEL
+                a.logo(href="http://app.unvael.fm/login") login to UNVAEL

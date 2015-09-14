@@ -1,6 +1,6 @@
 
 Package.describe({
-  name    : 'flvnt:accounts',
+  name    : 'flvnt:app-accounts',
   summary : 'flvnt-web bridge to the meteor-accounts framework.',
   version : '0.0.1',
   documentation : 'README.md'
@@ -21,7 +21,7 @@ Package.on_use(function (api, where) {
     'blaze',
     'flvnt:env@0.0.1',
     'flvnt:logger@0.0.1',
-    'flvnt:features@0.0.1',
+    'flvnt:app-features@0.0.1',
     'flvnt:collection-schemas@0.0.1',
     'service-configuration',
     'aldeed:simple-schema@1.3.2',
@@ -37,7 +37,6 @@ Package.on_use(function (api, where) {
     'accounts-ui-unstyled@1.1.7',
     'accounts-facebook',
     'accounts-google',
-    'soundcloud@0.0.1',
 
     // chrome bug: https://github.com/meteor/meteor/issues/1004#issuecomment-68652474
     // UA in Chrome iOS is same as Safari iOS, with CriOS/<ChromeRevision> addition
@@ -47,7 +46,8 @@ Package.on_use(function (api, where) {
 
   api.add_files([
     'lib/config.coffee',
-    'lib/accounts.coffee'
+    'lib/accounts.coffee',
+    'lib/collections.coffee'
   ], where);
 
   api.add_files([
@@ -59,33 +59,39 @@ Package.on_use(function (api, where) {
   ], 'client');
 
 
-  api.export('FLVNTAccounts', ['client', 'server']);
-  api.export('config', ['client', 'server']);
+  api.export('FLVNTAccounts', where);
+  api.export('config', where);
   // api.export('load_accounts_services_config');
 
 });
 
 
 Package.on_test(function (api, where) {
-  where = where || ['client'];
+  api.versionsFrom('1.1.0.2');
+  where = where || ['client', 'server'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'fixtures'
+    'flvnt:app-fixtures'
   ]);
 
 
   // package specific..
   api.use([
+    'underscore',
+    'jquery',
     'ui',
     'blaze',
-    'templating'
+    'templating',
+    'session'
   ], where);
 
 
   // import the package..
-  api.imply('flvnt:app-accounts', where, {bare: true});
+  api.imply([
+    'flvnt:app-accounts'
+  ], where, {bare: true});
 
 
   api.add_files([
