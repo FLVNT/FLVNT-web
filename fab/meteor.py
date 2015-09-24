@@ -14,54 +14,61 @@ from fabric.api import env
 from fab.environ import task, set_env
 from fabric.colors import blue, green, red, yellow
 from fabctx import ctx
+from contextlib import nested
 from simplejson import loads
+from fab import nvm
 from fab import environ
 from fab import supervisord
-from fab import nvm
 from fab.environ import meteor_release_version
 from fab.environ import get_host
 from fab.utils import execute
+from fab.utils import puts
 from DDPClient import DDPClient
 
 
 __all__ = ['install', 'update', 'meteor_release_version', 'meteor_shell',
-'meteor_env', 'set_accounts_config', 'clean_build_cache', 'render_packages_file',
-'run', 'run_local', 'create_package']
+'set_accounts_config', 'clean_build_cache', 'render_packages_file',
+'run', 'run_local', 'run_prod', 'run_debug_inspector', 'create_package']
 
 
 def _load_json(filepath):
   with open(filepath) as f:
-    _json = f.read().strip()
-    if len(_json) < 1:
-      raise EnvironmentError("{} is empty..".format(filepath))
-    try:
-      result = loads(_json)
-    except Exception, e:
-      raise EnvironmentError(e)
+    result = loads(f.read().strip())
     del f
   return result
 
 
-def meteor_env():
+def _default_meteor_env():
   set_env()
-  return {
-    "ENV_ID"    : env.env_id,
-    "ROOT_URL"  : env.config['root_url'],
-    "MONGO_URL" : env.config['mongo_url'],
-    # "KADIRA_PROFILE_LOCALLY": '1',
-  }
+  return dict(
+    ENV_ID=env.env_id,
+    ROOT_URL=env.config['root_url'],
+    MONGO_URL=env.config['mongo_url'],
+    # KADIRA_PROFILE_LOCALLY=1,
+  )
 
 
 @ctx.contextmanager
-def meteor_approot():
+def prefix_meteor_env(**kwargs):
   """
-  sets the context to the meteor app dir.
+  contextmanager to prefix meteor commands with the host environment variables.
   """
-  fn = cd
-  if env.env_id in ('local', 'test'):
-    fn = lcd
+  _env_vars = _default_meteor_env()
+  _env_vars.update(kwargs)
+  with ctx.shell_env(**_env_vars):
+    yield
 
-  with fn("./app/"):
+
+@ctx.contextmanager
+def prefix_cd_meteor_approot():
+  """
+  contextmanager sets the shell prefix to cd to the meteor app dir.
+  """
+  _cd = cd
+  if env.env_id in ('local', 'test'):
+    _cd = lcd
+
+  with _cd("./app/"):
     yield
 
 
@@ -70,14 +77,14 @@ def meteor_shell(**kwargs):
   """
   sets the shell context for the meteor command.
   """
-  _env = meteor_env()
-  _env.update(kwargs)
-  with meteor_approot():
-    with ctx.shell_env(**_env):
-      try:
-        yield
-      except Exception, e:
-        print(red(' ---> {}'.format(e)))
+  with nested(
+    prefix_cd_meteor_approot(),
+    prefix_meteor_env(**kwargs)):
+
+    yield
+    # try:
+    # except Exception, e:
+    #   print(red(' ---> {}'.format(e)))
 
 
 @task
@@ -88,7 +95,7 @@ def clean_build_cache(*args, **kwargs):
   print(blue("\ncleaning meteor build-cache.."))
   with ctx.warn_only():
     execute('rm -rf {}'.format('./app/.meteor/local/*'))
-    print(green(" ---> meteor: build-cache cleaned: './app/.meteor/local/'"))
+    print(green(" ---> meteor: build-cache cleaned: './app/.meteor/local/'\n"))
 
 
 @task
@@ -113,9 +120,9 @@ def set_accounts_config(*args, **kwargs):
   def _callback(err, data):
     client.close()
     if err:
-      print err
+      print(err)
     else:
-      print data
+      print(data)
 
   set_env()
   _ctx = env.config.copy()
@@ -128,7 +135,7 @@ def set_accounts_config(*args, **kwargs):
   try:
     client.connect()
   except socket.error, e:
-    print red('\n---> unable to connect to socket_url: {}  [check meteor-app is running..]'.format(socket_url))
+    print(red('\n---> unable to connect to socket_url: {}  [check meteor-app is running..]'.format(socket_url)))
   else:
     call_args = []
     client.call('reset_accounts_config', call_args, _callback)
@@ -137,45 +144,44 @@ def set_accounts_config(*args, **kwargs):
 @task
 def install(*args, **kwargs):
   """
-  installs nvm, meteor, npm global dependencies
+  installs meteor framework
   """
-  nvm.install()
+  print(blue("\ninstalling meteor-framework.."))
+
+  # nvm.install()
 
   _ctx = env.config.copy()
   _ctx.update(get_host())
   _ctx['meteor_install_url'] = 'https://install.meteor.com/'
 
   # install npm-libs
-  execute("""
-  nvm use {node_version}
-  npm install -g {npm_libs}
-  """.format(**_ctx))
+  # npm.install()
 
   # install meteor..
-  execute("curl {meteor_install_url} | sh".format(**_ctx))
+  execute("curl {meteor_install_url} | sh".format(**_ctx), capture=False)
 
   # install laika test-runner..
-  laika.install()
-  with meteor_shell():
-    execute("""
-    nvm use {node_version}
-    npm install -g laika
-    """.format(**_ctx))
+  # laika.install()
+  # with meteor_shell():
+  #   execute("""
+  #   npm install -g laika
+  #   """.format(**_ctx))
+
+  print(green(" ---> meteor-framework installed.. \n"))
 
 
 @task
-def meteor_debug(*args, **kwargs):
+def run_debug_inspector(*args, **kwargs):
   """
   updates the specified environs database accounts service configuration.
   """
   with meteor_shell():
     shstr = '''
-    npm install -g node-inspector
     node-inspector &
     export NODE_OPTIONS='--debug-brk'
     meteor
     '''
-    execute(shstr)
+    execute(shstr, capture=False)
 
 
 @task
@@ -183,8 +189,12 @@ def run_local(*args, **kwargs):
   """
   runs the meteor app locally with a local db.
   """
+  supervisord.stop_meteor()
+  supervisord.stop_mongod()
   supervisord.stop()
+
   supervisord.conf()
+  render_packages_file()
   supervisord.start()
   supervisord.start_mongod()
 
@@ -192,22 +202,30 @@ def run_local(*args, **kwargs):
   _ctx = env.config.copy()
   _ctx.update(get_host())
 
-  # _ctx.pop("db_uri")
-  # _ctx.pop("db_host")
-  # _ctx.pop("db_user")
-  # _ctx.pop("db_pswd")
-  # _ctx.pop("db_name")
+  # db_uri = _ctx.pop("db_uri")
+  # db_host = _ctx.pop("db_host")
+  # db_user = _ctx.pop("db_user")
+  # db_pswd = _ctx.pop("db_pswd")
+  # db_name = _ctx.pop("db_name")
 
   # TODO: format mongo-url
   _ctx['mongo_env_url'] = ''
 
-  render_packages_file()
-  with meteor_shell():
-    execute(
-      "MONGO_URL='{mongo_env_url}' && meteor "
-      "--port {app_port} "
-      "--release {meteor_release_version} "
-      "--settings private/env-{id}.json".format(**_ctx))
+  _env_vars = dict(
+    MONGO_URL=_ctx['mongo_env_url'],
+  )
+
+  _flags = dict(
+    port=_ctx['app_port'],
+    release=_ctx['meteor_release_version'],
+    settings='private/env-{}.json'.format(env.env_id),
+  )
+
+  _args = ' '.join(['--{} {}'.format(k,v) for k,v in _flags.iteritems()])
+
+  with meteor_shell(**_env_vars):
+    print(blue("\nstarting meteor-app.."))
+    execute("meteor {} ".format(_args), capture=False)
 
 
 @task
@@ -215,15 +233,58 @@ def run(*args, **kwargs):
   """
   runs the meteor app locally with the development db.
   """
+  supervisord.stop_meteor()
+  supervisord.stop_mongod()
+  supervisord.stop()
+
   supervisord.conf()
   render_packages_file()
+
+  set_env()
+  _ctx = env.config.copy()
+  _ctx.update(get_host())
+
+  _flags = dict(
+    port=_ctx['app_port'],
+    release=_ctx['meteor_release_version'],
+    settings='private/env-{}.json'.format(env.env_id),
+  )
+
+  _args = ' '.join(['--{} {}'.format(k,v) for k,v in _flags.iteritems()])
+
   with meteor_shell():
     print(blue("\nstarting meteor-app.."))
-    execute(
-      "meteor "
-      "--port {app_port} "
-      "--release {meteor_release_version} "
-      "--settings private/env-{id}.json".format(**env.config))
+    execute("meteor {} ".format(_args), capture=False)
+
+
+@task
+def run_prod(*args, **kwargs):
+  """
+  runs the meteor app locally with the development db.
+  """
+  supervisord.stop_meteor()
+  supervisord.stop_mongod()
+  supervisord.stop()
+
+  supervisord.conf()
+  render_packages_file()
+
+  set_env()
+  _ctx = env.config.copy()
+  _ctx.update(get_host())
+
+  _flags = dict(
+    port=_ctx['app_port'],
+    release=_ctx['meteor_release_version'],
+    settings='private/env-{}.json'.format(env.env_id),
+    production='',
+  )
+
+  _args = ' '.join(['--{} {}'.format(k,v) for k,v in _flags.iteritems()])
+
+  with meteor_shell():
+    print(blue("\nstarting meteor-app.."))
+    execute("meteor {} ".format(_args), capture=False)
 
 
 
@@ -297,4 +358,4 @@ def render_packages_file(*args, **kwargs):
   with open(packages_file, 'w') as f:
     f.write('\n'.join(ln))
 
-  print(green(" ---> meteor: {} file rendered..".format(packages_file)))
+  print(green(" ---> meteor: {} file rendered..\n".format(packages_file)))

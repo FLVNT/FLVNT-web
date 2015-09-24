@@ -12,17 +12,18 @@ import os
 from fabric.api import env
 from fabric.colors import blue, green, red, yellow
 from fabctx import ctx
+from contextlib import nested
 from fab.environ import get_host
 from fab.environ import task
 from fab.utils import execute
 from fab.environ import *
-from jinja2 import Environment
-from jinja2.loaders import DictLoader
+from fab import jinja
+from fab.utils import puts
 
 
 __all__ = [
   # supervisorctl
-  'setup', 'conf', 'start', 'stop', 'reload_config',
+  'setup', 'conf', 'start', 'stop', 'reload_config', 'tail',
   # meteor
   'start_meteor', 'stop_meteor', 'restart_meteor',
   # mongod
@@ -38,21 +39,7 @@ def _init_socket():
     sock_path = '/tmp/{}'.format(get_host()['supervisord_sock'])
     execute('touch {}'.format(sock_path))
 
-    print green(' ---> supervisord: socket initialized..')
-
-
-def _render_conf(name, template, context, out_path):
-  """
-  renders the supervisord configuration and writes it to a file.
-
-    :param template: instance of a jinja2 template object
-    :param context: instance of a dict
-    :param out_path: string file path
-  """
-  with open(out_path, 'w') as f:
-    f.write(template.render(**context))
-
-    print green(' ---> supervisord: conf rendered: {}..'.format(out_path))
+    print(green(' ---> supervisord: socket initialized..'))
 
 
 def _load_conf(conf_path="supervisord.template.conf"):
@@ -61,30 +48,33 @@ def _load_conf(conf_path="supervisord.template.conf"):
   """
   with open(conf_path, 'r') as f:
     text = f.read()
-    loader = DictLoader({str(conf_path): str(text)})
-    env = Environment(loader=loader)
 
-  return env
+  return jinja.env_dict(conf_path, text)
 
 
-def _write_conf(jinjaenv, context, out_path):
+def _write_conf(env_dict, context, out_path):
   """
   writes the `supervisord.conf` file to disk from the template.
   """
-  for name, _ in jinjaenv.loader.mapping.iteritems():
-    _render_conf(
-      name.replace(".template", ""),
-      jinjaenv.get_template(name), context, out_path)
+  for name, _ in env_dict.loader.mapping.iteritems():
+    jinja.render(
+      env_dict.get_template(name), context, out_path)
 
 
+
+# TODO: rename to render_conf .. ?
 @task
 def conf(*args, **kwargs):
   """
   writes the `supervisord.conf` file to disk from the template.
   """
-  ctx = env.config.copy()
-  ctx.update(get_host())
-  _write_conf(_load_conf(), ctx, out_path='supervisord.conf')
+  print(blue("\nrendering ./supervisord.conf.."))
+
+  _ctx = env.config.copy()
+  _ctx.update(get_host())
+  _write_conf(_load_conf(), _ctx, out_path='supervisord.conf')
+
+  print(green(' ---> ./supervisord.conf rendered: supervisord.conf..'))
 
 
 @task
@@ -97,12 +87,33 @@ def setup(*args, **kwargs):
 
 
 @task
+def tail(*args, **kwargs):
+  """
+  tail supervisord log output
+  """
+  execute("tail -f supervisord.log")
+
+
+@task
+def cat(lines=None, *args, **kwargs):
+  """
+  cat supervisord log output
+  """
+  log = execute("cat supervisord.log".format(str(lines)))
+  print 'log', log
+
+
+@task
 def start(*args, **kwargs):
   """
   starts supervisord
   """
   print(blue("\nstarting supervisor.."))
-  execute("supervisord -c supervisord.conf")
+  with ctx.warn_only():
+    try:
+      out = execute("supervisord -c supervisord.conf")
+    except Exception as e:
+      print(red(e))
 
 
 @task
@@ -163,7 +174,16 @@ def start_mongod(*args, **kwargs):
   starts the supervisor mongod
   """
   print(blue("\nstarting mongod.."))
-  execute("supervisorctl start mongod-{id}".format(**env.config))
+
+  out = execute("supervisorctl start mongod-{id}".format(**env.config))
+
+  if out and 'ERROR' in out:
+    cat(lines=25)
+    print(red(out))
+    return
+
+  print(out)
+
 
 @task
 def stop_mongod(*args, **kwargs):

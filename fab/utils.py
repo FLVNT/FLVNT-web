@@ -14,51 +14,27 @@ from fabric.api import run, cd
 from fabric.api import local
 from fabric.colors import blue, green, red, yellow
 from fabctx import ctx, virtualenv
-from fab import environ
+from contextlib import nested
+from fabric.utils import puts
 
 
-__all__ = ['execute', 'env_context', 'approot', 'print_command', 'log_call',
-'ensure_remote_host', 'ensure_test_environ']
+__all__ = ['execute', 'print_command', 'log_call',
+'ensure_remote_host', 'ensure_test_environ', 'puts', 'log_call', 'print_command']
 
 
 def execute(command, *args, **kwargs):
   """
   intelligently execute a command for the target host env.
   """
+  capture = kwargs.pop('capture', True)
+  # debug   = kwargs.pop('debug', True)
   if env.env_id in ('local', 'test'):
-    return local(command, *args, **kwargs)
+    return local(command, capture=capture, *args, **kwargs)
+
   else:
-    with env_context(environ.get_host()):
+    from fab import environ
+    with environ.prefix_host_shell():
       return run(command, *args, **kwargs)
-
-
-@ctx.contextmanager
-def env_context(host):
-  """
-  function wrapper to run a task on a remote host, setting the shell context
-  with the python-virtualenv and nvm-node-versions.
-  """
-  with shell_env_id():
-    with virtualenv.workon(host['workon']):
-      from fab import nvm
-      with nvm.nvm_use(host['node_version']):
-        with approot(host):
-          yield
-
-
-@ctx.contextmanager
-def shell_env_id():
-  with ctx.shell_env(ENV_ID=env.env_id):
-    yield
-
-
-@ctx.contextmanager
-def approot(host):
-  """
-  method decorator to run a command from the application root dir.
-  """
-  with cd(host['root']):
-    yield
 
 
 # debug tools + helpers..
@@ -68,7 +44,7 @@ def print_command(command):
   """
   prints a command string
   """
-  print("{} {}\n{}".format(
+  puts("{} {}\n{}".format(
     blue("$ ", bold=True), blue(command, bold=True), red(" --->"),
   ))
 
@@ -80,7 +56,7 @@ def log_call(func):
   @wraps(func)
   def logged(*args, **kawrgs):
     header = "-" * len(func.__name__)
-    print(yellow("\n -> ".join([header, func.__name__, header]), bold=True))
+    puts(yellow("\n -> ".join([header, func.__name__, header]), bold=True))
     return func(*args, **kawrgs)
   return logged
 
@@ -102,3 +78,28 @@ def ensure_test_environ():
   """
   if env.env_id not in ('test',):
     raise Exception('can only run command for `test` environment.')
+
+
+
+from functools import wraps
+
+
+def _print(output):
+  print()
+  print(output)
+  print()
+
+
+def print_command(command):
+  _print("{}{}{}".format(
+    blue("$ ", bold=True), yellow(command, bold=True), red(" ->", bold=True)))
+
+
+def log_call(func):
+  @wraps(func)
+  def logged(*args, **kawrgs):
+    header = "-" * len(func.__name__)
+    _print(green("\n".join([header, func.__name__, header]), bold=True))
+    return func(*args, **kawrgs)
+  return logged
+
