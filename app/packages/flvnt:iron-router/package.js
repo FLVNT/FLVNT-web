@@ -11,6 +11,7 @@ Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
   where = where || ['client', 'server'];
 
+
   api.use([
     'coffeescript',
     'mquandalle:jade@0.4.2',
@@ -23,8 +24,10 @@ Package.on_use(function (api, where) {
     'session',
     'check',
     'tracker',
-    'iron:router',
-    'meteorhacks:fast-render',
+    'iron:router@1.0.7',
+    'zimme:active-route@2.2.0',
+    'zimme:iron-router-auth@3.1.0',
+    'meteorhacks:fast-render@2.3.2',
     'flvnt:subs-manager@0.0.1',
     'flvnt:logger@0.0.1',
     'flvnt:api-utils@0.0.1',
@@ -33,16 +36,19 @@ Package.on_use(function (api, where) {
 
 
   api.add_files([
-    'lib/client/routes-config.coffee'
-  ], 'client');
+    'lib/client/router-goto.coffee'
+  ], where);
 
   api.add_files([
-    'lib/server/routes/unsubscribe-hook.coffee'
+    'lib/client/router-config.coffee'
+  ], 'client');
+
+
+  // app-default routes..
+  api.add_files([
+    'lib/routes/server/unsubscribe-hook.coffee'
   ], 'server');
 
-  api.use([
-    'ui', 'spacebars', 'blaze', 'templating'
-  ], where);
 
 });
 
@@ -68,9 +74,14 @@ Package.on_test(function (api, where) {
     'templating',
     'session',
     'tracker',
-    'iron:router',
-    'meteorhacks:fast-render',
-    'flvnt:subs-manager@0.0.1'
+    'iron:router@1.0.7',
+    'zimme:active-route@2.2.0',
+    'zimme:iron-router-auth@3.1.0',
+    'meteorhacks:fast-render@2.3.2',
+    'flvnt:subs-manager@0.0.1',
+    'flvnt:logger@0.0.1',
+    'flvnt:api-utils@0.0.1',
+    'flvnt:app-features@0.0.1'
   ], where);
 
 

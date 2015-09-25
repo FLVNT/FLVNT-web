@@ -32,11 +32,15 @@ Package.on_use(function (api, where) {
     'flvnt:app-features@0.0.1'
   ], ['server', 'client']);
 
+
   api.use([
     'mquandalle:jade@0.4.2',
+    'jquery',
     'templating',
+    'blaze',
     'ui'
   ], where);
+
 
   api.add_files([
     'lib/client/woopra-sdk.jade',
@@ -48,6 +52,38 @@ Package.on_use(function (api, where) {
   ], 'server');
 
 
-  api.export('Woopra');
+  api.export('woopra', where);
+  api.export('Woopra', where);
+
+});
+
+
+Package.on_test(function (api, where) {
+  where = where || ['client'];
+
+  // standard test helpers..
+  api.use([
+    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
+    'flvnt:app-fixtures'
+  ]);
+
+
+  // package specific..
+  api.use([
+    'ui',
+    'templating'
+  ], where);
+
+
+  // import the package..
+  api.imply([
+    'flvnt:woopra-sdk'
+  ], where, {bare: true});
+
+
+  api.add_files([
+    'tests/exports.coffee',
+    'tests/methods.coffee'
+  ], where);
 
 });

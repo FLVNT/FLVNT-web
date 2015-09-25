@@ -1,20 +1,15 @@
 
-FLVNTAccounts = FLVNTAccounts || {
-  ui: {}
-  # config is for managing service-configs
-  config: {}
-}
-
-
-# NOTE: this is set here to provide server-side code access to the account-ui
-# config object
+#: NOTE: this is set here to provide server-side code access to the account-ui
+#: config object
 
 config = {}
 config.accounts = {}
+
 config.accounts.service_providers = [
   'soundcloud',
   'google',
 ]
+
 config.accounts.ui =
 
   passwordSignupFields: "USERNAME_AND_EMAIL"

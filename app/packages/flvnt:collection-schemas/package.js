@@ -17,20 +17,21 @@ Package.on_use(function (api, where) {
     'underscore',
     'mongo',
     'flvnt:logger@0.0.1',
-    'aldeed:simple-schema',
-    'aldeed:collection2',
-    'dburles:collection-helpers'
+    'aldeed:simple-schema@1.3.2',
+    'aldeed:collection2@2.3.3',
+    'dburles:collection-helpers@1.0.3'
   ]);
 
   api.imply([
-    'aldeed:simple-schema',
-    'aldeed:collection2',
-    'dburles:collection-helpers',
+    'aldeed:simple-schema@1.3.2',
+    'aldeed:collection2@2.3.3',
+    'dburles:collection-helpers@1.0.3',
     'mongo'
   ]);
 
   api.add_files([
-    'lib/schema-helpers.coffee'
+    'lib/schema-helpers.coffee',
+    'lib/schema-helpers/timestamps.coffee'
   ], where);
 
 
@@ -56,9 +57,9 @@ Package.on_test(function (api, where) {
     'underscore',
     'mongo',
     'flvnt:logger@0.0.1',
-    'aldeed:simple-schema',
-    'aldeed:collection2',
-    'dburles:collection-helpers'
+    'aldeed:simple-schema@1.3.2',
+    'aldeed:collection2@2.3.3',
+    'dburles:collection-helpers@1.0.3'
   ], where);
 
 

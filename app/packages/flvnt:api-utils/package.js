@@ -11,6 +11,7 @@ Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
   where = where || ['client', 'server'];
 
+
   api.use([
     'coffeescript',
     'underscore',
@@ -41,7 +42,6 @@ Package.on_test(function (api, where) {
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
     'flvnt:app-fixtures',
-    'check'
   ], where);
 
 

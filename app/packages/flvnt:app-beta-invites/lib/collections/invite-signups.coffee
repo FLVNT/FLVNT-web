@@ -1,6 +1,7 @@
 
 @InviteSignups = new Mongo.Collection "invite_signups", {}
 
+
 InviteSignups.attachSchema new SimpleSchema
   created_at: SchemaHelpers.created_at()
   updated_at: SchemaHelpers.updated_at()
@@ -23,6 +24,7 @@ InviteSignups.attachSchema new SimpleSchema
 
 
 InviteSignups.helpers {}
+
 
 # TODO: remove this method and wherever its called
 InviteSignups.create_signup = (options) ->
