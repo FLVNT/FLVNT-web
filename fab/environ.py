@@ -11,11 +11,17 @@ from pprint import pformat
 from os import getenv, environ
 import simplejson as json
 from fabric.api import env
+from fabric.api import cd, lcd
 from fabric.colors import blue, green, red, yellow
 from fabric.api import task as _task
+from fabctx import ctx
+from fabctx import virtualenv
+from contextlib import nested
+from fab.utils import puts
 
 
-__all__ = ['test', 'stage', 'prod', 'get_host', 'task', 'env', 'set_env']
+__all__ = ['test', 'stage', 'prod', 'get_host', 'task', 'env', 'set_env',
+'prefix_host_shell', 'prefix_cd_approot']
 
 
 # environment specific host settings. SHOULD be named `HOSTS` - but that
@@ -23,13 +29,16 @@ __all__ = ['test', 'stage', 'prod', 'get_host', 'task', 'env', 'set_env']
 # TODO: refactor to inhertiable classes
 env.ENVS = {
   'test': {
+    'app_id'       : 'flvnt-web',
+    'git_repo'     : 'FLVNT/FLVNT-web',
+    'email_host'   : 'flvnt.com',
     'hostname'     : None,
     'hostname_ip'  : '127.0.0.1',
     'branch'       : None,
     'root'         : None,
+    'home'         : '.',
     'workon'       : None,
     'node_version' : '0.10.26',
-    'home'         : '.',
     'npm_libs'     : 'coffee-script jade stylus node-inspector laika meteorite',
     'loglevel'     : 'trace',
     'app_root'     : 'app',
@@ -41,13 +50,16 @@ env.ENVS = {
     ),
   },
   'local': {
+    'app_id'       : 'flvnt-web',
+    'git_repo'     : 'FLVNT/FLVNT-web',
+    'email_host'   : 'flvnt.com',
     'hostname'     : None,
     'hostname_ip'  : '127.0.0.1',
     'branch'       : None,
     'root'         : None,
+    'home'         : '.',
     'workon'       : None,
     'node_version' : '0.10.26',
-    'home'         : '.',
     'npm_libs'     : 'coffee-script jade stylus node-inspector laika',
     'loglevel'     : 'debug',
     'app_root'     : 'app',
@@ -59,13 +71,16 @@ env.ENVS = {
     ),
   },
   'stage': {
+    'app_id'       : 'flvnt-web',
+    'git_repo'     : 'FLVNT/FLVNT-web',
+    'email_host'   : 'flvnt.com',
     'hostname'     : 'flvnt-web-stage-01',
     'hostname_ip'  : '54.xx.xxx.xx',
     'branch'       : 'develop',
-    'root'         : '/home/ubuntu/web',
+    'root'         : '/home/ubuntu/FLVNT-web',
+    'home'         : '/home/ubuntu',
     'workon'       : 'flvnt-dev',
     'node_version' : '0.10.26',
-    'home'         : '/home/ubuntu',
     'npm_libs'     : 'coffee-script jade stylus node-inspector laika',
     'loglevel'     : 'debug',
     'app_root'     : 'app',
@@ -77,14 +92,17 @@ env.ENVS = {
     ),
   },
   'prod': {
+    'app_id'       : 'flvnt-web',
+    'git_repo'     : 'FLVNT/FLVNT-web',
+    'email_host'   : 'flvnt.com',
     'hostname'     : 'flvnt-web-prod-01',
     'hostname_ip'  : '52.26.88.253',
     'hostname_id'  : 'i-2532aee3',
     'branch'       : 'develop',
-    'root'         : '/home/ubuntu/web',
+    'root'         : '/home/ubuntu/FLVNT-web',
+    'home'         : '/home/ubuntu',
     'workon'       : 'flvnt-dev',
     'node_version' : '0.10.26',
-    'home'         : '/home/ubuntu',
     'npm_libs'     : 'coffee-script jade stylus node-inspector laika',
     'loglevel'     : 'debug',
     'app_root'     : 'app',
@@ -100,7 +118,71 @@ env.ENVS = {
 
 env.env_id = getenv('ENV_ID', 'local')
 env.config = dict(env_id=env.env_id)
-env.use_ssh_config = True
+env.use_ssh_config      = True
+env.forward_agent       = True
+env.colorize_errors     = True
+env.dedupe_hosts        = True
+env.disable_known_hosts = False
+env.eagerly_disconnect  = False
+env.no_agent            = False
+env.no_keys             = False
+env.skip_bad_hosts      = False
+env.output_prefix       = False
+# env.combine_stderr = True
+# env.parallel = True
+# env.linewise = True
+# env.output_prefix = False
+# env.ssh_config_path = '$HOME/.ssh/config'
+
+# http://docs.fabfile.org/en/1.6/usage/env.html#command-prefixes
+# env.command_prefixes = []
+
+
+@ctx.contextmanager
+def prefix_environ_vars():
+  """
+  context-manager to prefix commands with the `ENV_ID` environment variable set
+  to `env.env_id`
+  """
+  _env_vars = dict(ENV_ID=env.env_id)
+  with ctx.shell_env(**_env_vars):
+    yield
+
+
+@ctx.contextmanager
+def prefix_host_shell():
+  """
+  contextmanager to run a task on a remote host, setting the shell prefixes
+  with the python virtualenv, and the nvm node-version.
+  """
+  host = get_host()
+  _virtualenv_id = host['workon']
+  _node_version  = host['node_version']
+
+  from fab import nvm
+
+  with nested(
+    prefix_environ_vars(),
+    virtualenv.workon(_virtualenv_id),
+    nvm.nvm_use(_node_version),
+    prefix_cd_approot()):
+
+    yield
+
+
+@ctx.contextmanager
+def prefix_cd_approot():
+  """
+  method decorator to run a command from the application root dir.
+  """
+  _cd = cd
+  if env.env_id in ('local', 'test'):
+    _cd = lcd
+
+  host = get_host()
+  root_path = host.get('root')
+  with _cd(root_path):
+    yield
 
 
 def set_env():
@@ -117,8 +199,8 @@ def set_env():
     _json = json.loads(_json)
     env.config.update(_json)
 
-  if env.hosts is None and _ctx['hostname'] is not None:
-    env.hosts = [_ctx['hostname']]
+  if (env.hosts is None or len(env.hosts) < 1) and _ctx.get('hostname', None):
+    env.hosts = [_ctx.get('hostname')]
 
   # build the mongo url
   # TOOD: needs to be a list for replica-sets, and read-vs-write slaves
@@ -129,6 +211,7 @@ def set_env():
     host=env.config['db_host'],
     name=env.config['db_name'])
 
+  # TODO: move this back to meteor.py
   env.config['meteor_release_version'] = meteor_release_version()
 
 
@@ -154,11 +237,8 @@ def meteor_release_version():
   reads the meteor release version from `app/.meteor/release`
   """
   version = ''
-  # print '1'
   with open('app/.meteor/release', 'r') as f:
-    # print '2'
     version = f.read().strip()
-    # print '3'
   return version
 
 

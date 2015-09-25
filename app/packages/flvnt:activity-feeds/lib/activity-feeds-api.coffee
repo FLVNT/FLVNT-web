@@ -7,15 +7,15 @@ activity_api = {}
 
 # returns string of absolute url to user's profile
 activity_api._actor_url = (user) ->
-  "#{Meteor.absoluteUrl()}user/#{user._id}"
+  Meteor.absoluteUrl "user/#{user._id}"
 
 # returns string of absolute url to track post within a group
 activity_api._post_url = (post) ->
-  "#{Meteor.absoluteUrl()}group/#{post.group_id}/#{post._id}"
+  Meteor.absoluteUrl "group/#{post.group_id}/#{post._id}"
 
 # returns string of absolute url to a group
 activity_api._group_url = (group) ->
-  "#{Meteor.absoluteUrl()}group/#{group._id}"
+  Meteor.absoluteUrl "group/#{group._id}"
 
 
 # returns an `actor` object parsed from a `Meteor.user` doc
@@ -97,9 +97,9 @@ activity_api.create_group = (group_id, user) ->
 
 activity_api.create_track_post = (post_id, user) ->
   post = Posts.findOne _id: post_id
-  return logger.warn("[ACTIVITY-API]create_track_post: post not found: #{post_id}") if not post?
+  return logger.warn("[ACTIVITY-API]create_track_post: post not found: #{post_id}") unless post?
   api_track = Library.findOne _id: post.library_id
-  return logger.warn("[ACTIVITY-API]create_track_post: library-track not found: {_id: #{post.library_id}}") if not api_track?
+  return logger.warn("[ACTIVITY-API]create_track_post: library-track not found: {_id: #{post.library_id}}") unless api_track?
   group = Groups.findOne _id: post.group_id
 
   activity = @_create 'post', user

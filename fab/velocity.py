@@ -13,7 +13,7 @@ from fab.environ import task
 from fabric.colors import red, green
 from fabctx import ctx
 from fab import mongo
-from fab.meteor import meteor_env, meteor_shell
+from fab.meteor import meteor_shell
 from fab.utils import execute
 
 
@@ -23,26 +23,27 @@ __all__ = ['meteor', 'velocity_shell', 'setup', 'teardown', 'install']
 @ctx.contextmanager
 def velocity_shell(**kwargs):
   """
-  sets the shell context for the velocity test runner.
+  contextmanager sets the shell prefix for the velocity test runner.
   """
-  with meteor_shell():
-    _env = meteor_env()
-    _env.update({
-      'DEBUG': '1',
-      'JASMINE_DEBUG': '1',
-      'VELOCITY_DEBUG': '1',
-      'VELOCITY_DEBUG_MIRROR': '1',
-    })
-    with ctx.shell_env(**_env):
-      setup()
-      try:
-        print(green('FUCK'))
-        yield
-      except Exception, e:
-        print(red(' ---> {}'.format(e)))
-        raise e
-      finally:
-        teardown()
+  _meteor_env = {
+    'DEBUG': '1',
+    'JASMINE_DEBUG': '1',
+    'VELOCITY_DEBUG': '1',
+    'VELOCITY_DEBUG_MIRROR': '1',
+  }
+
+  with meteor_shell(**_meteor_env):
+    setup()
+    try:
+      print(green('FUCK'))
+      yield
+
+    except Exception, e:
+      print(red(' ---> {}'.format(e)))
+      raise e
+
+    finally:
+      teardown()
 
 
 @task

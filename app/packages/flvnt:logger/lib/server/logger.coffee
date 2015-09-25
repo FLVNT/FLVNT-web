@@ -40,6 +40,15 @@ logger = new Winston.Logger(
 )
 
 
+# LOGGER PROPERTIES:
+# logger.sentry_client
+# - instance of a sentry-raven Client() class
+# - methods exposed:
+#   - sentry_client.captureMessage(msg, kwargs, db)
+#   - sentry_client.captureError(err, kwargs, cb)
+#   - sentry_client.captureQuery(query, engine, kwargs, cb)
+
+
 ### disable loggly
 if env_id isnt "test" and logger.transports.loggly.client.config
   Object.defineProperty logger.transports.loggly.client.config, "inputUrl",

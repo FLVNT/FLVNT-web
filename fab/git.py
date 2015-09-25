@@ -14,28 +14,60 @@ from fabric.colors import blue, green, red, yellow
 from fabctx import ctx
 from fab.environ import get_host
 from fab.environ import task
+from fab.environ import prefix_cd_approot
 from fab.utils import execute
+from fab.utils import puts
+from fab import notify
 
 
-__all__ = ['update']
+__all__ = ['install', 'clone', 'update']
 
 
 @task
-def update(host):
+def install(*args, **kwargs):
+  """
+  installs git
+  """
+  puts(blue( "\ninstalling git.." ))
+  execute('sudo apt-get update && sudo apt-get install git ')
+  puts(green( " ---> git installed.." ))
+  notify.terminal('git installed')
+
+
+@task
+def clone(*args, **kwargs):
+  """
+  git-clones the project repo.
+  """
+  puts(blue( "\ngit-cloning project repo.." ))
+
+  with prefix_cd_approot():
+    execute('git clone git@github.com:{git_repo}.git'.format(**env.config))
+    puts(green( " ---> project repo cloned.." ))
+    notify.terminal('project repo cloned')
+
+
+@task
+def update(*args, **kwargs):
   """
   updates the application from git
   """
-  print(blue("\nupdating app from git.."))
+  puts(blue( "\nupdating app from git.." ))
 
-  # TODO: change to execute() vs run() ..?
+  _fn = run
+  if env.env_id in ('local', 'test'):
+    _fn = execute
+
+  host = get_host()
+  branch = host['branch']
 
   with ctx.warn_only():
-    run("git stash")
+    _fn("git stash")
 
   with ctx.warn_only():
-    run("git checkout {}".format(host['branch']))
+    _fn( "git checkout {}".format( branch ))
 
   with ctx.warn_only():
-    run("git pull origin {}".format(host['branch']))
+    _fn( "git pull origin {}".format( branch ))
 
-  print(green(" ---> host updated from git.."))
+  puts(green( " ---> host updated from git.." ))

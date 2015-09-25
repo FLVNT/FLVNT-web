@@ -17,6 +17,7 @@ from fab import mongo
 from fab import supervisord
 from fab.meteor import meteor_shell
 from fab.utils import execute
+from fab.utils import puts
 
 
 __all__ = ['meteor', 'laika_shell', 'install']
@@ -28,14 +29,13 @@ def laika_shell(**kwargs):
   sets the shell context for the laika test runner.
   """
   with meteor_shell():
-    with ctx.shell_env(**meteor_env):
-      _setup()
-      try:
-        yield
-      except Exception, e:
-        print(red(' ---> {}'.format(e)))
-      finally:
-        _teardown()
+    _setup()
+    try:
+      yield
+    except Exception, e:
+      puts(red(' ---> {}'.format(e)))
+    finally:
+      _teardown()
 
 
 @task
@@ -52,7 +52,7 @@ def _setup():
   """
   setup test environment.
   """
-  print(blue('\n ---> laika: setup..\n'))
+  puts(blue('\n ---> laika: setup..\n'))
 
   with ctx.warn_only():
     supervisord.start()
@@ -64,7 +64,7 @@ def _teardown():
   """
   teardown test environment.
   """
-  print(blue('\n ---> laika: teardown..\n'))
+  puts(blue('\n ---> laika: teardown..\n'))
   # stop mongodb
   with ctx.warn_only():
     mongo.stop('test')
@@ -81,16 +81,19 @@ def meteor(*args, **kwargs):
   """
   runs the laika test runner.
   """
+  _ctx = env.config.copy()
+
   flags = dict(
     verbose   = 1,
-    settings  = './private/env-{id}.json'.format(**env.config),
+    settings  = './private/env-{id}.json'.format(**_ctx),
     # TODO: stylus, jade.. ?
     compilers = ' coffee:coffee-script/register ',
   )
+
   with laika_shell():
     with ctx.warn_only():
       execute(
         'laika --compilers coffee:coffee-script/register '
         '--settings ./private/env-{id}.json '
-        '--verbose '.format(**env.config),
+        '--verbose '.format(**_ctx),
       )

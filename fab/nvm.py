@@ -12,12 +12,15 @@ from os import environ
 from fabric.api import env
 from fabric.colors import blue, green, red, yellow
 from fabctx import ctx
+from contextlib import nested
 from fab.environ import get_host
 from fab.environ import task
 from fab.utils import execute
+from fab.utils import puts
+from fab import notify
 
 
-__all__ = ['install', 'nvm_use']
+__all__ = ['install', 'nvm_use', 'prefix_nvm']
 
 
 def _nvm_path():
@@ -25,31 +28,58 @@ def _nvm_path():
     if env.env_id in ('local', 'test'):
       return environ.get('NVM_DIR', '')
     else:
-      return "{}/.nvm".format(ctx.home())
+      host = get_host()
+      return "{home}/.nvm".format(**host)
 
 
 @ctx.contextmanager
-def nvm_use(version):
-  with ctx.source('{}/nvm.sh'.format(_nvm_path())):
-    with ctx.prefix("nvm use {}".format(version)):
-      yield
+def nvm_use(node_version):
+  """
+  """
+  nvm_path = _nvm_path()
+  with nested(
+    ctx.source('{}/nvm.sh'.format(nvm_path)),
+    ctx.prefix("nvm use {}".format(node_version)) ):
+    yield
+
+
+@ctx.contextmanager
+def prefix_nvm():
+  """
+  command prefix version of `nvm_use`
+  """
+  host = environ.get_host()
+  node_version = host['node_version']
+  nvm_path = _nvm_path()
+
+  with nested(
+    ctx.source('{}/nvm.sh'.format(nvm_path)),
+    ctx.prefix("nvm use {}".format(node_version)) ):
+    yield
 
 
 @task
 def install(*args, **kwargs):
   """
   installs nvm.
-  """
-  print(blue("\ninstalling node-version-manager (nvm).."))
 
-  env.config['nvm_install_url'] = 'https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh'
+  see: https://github.com/creationix/nvm#install-script
+  """
+  puts(blue("\ninstalling node-version-manager (nvm).."))
+
   env.config['nvm_path'] = _nvm_path()
+  env.config['nvm_install_url'] = 'https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh'
   execute("""
-  curl {nvm_install_url} | sh
+  export NVM_DIR="{nvm_path}"
+  curl -o- {nvm_install_url} | bash
+
+  echo 'export NVM_DIR="{nvm_path}"' >> {home}/.bashrc
   echo '[ -s "{nvm_path}/nvm.sh" ] && . "{nvm_path}/nvm.sh"' >> {home}/.bashrc
   echo "nvm use {node_version}" >> {home}/.bashrc
+
   [ -s "{nvm_path}/nvm.sh" ] && . "{nvm_path}/nvm.sh"
   nvm install {node_version}
-  """.format(**env.config))
+  """.format(**env.config), capture=False)
 
-  print(green(" ---> node-version-manager (nvm) installed.."))
+  puts(green(" ---> node-version-manager (nvm) installed.."))
+  notify.terminal('node version manager installed')

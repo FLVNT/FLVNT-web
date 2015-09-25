@@ -1,7 +1,7 @@
 
 Package.describe({
   name    : 'flvnt:activity-feeds',
-  summary : 'activity feeds for meteor apps',
+  summary : 'activity streams for meteor apps',
   version : '0.0.1',
   documentation : 'README.md'
 });
@@ -9,7 +9,8 @@ Package.describe({
 
 Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
+  where = where || ['server', 'client'];
+
 
   api.use([
     'coffeescript',
@@ -17,40 +18,39 @@ Package.on_use(function (api, where) {
     'stylus',
     'underscore',
     'jquery',
+    'session',
+    'templating',
+    'tracker',
+    'blaze',
+    'service-configuration',
+    'oauth',
+    'oauth2',
     'mongo',
     'http',
-    'deps',
-    'tracker',
-    'flvnt:logger@0.0.1',
-    'flvnt:env@0.0.1',
-    'aldeed:collection2',
-    'aldeed:simple-schema',
-    'dburles:collection-helpers',
-    'flvnt:collection-schemas@0.0.1',
-    'flvnt:api-utils@0.0.1',
-    'flvnt:app-features@0.0.1',
+    'check',
+    'aldeed:collection2@2.3.3',
+    'aldeed:simple-schema@1.3.2',
+    'dburles:collection-helpers@1.0.3',
     'tmeasday:publish-counts@0.4.0',
     'meteorhacks:subs-manager@1.3.0',
-    'meteorhacks:unblock@1.1.0'
-  ]);
-
-  api.imply([
-    'mongo',
-    'aldeed:collection2',
-    'aldeed:simple-schema',
-    'dburles:collection-helpers',
-    'flvnt:collection-schemas@0.0.1'
-  ]);
+    'meteorhacks:unblock@1.1.0',
+    'flvnt:collection-schemas@0.0.1',
+    'flvnt:env@0.0.1',
+    'flvnt:logger@0.0.1',
+    'flvnt:api-utils@0.0.1',
+    'flvnt:features@0.0.1'
+  ], where);
 
 
   api.add_files([
     'lib/activity-feeds-api.coffee',
-    'lib/collections.coffee'
+    'lib/collections/collections.coffee'
   ], where);
 
   api.add_files([
-    'lib/server/methods.coffee',
-    'lib/server/publish.coffee'
+    'lib/server/methods/methods.coffee',
+    'lib/server/publish/notifications-counts.coffee',
+    'lib/server/publish/notifications.coffee'
   ], 'server');
 
   api.add_files([
@@ -58,49 +58,27 @@ Package.on_use(function (api, where) {
   ], 'client');
 
 
-  api.export('Activity');
-  api.export('activity_api');
+  api.export([
+    'Activity',
+    'activity_api'
+  ], where);
 
 });
 
 
 Package.on_test(function (api, where) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
+  where = where || ['client'];
 
   // standard test helpers..
   api.use([
     'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'check',
     'flvnt:app-fixtures'
-  ], where);
+  ]);
 
 
   // package specific..
   api.use([
-    'underscore',
-    'ui',
-    'blaze',
-    'templating',
-    'session',
-    'mquandalle:jade@0.4.2',
-    'stylus',
-    'jquery',
-    'mongo',
-    'http',
-    'deps',
-    'tracker',
-    'flvnt:logger@0.0.1',
-    'flvnt:env@0.0.1',
-    'aldeed:collection2',
-    'aldeed:simple-schema',
-    'dburles:collection-helpers',
-    'flvnt:collection-schemas@0.0.1',
-    'flvnt:api-utils@0.0.1',
-    'flvnt:app-features@0.0.1',
-    'tmeasday:publish-counts@0.4.0',
-    'meteorhacks:subs-manager@1.3.0',
-    'meteorhacks:unblock@1.1.0'
   ], where);
 
 

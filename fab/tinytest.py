@@ -14,6 +14,7 @@ from fabctx import ctx
 from fab import meteor
 from fab.environ import task
 from fab.utils import execute
+from fab.utils import puts
 
 
 __all__ = ['setup', 'teardown', 'run']

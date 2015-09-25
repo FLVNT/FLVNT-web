@@ -21,7 +21,7 @@ __all__ = ['meteor_app_deployed', 'email', 'terminal']
 
 def email(recipient, template_id):
   """
-  sends a HTTP POST request to unvael's app-engine mail api.
+  sends a HTTP POST request to google's app-engine mail api.
 
     :param recipient:
     :param template_id:
@@ -31,7 +31,7 @@ def email(recipient, template_id):
   _ctx['env_id'] = env.env_id
   _ctx['recipient'] = recipient
   _ctx['template_id'] = template_id
-  http.post('http://gae.unvael.com/api/mail/send', _ctx)
+  http.post('http://gae.flvnt.com/api/mail/send', _ctx)
 
 
 def terminal(msg):
@@ -49,6 +49,6 @@ def meteor_app_deployed(*args, **kwargs):
   """
   sends deployment notifications by email + terminal
   """
-  recipient = 'deployments-{id}@flvnt.com'.format(**env.config)
+  recipient = '{app_id}-deployments-{id}@flvnt.com'.format(**env.config)
   email(recipient, 'meteor-app-deployed')
   terminal('deployment completed')

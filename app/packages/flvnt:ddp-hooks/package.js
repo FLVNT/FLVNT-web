@@ -13,11 +13,15 @@ Package.on_use(function (api, where) {
 
 
   api.use([
-    'livedata',
     'coffeescript',
     'underscore',
-    'livedata',
-    'ddp'
+    'mongo',
+    'ddp',
+    'check',
+    'tracker',
+    'session',
+    'flvnt:logger@0.0.1'
+    // 'livedata'
   ], where);
 
 

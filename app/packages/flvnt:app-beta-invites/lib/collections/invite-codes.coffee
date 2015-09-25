@@ -5,6 +5,7 @@
 #
 @InviteCodes = new Mongo.Collection "invite_codes", {}
 
+
 InviteCodes.attachSchema new SimpleSchema
   created_at: SchemaHelpers.created_at()
   updated_at: SchemaHelpers.updated_at()

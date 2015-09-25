@@ -1,5 +1,5 @@
 
-empty_out = ->
+_console = ->
   log   : -> {}
   info  : -> {}
   warn  : -> {}
@@ -33,5 +33,5 @@ _console =
 if console?
   logger = console
 else
-  logger = empty_out()
+  logger = _console()
 
