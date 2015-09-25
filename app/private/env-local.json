@@ -21,9 +21,9 @@
 
   "git_branch": "develop",
 
-  "db_uri"  : "candidate.50.mongolayer.com:10457,candidate.51.mongolayer.com:10270/FLVNT-web?replicaSet=set-55eff3125e959dfab6000700",
+  "db_uri"  : "candidate.51.mongolayer.com:10270,candidate.50.mongolayer.com:10457/FLVNT-web?replicaSet=set-55eff3125e959dfab6000700",
   "db_host" : "candidate.50.mongolayer.com:10457",
-  "db_user" : "jessie-andrews",
+  "db_user" : "jessie-andrews-op",
   "db_pswd" : "aDSB.85xGw",
   "db_name" : "FLVNT-web",
 
