@@ -75,7 +75,8 @@ def full(*args, **kwargs):
   ensure_remote_host()
   puts(blue('\nfull-deploying meteor-app..'))
 
-  execute('touch /tmp/flvnt-web-supervisor.sock')
+  with ctx.warn_only():
+    execute('touch /tmp/flvnt-web-supervisor.sock')
 
   pip.update()
   # TODO: use remote $HOME env variable instead of path set in config..
