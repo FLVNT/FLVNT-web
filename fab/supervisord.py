@@ -111,7 +111,7 @@ def start(*args, **kwargs):
   print(blue("\nstarting supervisor.."))
   with ctx.warn_only():
     try:
-      out = execute("supervisord -c supervisord.conf")
+      out = execute("supervisord -c supervisord.conf", capture=False)
     except Exception as e:
       print(red(e))
 
@@ -123,7 +123,7 @@ def stop(*args, **kwargs):
   """
   print(blue("\nstopping supervisord.."))
   with ctx.warn_only():
-    execute("supervisorctl -c supervisord.conf shutdown")
+    execute("supervisorctl -c supervisord.conf shutdown", capture=False)
 
 
 @task
@@ -133,7 +133,7 @@ def reload_config(*args, **kwargs):
   """
   print(blue("\nreloading supervisord.conf.."))
   with ctx.warn_only():
-    execute("supervisorctl -c supervisord.conf update")
+    execute("supervisorctl -c supervisord.conf update", capture=False)
 
 
 # METEOR
@@ -144,7 +144,7 @@ def start_meteor(*args, **kwargs):
   starts the supervisor meteor-app
   """
   print(blue("\nstarting meteor-app.."))
-  execute("supervisorctl start meteor-{id}".format(**env.config))
+  execute("supervisorctl start meteor-{id}".format(**env.config), capture=False)
 
 
 @task
@@ -154,7 +154,7 @@ def stop_meteor(*args, **kwargs):
   """
   print(blue("\nstopping meteor-app.."))
   with ctx.warn_only():
-    execute("supervisorctl stop meteor-{id}".format(**env.config))
+    execute("supervisorctl stop meteor-{id}".format(**env.config), capture=False)
 
 @task
 def restart_meteor(*args, **kwargs):
@@ -163,7 +163,7 @@ def restart_meteor(*args, **kwargs):
   """
   print(blue("\nrestarting meteor-app.."))
   with ctx.warn_only():
-    execute("supervisorctl restart meteor-{id}".format(**env.config))
+    execute("supervisorctl restart meteor-{id}".format(**env.config), capture=False)
 
 
 # MONGO
