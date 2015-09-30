@@ -16,6 +16,7 @@
   position absolute
   top 0
   left 50%
+  z-index 10000
 
 
 txt-2-width = 100px
@@ -30,6 +31,7 @@ txt-2-width = 100px
   position absolute
   top 480px
   left 50%
+  z-index 10010
 
 txt-3-width = 1046px
 
@@ -44,6 +46,7 @@ txt-3-width = 1046px
   position absolute
   top 660px
   left 50%
+  z-index 10030
 
 .txt-4
   width 1061px
@@ -54,6 +57,7 @@ txt-3-width = 1046px
   position absolute
   top 1652px
   left 50%
+  z-index 10040
 
 
 .layer-3
@@ -68,3 +72,45 @@ txt-3-width = 1046px
   top 480px
   // left 50%
   opacity-fn(0.45)
+
+
+.tile-card
+  width 380px
+  height 650px
+  position absolute
+  transition all 0.5s ease-out
+  -webkit-transition all 0.5s ease-out
+
+  &.default
+    background-color rgba(255,255,255, 0.5)
+    box-shadow(0 0 5px rgba(0,0,0,0.95))
+    z-index 1020
+    perspective-origin center
+    transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(10deg)
+
+    &.a
+      top 100px
+      left 100px
+    &.b
+      top -49px
+      left 432px
+    &.c
+      top 337px
+      left 577px
+
+  &.fadeout
+    opacity 0.1
+    background-color rgba(255,255,255, 0.25)
+    box-shadow(0 0 100px rgba(0,0,0,0.35))
+    z-index 1010
+
+    &.a
+      top 200px
+      left 100px
+    &.b
+      opacity 0.5
+      top -151px
+      left 432px
+    &.c
+      top 437px
+      left 577px
