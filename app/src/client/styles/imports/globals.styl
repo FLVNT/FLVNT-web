@@ -1,0 +1,121 @@
+// GLOBAL CSS MIXINS + VARIABLES
+// -----------------------------
+
+// COLOR GLOBAL VARS
+
+FACEBOOK-BLUE = #4e69a2  // deprecated
+UNVAEL-GOLD   = #9a8d3c
+DARK          = #000
+LIGHT         = #fff
+
+
+// VENDOR DEFINITION HELPERS
+// -------------------------
+
+vendor-prop(prop, def, args)
+  {prop} s('-webkit-%s(%s)', def, args)
+  {prop} s('-moz-%s(%s)', def, args)
+  {prop} s('-ms-%s(%s)', def, args)
+  {prop} s('-o-%s(%s)', def, args)
+  {prop} s('%s(%s)', def, args)
+
+vendor-def(def, args)
+  -webkit-{def} args
+  -moz-{def} args
+  -ms-{def} args
+  -o-{def} args
+  {def} args
+
+
+// VENDOR-SPECIFIC HELPER MIXINS
+// -----------------------------
+
+animation()
+  vendor-def(animation, arguments)
+
+transition()
+  vendor-def(transition, arguments)
+
+transform-style()
+  vendor-def(transform-style, arguments)
+
+perspective()
+  vendor-def(perspective, arguments)
+
+box-shadow()
+  vendor-def(box-shadow, arguments)
+
+text-shadow()
+  vendor-def(text-shadow, arguments)
+
+filter()
+  vendor-def(filter, arguments)
+
+appearance()
+  vendor-def(appearance, arguments)
+
+opacity-fn()
+  vendor-def(opacity, arguments)
+
+user-select()
+  vendor-def(user-select, arguments)
+
+tap-highlight-color()
+  vendor-def(tap-highlight-color, arguments)
+
+touch-callout()
+  vendor-def(touch-callout, arguments)
+
+translate3dfn()
+  vendor-def(transform, arguments)
+
+no-filter()
+  filter(none !important)
+
+
+
+// see: http://codepen.io/rss/pen/ftnDd
+img-grayscale()
+  filter(grayscale(100%))
+
+
+backface-visibility()
+  vendor-def(backface-visibility, arguments)
+
+backface-visibility-hidden()
+  backface-visibility(hidden)
+
+// cubic-bezier animation transition-timing-function
+// - sourced from: atmospherejs.com
+transition-cubic()
+  -webkit-transition-delay initial
+  -webkit-transition-property all
+  -webkit-transition-duration 400ms
+  -webkit-transition-timing-function cubic-bezier(0.175, 0.885, 0.335, 1.05)
+
+  transition all 400ms cubic-bezier(0.175, 0.885, 0.335, 1.05)
+  transition-delay initial
+  transition-property all
+  transition-duration 400ms
+  transition-timing-function cubic-bezier(0.175, 0.885, 0.335, 1.05)
+
+
+abs-position(top, right, bottom, left)
+  top top
+  right right
+  bottom bottom
+  left left
+
+margin-auto()
+  margin 0 auto
+
+zero-padding-margin()
+  padding 0
+  margin 0
+
+// mixin for elements that use a block background style as an image
+block-bg()
+  display block
+  text-indent -9999px
+  background-repeat no-repeat
+  background-position center center

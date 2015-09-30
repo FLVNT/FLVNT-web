@@ -1,7 +1,7 @@
 
 Package.describe({
-  name    : 'flvnt:app-layouts',
-  summary : 'flvnt-web iron-router global layouts',
+  name    : 'flvnt:app-routes-index',
+  summary : 'flvnt-web route: index /',
   version : '0.0.1',
   documentation : 'README.md'
 });
@@ -10,6 +10,7 @@ Package.describe({
 Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
   where = where || ['client', 'server'];
+
 
   api.use([
     'coffeescript',
@@ -36,13 +37,11 @@ Package.on_use(function (api, where) {
     'flvnt:jquery-touch-events@0.0.1'
   ], where);
 
+
   api.add_files([
-    'lib/client/head.jade',
-    'lib/client/route-layout.jade',
-    'lib/client/route-layout.coffee',
-    'lib/client/route-loading.jade',
-    // 'lib/client/route-loading.coffee',
-    'lib/client/route-not-found.jade'
-  ], where);
+    'lib/client/route.coffee',
+    'lib/client/templates/route-index.jade',
+    'lib/client/templates/route-index.coffee'
+  ], ['client']);
 
 });

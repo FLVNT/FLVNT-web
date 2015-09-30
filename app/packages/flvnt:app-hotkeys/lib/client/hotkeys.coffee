@@ -77,18 +77,20 @@ QUESTION_KEYCODE  = "#{FWD_SLASH_KEYCODE}-shift"
 
   "40": (e)->
     $controls = $ '#player_controls'
-    return if not $controls.length
+    return unless $controls.length
+    return if e.isDefaultPrevented()
+    e?.preventDefault()
 
-    e.preventDefault()
     logger.info "playing next track.."
     Player.next_track()
     Player.goto_playing_group()
     false
 
   "39": (e)->
-    e.preventDefault()
     $controls = $ '#player_controls'
-    return if not $controls.length
+    return unless $controls.length
+    return if e.isDefaultPrevented()
+    e?.preventDefault()
 
     logger.info "playing next track.."
     Player.next_track()
@@ -96,18 +98,20 @@ QUESTION_KEYCODE  = "#{FWD_SLASH_KEYCODE}-shift"
     false
 
   "38": (e)->
-    e.preventDefault()
     $controls = $ '#player_controls'
-    return if not $controls.length
+    return unless $controls.length
+    return if e.isDefaultPrevented()
+    e.preventDefault()
 
     logger.info "playing previous track.."
     Player.prev_track()
     false
 
   "37": (e)->
-    e.preventDefault()
     $controls = $ '#player_controls'
-    return if not $controls.length
+    return unless $controls.length
+    return if e.isDefaultPrevented()
+    e?.preventDefault()
 
     logger.info "playing previous track.."
     Player.prev_track()
@@ -116,7 +120,8 @@ QUESTION_KEYCODE  = "#{FWD_SLASH_KEYCODE}-shift"
   # handle global search
 
   "191": (e)->
-    e.preventDefault()
+    return if e.isDefaultPrevented()
+    e?.preventDefault()
     if current_group()?
       logger.info "opening group search modal.."
       # todo: trigger custom event for opening search modal
@@ -126,7 +131,8 @@ QUESTION_KEYCODE  = "#{FWD_SLASH_KEYCODE}-shift"
     false
 
   "191-shift": (e)->
-    e.preventDefault()
+    return if e.isDefaultPrevented()
+    e?.preventDefault()
     logger.info "opening help.."
     # todo: trigger custom event for opening search modal
     false
@@ -141,34 +147,27 @@ QUESTION_KEYCODE  = "#{FWD_SLASH_KEYCODE}-shift"
 
   # make sure other modals arent open..
   # ----
-  if $('body').hasClass 'modalized'
-    return
+  return true if $('body').hasClass 'modalized'
 
   # return early if someone is typing in a form input field
   # ----
   $target = $ e.target
   node = $target[0].nodeName.toUpperCase()
-  if node in ['INPUT', 'TEXTAREA', 'SELECT']
-    return true
+  return true if node in ['INPUT', 'TEXTAREA', 'SELECT']
 
   code = "#{e.keyCode}"
-  shift = e.shiftKey
-  meta = e.metaKey
 
   # append shift / meta keys to the code to handle their events differently
-  if shift is true
-    logger.info 'handling shift-key'
+  if e.shiftKey is true
     code = "#{code}-shift"
 
-  if meta is true
-    logger.info 'handling meta-key'
+  if e.metaKey is true
     code = "#{code}-meta"
 
   # logger.warn 'code', code, KEY_TO_HANDLER_MAP[code]
   # logger.warn 'keydown', 'code', code, '\n- e:', e
 
   return true unless KEY_TO_HANDLER_MAP[code]?
-
   KEY_TO_HANDLER_MAP[code](e)
 
 
