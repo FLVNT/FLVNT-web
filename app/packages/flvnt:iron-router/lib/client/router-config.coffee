@@ -1,9 +1,9 @@
 
 # router setup + config
 Router.configure {
-  layoutTemplate   : "global_layout"
+  layoutTemplate   : "route-layout"
   loadingTemplate  : "route-loading"
-  notFoundTemplate : "not-found"
+  notFoundTemplate : "route-not-found"
 
   data: ->
     show_header : true

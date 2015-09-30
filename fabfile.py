@@ -32,6 +32,7 @@ from fab import ssh
 from fab import supervisord
 from fab import velocity
 from fab import tinytest
+# from fab import handler
 from fab.environ import env, get_host
 from fab.environ import test, stage, prod
 from fab.environ import task
@@ -39,8 +40,6 @@ from fab.environ import prefix_cd_approot
 from fab.utils import execute
 from fab.utils import ensure_remote_host
 from fab.utils import puts
-import atexit
-import signal
 
 
 @task
@@ -78,22 +77,3 @@ def stop(*args, **kwargs):
   """
   supervisord.stop()
   cron.remove()
-
-
-
-def signal_handler(*args, **kwargs):
-  if len(args) > 1:
-    print red( '\t * {}'.format(args) )
-
-  if len(kwargs) > 1:
-    print red( '\t * {}'.format(kwargs) )
-
-  # print pformat(env)
-  # for r in env.resources_log:
-  #   print red( '\t * '.format(r) )
-
-
-# atexit.register(signal_handler)
-# note: this doesn't work at catching ctrl-c w/ multiprocessing code..
-# signal.signal(signal.SIGINT,  signal_handler)
-# signal.signal(signal.SIGTERM, signal_handler)

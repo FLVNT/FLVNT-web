@@ -2,7 +2,8 @@
 Package.describe({
   name    : 'flvnt:app-features',
   summary : 'flvnt:web feature toggles',
-  version : '0.0.1'
+  version : '0.0.1',
+  documentation : 'README.md'
 });
 
 

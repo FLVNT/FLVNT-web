@@ -18,11 +18,6 @@ Package.on_use(function (api, where) {
   ], where);
 
 
-  api.imply([
-    'jquery'
-  ], where);
-
-
   api.add_files([
 
     // BOOTSTRAP CSS CORE
@@ -125,6 +120,10 @@ Package.on_use(function (api, where) {
     'lib/client/styles/bootstrap-meteor-overrides.css',
 
 
+  ], where);
+
+
+  api.add_files([
     // FONTS
     // ---------------------
     'public/fonts/bootstrap/glyphicons-halflings-regular.eot',
@@ -132,39 +131,6 @@ Package.on_use(function (api, where) {
     'public/fonts/bootstrap/glyphicons-halflings-regular.ttf',
     'public/fonts/bootstrap/glyphicons-halflings-regular.woff',
     'public/fonts/bootstrap/glyphicons-halflings-regular.woff2'
-
-  ], where);
-});
-
-
-Package.on_test(function (api, where) {
-  api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
-
-  // standard test helpers..
-  api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'check',
-    'flvnt:app-fixtures'
-  ]);
-
-
-  // package specific..
-  api.use([
-    'ui',
-    'templating'
-  ], where);
-
-
-  // import the package..
-  api.imply([
-    'flvnt:bootstrap'
-  ], where, {bare: true});
-
-
-  api.add_files([
-    'tests/exports.coffee',
-    'tests/methods.coffee'
-  ], where);
+  ], where, {isAsset: true});
 
 });

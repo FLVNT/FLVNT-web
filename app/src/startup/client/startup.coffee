@@ -5,7 +5,7 @@ TRACE = true
 Meteor.startup =>
   configure_tracing()
   configure_for_mobile()
-  configure_third_party_sdks()
+  # configure_third_party_sdks()
 
 
 configure_tracing = =>
@@ -30,6 +30,8 @@ configure_tracing = =>
     logger.info 'page loaded from AppCache..'
 
 
+@ui_events = {}
+
 configure_for_mobile = =>
 
   # set browser-detection
@@ -39,11 +41,11 @@ configure_for_mobile = =>
   @is_touch_capable    = ('ontouchstart' in window && !is_chrome_desktop)
   @orientation_support = ('orientation' in window && 'onorientationchange' in window)
 
-  @startevent  = ('ontouchstart' in window && !is_chrome_desktop) ? 'touchstart' : 'mousedown'
-  @endevent    = ('ontouchstart' in window && !is_chrome_desktop) ? 'touchend'   : 'mouseup'
-  @moveevent   = ('ontouchstart' in window && !is_chrome_desktop) ? 'touchmove'  : 'mousemove'
-  @tapevent    = ('ontouchstart' in window && !is_chrome_desktop) ? 'tap'        : 'click'
-  @scrollevent = ('ontouchstart' in window && !is_chrome_desktop) ? 'touchmove'  : 'scroll'
+  ui_events.startevent  = ('ontouchstart' in window && !is_chrome_desktop) ? 'touchstart' : 'mousedown'
+  ui_events.endevent    = ('ontouchstart' in window && !is_chrome_desktop) ? 'touchend'   : 'mouseup'
+  ui_events.moveevent   = ('ontouchstart' in window && !is_chrome_desktop) ? 'touchmove'  : 'mousemove'
+  ui_events.tapevent    = ('ontouchstart' in window && !is_chrome_desktop) ? 'tap'        : 'click'
+  ui_events.scrollevent = ('ontouchstart' in window && !is_chrome_desktop) ? 'touchmove'  : 'scroll'
 
 
   FastClick.attach document.body
@@ -56,4 +58,4 @@ configure_third_party_sdks = =>
   load_google_sdk    Meteor.settings.public.google_client_id
 
   # see: https://developers.inkfilepicker.com/docs/web/v1/
-  load_filepicker_sdk  Meteor.settings.public.filepicker.key, 'v1'
+  # load_filepicker_sdk  Meteor.settings.public.filepicker.key, 'v1'

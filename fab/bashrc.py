@@ -3,7 +3,7 @@
   fab.bashrc
   ~~~~~~~~~~
 
-  fabric context for managing the ~/.bashrc file
+  module with methods to manage the ~/.bashrc file
 
 """
 from __future__ import unicode_literals

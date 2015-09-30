@@ -15,7 +15,9 @@ phantomjs*
 docs/*/*.json
 convert
 
-# supervisor output
+
+# SUPERVISOR OUTPUT
+# -----------------
 supervisord.conf
 supervisord.log
 supervisord.pid
@@ -24,3 +26,8 @@ supervisord.pid
 circle.yml
 cron.txt
 CRON_FILE
+
+
+# MONGODB OUTPUT
+# --------------
+.data

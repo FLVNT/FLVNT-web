@@ -20,7 +20,6 @@ Package.on_use(function (api, where) {
     'templating',
     'spacebars',
     'blaze',
-    'ui',
     'session',
     'check',
     'tracker',
