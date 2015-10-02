@@ -6,12 +6,13 @@
   background url('/images/layer-02.jpg') no-repeat
 
 .txt-1
-  width 769px
-  height 140px
+  width 400px
+  height 75px
   margin 0 auto
   // margin-top 210px
-  margin-left -384px
-  background url('/images/txt-01.png') no-repeat center top
+  margin-left -200px
+  background url('/images/txt-01-c.png') no-repeat center top
+  background-size contain
   margin-top 120px
   position absolute
   top 0
@@ -29,7 +30,7 @@ txt-2-width = 100px
   background url('/images/v2/txt-02.png') no-repeat center top
   background-size contain
   position absolute
-  top 480px
+  top 380px
   left 50%
   z-index 10010
 
@@ -44,20 +45,60 @@ txt-3-width = 1046px
   background url('/images/v2/txt-03.png') no-repeat center top
   background-size contain
   position absolute
-  top 660px
+  top 560px
   left 50%
   z-index 10030
 
 .txt-4
-  width 1061px
-  height 223px
+  width 1600px
+  height 325px
   margin 0 auto
-  margin-left -530px
-  background url('/images/txt-02.png') no-repeat center top
+  margin-left -800px
+  background-image url('/images/txt-brands-points.png')
+  background-size contain
+  background-repeat no-repeat
   position absolute
-  top 1652px
+  top 700px
   left 50%
-  z-index 10040
+  z-index 1050
+
+
+
+
+.brand-point-1
+  width 800px
+  height 60px
+  margin 0 auto
+  background url('/images/txt-brands-points-01.png') no-repeat center top
+  background-size contain
+  position absolute
+  top 700px
+  right 265px
+  z-index 10010
+
+.brand-point-2
+  width 800px
+  height 60px
+  margin 0 auto
+  background url('/images/txt-brands-points-02.png') no-repeat center top
+  background-size contain
+  position absolute
+  top 803px
+  right 140px
+  z-index 10010
+
+.brand-point-3
+  width 800px
+  height 60px
+  margin 0 auto
+  background url('/images/txt-brands-points-03.png') no-repeat center top
+  background-size contain
+  position absolute
+  top 903px
+  right 10px
+  z-index 10010
+
+
 
 
 .layer-3
@@ -74,43 +115,80 @@ txt-3-width = 1046px
   opacity-fn(0.45)
 
 
+tile-card-scale-factor = 0.66
+tile-card-width  = (640px  * tile-card-scale-factor)
+tile-card-height = (1075px * tile-card-scale-factor)
+
+
+// disables horizontal scrolling due to tile-card placement off-screen
+html
+  overflow-x hidden
+
+
+.tile-cards
+  width 100%
+  overflow hidden
+
+
 .tile-card
-  width 380px
-  height 650px
+  width  tile-card-width
+  height tile-card-height
   position absolute
   transition all 0.5s ease-out
   -webkit-transition all 0.5s ease-out
+  opacity 0.5
 
   &.default
-    background-color rgba(255,255,255, 0.5)
-    box-shadow(0 0 5px rgba(0,0,0,0.95))
+    background-color rgba(154, 141, 60, 0.3)
+    box-shadow(0 0 15px rgba(0,0,0,0.95))
     z-index 1020
     perspective-origin center
-    transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(10deg)
+    transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg)
 
     &.a
-      top 100px
-      left 100px
+      top 343px
+      left 821px
+      background-image url('/images/artists-influencers/quincy.jpg')
+      background-size contain
+      background-repeat no-repeat
     &.b
-      top -49px
-      left 432px
+      top 517px
+      left 469px
+      background-image url('/images/artists-influencers/margaux.jpg')
+      background-size contain
+      background-repeat no-repeat
     &.c
-      top 337px
-      left 577px
+      top 600px
+      left 1339px
+      background-image url('/images/artists-influencers/drake.jpg')
+      background-size contain
+      background-repeat no-repeat
 
   &.fadeout
+    box-shadow(0 0 1px rgba(0,0,0,0.35))
     opacity 0.1
-    background-color rgba(255,255,255, 0.25)
-    box-shadow(0 0 100px rgba(0,0,0,0.35))
     z-index 1010
+    background-color rgba(255,255,255, 0.25)
 
     &.a
-      top 200px
-      left 100px
+      opacity 0
+      top 343px * 1.2
     &.b
-      opacity 0.5
-      top -151px
-      left 432px
+      opacity 0
+      top 517px * 1.2
     &.c
-      top 437px
-      left 577px
+      opacity 0
+      top 600px * 1.2
+
+  &.fadein
+    box-shadow(0 0 100px rgba(0,0,0,0.35))
+
+    &.a
+      opacity 0.1
+      top 343px - (343px* 1.2)
+    &.b
+      opacity 0.1
+      top 517px - (517px* 1.2)
+    &.c
+      opacity 0.1
+      top 600px - (500px* 1.2)

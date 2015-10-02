@@ -1,5 +1,6 @@
 
 Router.map ->
+
   @route "/",
     # controller: PageTrackerController
     template: 'index'
