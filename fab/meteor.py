@@ -27,7 +27,7 @@ from DDPClient import DDPClient
 
 
 __all__ = ['install', 'update', 'meteor_release_version', 'meteor_shell',
-'set_accounts_config', 'clean_build_cache', 'render_packages_file',
+'set_accounts_config', 'clean_build_cache', 'render_packages_file', 'list',
 'run', 'run_local', 'run_prod', 'run_debug_inspector', 'create_package']
 
 
@@ -359,3 +359,30 @@ def render_packages_file(*args, **kwargs):
     f.write('\n'.join(ln))
 
   print(green(" ---> meteor: {} file rendered..\n".format(packages_file)))
+
+
+@task
+def list_packages(*args, **kwargs):
+  """
+  list meteor packages explicitly used by the app.
+  """
+  with meteor_shell():
+    execute('meteor list')
+
+
+@task
+def show(*args, **kwargs):
+  """
+  show detailed information about a release or package.
+  """
+  with meteor_shell():
+    execute('meteor show')
+
+
+@task
+def debug(*args, **kwargs):
+  """
+  run the meteor app, suspend the server process for debugging.
+  """
+  with meteor_shell():
+    execute('meteor debug')

@@ -15,18 +15,24 @@ Package.on_use(function (api, where) {
   api.use([
     'coffeescript',
     'underscore',
+    'livedata',
     'mongo',
     'ddp',
     'check',
-    'tracker',
-    'session',
+    'flvnt:env@0.0.1',
+    'flvnt:api-utils@0.0.1',
+    'flvnt:app-features@0.0.1',
     'flvnt:logger@0.0.1'
-    // 'livedata'
   ], where);
 
 
   api.add_files([
     'lib/server/ddp-hooks.coffee'
   ], where);
+
+
+  api.export([
+    'DDP'
+  ]);
 
 });

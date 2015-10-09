@@ -1,11 +1,13 @@
 
 current_count = Meteor.users.find().count()
 
+
 options =
   sort:
     # TODO: ensureIndex() ..?
     'createdAt': -1
   limit: 1
+
 
 Meteor.users.find({}, options).observeChanges
   added: (_id, fields)->

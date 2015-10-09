@@ -1,8 +1,4 @@
 
-#
-#: SETUP METEOR METHODS
-#
-
 Meteor.methods ->
 
   events_onLoseFocus: ()->

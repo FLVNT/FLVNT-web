@@ -21,17 +21,23 @@ class Environ
     return @root_url + path
 
 
-# localhost development server config
+#: localhost development server config
 envs.local = new Environ('local')
-# circle ci server config
+
+#: remote development server config
+# envs.develop = new Environ('develop')
+
+#: circle ci server config
 envs.stage = new Environ('stage')
-# production server config
+
+#: production server config
 envs.prod  = new Environ('prod')
-# test server config
+
+#: test env config
 envs.test  = new Environ('test')
 
 
-# export the env object that maps to the current environment id..
+#: export the env object that maps to the current environment id..
 env = envs[env_id]
 
 console.info "current environment:", env_id

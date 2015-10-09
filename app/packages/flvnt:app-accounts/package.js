@@ -14,12 +14,11 @@ Package.on_use(function (api, where) {
 
   api.use([
     'coffeescript',
-    'mquandalle:jade@0.4.2',
     'stylus',
+    'mquandalle:jade@0.4.2',
     'underscore',
     'jquery',
     'templating',
-    'ui',
     'blaze',
     'flvnt:event-hooks@0.0.1',
     'flvnt:env@0.0.1',
@@ -76,44 +75,11 @@ Package.on_use(function (api, where) {
   ], 'client');
 
 
-  api.export('AppAccounts', where);
-  api.export('config', where);
+  api.export([
+    'AppAccounts',
+    'config'
+  ], where);
+
   // api.export('load_accounts_services_config');
-
-});
-
-
-Package.on_test(function (api, where) {
-  api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
-
-  // standard test helpers..
-  api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'flvnt:app-fixtures'
-  ]);
-
-
-  // package specific..
-  api.use([
-    'underscore',
-    'jquery',
-    'ui',
-    'blaze',
-    'templating',
-    'session'
-  ], where);
-
-
-  // import the package..
-  api.imply([
-    'flvnt:app-accounts'
-  ], where, {bare: true});
-
-
-  api.add_files([
-    'tests/exports.coffee',
-    'tests/methods.coffee'
-  ], where);
 
 });

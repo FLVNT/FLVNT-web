@@ -11,6 +11,7 @@ Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
   where = where || ['client', 'server'];
 
+
   api.use([
     'coffeescript',
     'underscore',
@@ -19,21 +20,18 @@ Package.on_use(function (api, where) {
     'templating',
     'tracker',
     'blaze',
-    'service-configuration',
     'oauth',
     'oauth2',
     'mongo',
     'http',
-    'tracker',
-    'mongo',
     'accounts-base',
-    'oauth',
-    'oauth2',
     'check',
     'service-configuration',
     'aldeed:collection2@2.3.3',
     'aldeed:simple-schema@1.3.2',
-    'dburles:collection-helpers@1.0.3'
+    'dburles:collection-helpers@1.0.3',
+    'meteorhacks:unblock@1.1.0',
+    'meteorhacks:subs-manager@1.3.0'
   ], where);
 
 

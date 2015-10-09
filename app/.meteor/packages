@@ -96,8 +96,8 @@ aldeed:collection2@2.3.3
 # ---------
 iron:router@1.0.7
 zimme:iron-router-auth@3.1.0
+flvnt:app-iron-router@0.0.1
 zimme:active-route@2.2.0
-flvnt:iron-router@0.0.1
 
 
 # third_party_analytics
@@ -149,7 +149,7 @@ flvnt:logger@0.0.1
 
 # server_libs
 # -------------
-flvnt:cron@0.0.1
+flvnt:app-cron@0.0.1
 flvnt:nodepkg@0.0.1
 node-btoa@0.0.1
 
@@ -157,13 +157,14 @@ node-btoa@0.0.1
 # flvnt_app_client
 # ------------------
 flvnt:handlebars@0.0.1
+flvnt:online@0.0.1
 flvnt:app-hotkeys@0.0.1
 flvnt:jquery-easing@0.0.1
 
 
 # pubsub
 # --------
+flvnt:app-subs-manager@0.0.1
 meteorhacks:subs-manager@1.3.0
 meteorhacks:unblock@1.1.0
-flvnt:subs-manager@0.0.1
 tmeasday:publish-counts@0.4.0

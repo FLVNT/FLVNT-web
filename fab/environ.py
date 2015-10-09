@@ -20,15 +20,16 @@ from contextlib import nested
 from fab.utils import puts
 
 
-__all__ = ['test', 'stage', 'prod', 'get_host', 'task', 'env', 'set_env',
-'prefix_host_shell', 'prefix_cd_approot']
+__all__ = ['test', 'stage', 'prod',
+'get_host', 'task', 'env', 'set_env', 'prefix_host_shell', 'prefix_cd_approot']
 
 
 # environment specific host settings. SHOULD be named `HOSTS` - but that
 # collides with fabric internals.
 # TODO: refactor to inhertiable classes
-env.ENVS = {
-  'test': {
+env.ENVS = dict(
+  test={
+    'org'          : 'flvnt',
     'app_id'       : 'flvnt-web',
     'git_repo'     : 'FLVNT/FLVNT-web',
     'email_host'   : 'flvnt.com',
@@ -49,7 +50,8 @@ env.ENVS = {
       MONGO_URL='',
     ),
   },
-  'local': {
+  local={
+    'org'          : 'flvnt',
     'app_id'       : 'flvnt-web',
     'git_repo'     : 'FLVNT/FLVNT-web',
     'email_host'   : 'flvnt.com',
@@ -70,7 +72,8 @@ env.ENVS = {
       MONGO_URL='',
     ),
   },
-  'stage': {
+  stage={
+    'org'          : 'flvnt',
     'app_id'       : 'flvnt-web',
     'git_repo'     : 'FLVNT/FLVNT-web',
     'email_host'   : 'flvnt.com',
@@ -91,7 +94,8 @@ env.ENVS = {
       MONGO_URL='',
     ),
   },
-  'prod': {
+  prod={
+    'org'          : 'flvnt',
     'app_id'       : 'flvnt-web',
     'git_repo'     : 'FLVNT/FLVNT-web',
     'email_host'   : 'flvnt.com',
@@ -113,7 +117,7 @@ env.ENVS = {
       MONGO_URL='',
     ),
   },
-}
+)
 
 
 env.env_id = getenv('ENV_ID', 'local')

@@ -163,6 +163,12 @@ html
       background-image url('/images/artists-influencers/drake.jpg')
       background-size contain
       background-repeat no-repeat
+    &.d
+      top 773px
+      left 990px
+      background-image url('/images/artists-influencers/drake.jpg')
+      background-size contain
+      background-repeat no-repeat
 
   &.fadeout
     box-shadow(0 0 1px rgba(0,0,0,0.35))
@@ -171,24 +177,38 @@ html
     background-color rgba(255,255,255, 0.25)
 
     &.a
-      opacity 0
-      top 343px * 1.2
+      opacity 0.3
+      top 343px * 1.01
+      transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg) scale(0.9)
     &.b
-      opacity 0
-      top 517px * 1.2
+      opacity 0.3
+      top 517px * 1.01
+      transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg) scale(0.9)
     &.c
-      opacity 0
-      top 600px * 1.2
+      opacity 0.3
+      top 600px * 1.01
+      transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg) scale(0.9)
+    &.d
+      opacity 0.3
+      top 773px * 1.01
+      transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg) scale(0.9)
 
   &.fadein
     box-shadow(0 0 100px rgba(0,0,0,0.35))
 
     &.a
-      opacity 0.1
-      top 343px - (343px* 1.2)
+      opacity 0.01
+      top 343px -  (343px * 1.2)
+      transform rotateX(22deg) rotateY(-45deg) skewX(45deg) skewY(-3deg)
     &.b
-      opacity 0.1
-      top 517px - (517px* 1.2)
+      opacity 0.01
+      top 517px - (517px * 1.2)
+      transform rotateX(22deg) rotateY(-45deg) skewX(45deg) skewY(-3deg)
     &.c
-      opacity 0.1
-      top 600px - (500px* 1.2)
+      opacity 0.01
+      top 600px - (600px * 1.2)
+      transform rotateX(22deg) rotateY(-45deg) skewX(45deg) skewY(-3deg)
+    &.d
+      opacity 0.01
+      top 773px - (773px * 1.2)
+      transform rotateX(22deg) rotateY(-45deg) skewX(45deg) skewY(-3deg)

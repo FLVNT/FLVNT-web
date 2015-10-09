@@ -1,23 +1,28 @@
 ESC_KEYCODE       = 27
 TAB_KEYCODE       = 9
+SHIFT_KEYCODE     = 16
+CTRL_KEYCODE      = 17
+ALT_KEYCODE       = 18
 SPACE_KEYCODE     = 32
 DELETE_KEYCODE    = 8
 A_KEYCODE         = 65
 C_KEYCODE         = 67
+N_KEYCODE         = 78
 R_ARROW_KEYCODE   = 39
 L_ARROW_KEYCODE   = 37
 U_ARROW_KEYCODE   = 38
 D_ARROW_KEYCODE   = 40
 O_ARROW_KEYCODE   = 79
 DOT_KEYCODE       = 190
+COMMA_KEYCODE     = 188
 FWD_SLASH_KEYCODE = 191
 QUESTION_KEYCODE  = "#{FWD_SLASH_KEYCODE}-shift"
 
 
-# create a mapping of key-handlers to component/modules to handle events
-# specific to each view/page/ui-state
+#: create a mapping of key-handlers to component/modules to handle events
+#: specific to each view/page/ui-state
 
-@UI_STATE_TO_KEY_HANLDER_MAP =
+UI_STATE_TO_KEY_HANLDER_MAP =
   group             : {}
   track_search      : {}
   create_track_post : {}
@@ -26,27 +31,34 @@ QUESTION_KEYCODE  = "#{FWD_SLASH_KEYCODE}-shift"
   notifications_tab : {}
 
 
-@KEY_TO_HANDLER_MAP =
+# TODO: replace keys with codes (above)..
+KEY_TO_HANDLER_MAP =
 
-  # ESC
+  #: ESC_KEYCODE
   "27": (e)->
+    return if e?.isDefaultPrevented()
     e.preventDefault()
 
-  # TAB
+  #: TAB_KEYCODE
   "9": (e)->
+    return if e?.isDefaultPrevented()
     e.preventDefault()
 
   # DELETE
   "8": (e)->
+    return if e?.isDefaultPrevented()
     e.preventDefault()
 
   # DOT
   "190": (e)->
+    return if e?.isDefaultPrevented()
     e.preventDefault()
 
-  # o-chat
+  # o-char
   "79": (e)->
+    return if e?.isDefaultPrevented()
     e.preventDefault()
+
 
   # toggle player state
 
@@ -117,39 +129,40 @@ QUESTION_KEYCODE  = "#{FWD_SLASH_KEYCODE}-shift"
     Player.prev_track()
     false
 
-  # handle global search
+  #: handle global search
 
   "191": (e)->
     return if e.isDefaultPrevented()
     e?.preventDefault()
     if current_group()?
-      logger.info "opening group search modal.."
+      logger.info "[HOTKEYS] opening group search modal.."
       # todo: trigger custom event for opening search modal
     else
-      logger.info "opening group / track-search modal.."
+      logger.info "[HOTKEYS] opening group / track-search modal.."
       # todo: trigger custom event for opening search modal
     false
 
+  # FWD_SLASH_KEYCODE + SHIFT
   "191-shift": (e)->
     return if e.isDefaultPrevented()
     e?.preventDefault()
-    logger.info "opening help.."
+    logger.info "[HOTKEYS] opening help modal.."
     # todo: trigger custom event for opening search modal
     false
 
 
-# spacebar keyboard integration with the player controls
+#: spacebar keyboard integration with the player controls
 @handle_keydown = (e)->
-  # # if there is no group loaded, then return early..
+  #: if there is no group loaded, then return early..
   # group = current_group()
   #  else if not group?
   #   return logger.warn('no group loaded..')
 
-  # make sure other modals arent open..
+  #: make sure other modals arent open..
   # ----
   return true if $('body').hasClass 'modalized'
 
-  # return early if someone is typing in a form input field
+  #: return early if someone is typing in a form input field
   # ----
   $target = $ e.target
   node = $target[0].nodeName.toUpperCase()
@@ -157,15 +170,12 @@ QUESTION_KEYCODE  = "#{FWD_SLASH_KEYCODE}-shift"
 
   code = "#{e.keyCode}"
 
-  # append shift / meta keys to the code to handle their events differently
-  if e.shiftKey is true
-    code = "#{code}-shift"
+  #: append shift / meta keys to the code to handle their events differently
+  if e.shiftKey
+    code = "#{code}-SHIFT"
 
-  if e.metaKey is true
-    code = "#{code}-meta"
-
-  # logger.warn 'code', code, KEY_TO_HANDLER_MAP[code]
-  # logger.warn 'keydown', 'code', code, '\n- e:', e
+  if e.metaKey
+    code = "#{code}-META"
 
   return true unless KEY_TO_HANDLER_MAP[code]?
   KEY_TO_HANDLER_MAP[code](e)
