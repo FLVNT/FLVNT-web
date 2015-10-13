@@ -38,7 +38,7 @@ Package.on_use(function (api, where) {
 
 
   api.add_files([
-    'lib/client/head.jade',
+    'lib/client/html-head.jade',
     'lib/client/route-layout.jade',
     'lib/client/route-layout.coffee',
     'lib/client/route-loading.jade',
