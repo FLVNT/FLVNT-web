@@ -231,7 +231,7 @@ def run_local(*args, **kwargs):
 @task
 def run(*args, **kwargs):
   """
-  runs the meteor app locally with the development db.
+  runs the meteor app locally with the remote development db.
   """
   supervisord.stop_meteor()
   supervisord.stop_mongod()
