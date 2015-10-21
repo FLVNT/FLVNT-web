@@ -34,7 +34,7 @@ def email(recipient, template_id):
   http.post('http://gae.flvnt.com/api/mail/send', _ctx)
 
 
-def terminal(msg):
+def terminal(msg, *args, **kw):
   """
   ping the terminal prompt (osx only)..
 

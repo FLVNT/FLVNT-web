@@ -147,10 +147,10 @@
   },
 
   "flvnt_app_client": {
-      "flvnt:app-hotkeys"   : "0.0.1",
-      "flvnt:jquery-easing" : "0.0.1",
-      "flvnt:handlebars"    : "0.0.1",
-      "flvnt:online"        : "0.0.1"
+      "flvnt:app-hotkeys"     :   "0.0.1",
+      "flvnt:jquery-easing"   :   "0.0.1",
+      "flvnt:handlebars"      :   "0.0.1",
+      "flvnt:online"          :   "0.0.1"
   },
 
   "flvnt_app_routes": {
