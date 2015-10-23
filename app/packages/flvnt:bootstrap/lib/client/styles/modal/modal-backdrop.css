@@ -1,0 +1,35 @@
+
+.modal-backdrop {
+  position: fixed;
+  top:     0;
+  left:    0;
+  right:   0;
+  bottom:  0;
+  z-index: 1030;
+  background-color: #000000;
+
+  opacity: 0.9;
+  filter: alpha(opacity=0.99);
+
+
+  /* effect for radial gradient BG */
+  /*
+  background: -moz-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.75) 0%, rgba(0,0,0,1) 50%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,0.75)), color-stop(50%,rgba(0,0,0,1)));
+  background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.75) 0%,rgba(0,0,0,1) 50%);
+  background: -o-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.75) 0%,rgba(0,0,0,1) 50%);
+  background: -ms-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.75) 0%,rgba(0,0,0,1) 50%);
+  background: radial-gradient(ellipse at center,  rgba(0,0,0,0.75) 0%,rgba(0,0,0,1) 50%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bf000000', endColorstr='#000000',GradientType=1 );
+  */
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.modal-backdrop.in {
+  opacity: 0.99;
+  filter: alpha(opacity=99);
+}

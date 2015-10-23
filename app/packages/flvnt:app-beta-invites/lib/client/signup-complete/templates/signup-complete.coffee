@@ -1,13 +1,15 @@
 
-# manage state of the view from reactive dependencies
+#: manage state of the view from reactive dependencies
 Tracker.autorun ->
-  if Session.get('signup_completed')?
-    if Session.get('signup_completed') is true
-      Session.set 'signup_completed', null
+  if Session.get('user_completed_setup')?
+    if Session.equals 'user_completed_setup', true
+      $('#invite-signup-complete').css opacity: 0.35
+      Session.set 'user_completed_setup', null
       Router.go Router.path('groups/100')
 
-    if invite_signup_complete.in_progress()
+    else if account_setup.in_progress()
       $('#invite-signup-complete').css opacity: 0.35
+
     else
       $('#invite-signup-complete').css opacity: 1
 
@@ -24,7 +26,7 @@ Template['invite-signup-complete'].helpers
 
 
 Template['invite-signup-complete'].created = ->
-  Session.set 'signup_completed', false
+  Session.set 'user_completed_setup', false
 
 
 Template['invite-signup-complete'].rendered = ->
@@ -32,6 +34,7 @@ Template['invite-signup-complete'].rendered = ->
   @autorun =>
     # we populate the name and email fields from facebook, so set initial focus
     # on the password field and init the bootstrap popover
+    document.activeElement.blur()
     $field = Template.instance().$ 'input[name="email"]'
     $field.popover('toggle').focus().select()
 
@@ -47,13 +50,14 @@ Template['invite-signup-complete'].events =
     e?.preventDefault()
 
     #: prevent double submit..
-    return if invite_signup_complete.in_progress()
-    invite_signup_complete.set_in_progress true
+    return if account_setup.in_progress()
+    account_setup.set_in_progress true
 
     #: serialize form fields
     name = $.trim @$('[name="name"]').val()
     #: always lowercase the email
     email = $.trim @$('[name="email"]').val().toLowerCase()
+
     #: use `accounts-passwords` package to encyrpt & set the password field
     password = $.trim @$('[name="password"]').val()
 
@@ -67,11 +71,8 @@ Template['invite-signup-complete'].events =
       else
         Meteor.call 'invite_signup_complete', name, email, password, (err, rv) ->
           if err?
-            logger.error 'error completing account setup:', err.stack
+            logger.error 'error completing account setup:', err, err.stack
             $('#invite-signup-complete').css opacity: 1
             invite_signup_complete.set_in_progress false
           else
             invite_signup_complete.on_signup_complete()
-
-
-invite_signup_complete = new InviteSignupComplete

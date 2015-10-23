@@ -34,7 +34,8 @@ Package.on_use(function (api, where) {
 
 
   api.export([
-    'subs'
+    'subs',
+    'notifications_subs'
   ]);
 
 });

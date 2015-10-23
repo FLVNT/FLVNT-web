@@ -1,12 +1,11 @@
 
 #: callback to be called after a login attempt succeeds
 Accounts.onLogin ->
-  logger.info 'accounts-callback-hook: on-login'
-
+  AppAccounts._logging_in = null
 
 #: callback to be called after the login has failed
 Accounts.onLoginFailure ->
-  logger.warn 'accounts-callback-hook: on-login-failure'
+  AppAccounts._logging_in = null
 
 
 #: callback when a user successfuly connected with a third-party oauth provider

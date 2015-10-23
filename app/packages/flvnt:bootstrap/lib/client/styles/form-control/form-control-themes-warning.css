@@ -1,0 +1,23 @@
+
+.has-warning .help-block,
+.has-warning .control-label,
+.has-warning .radio,
+.has-warning .checkbox,
+.has-warning .radio-inline,
+.has-warning .checkbox-inline {
+  color: #8a6d3b;
+}
+
+.has-warning .form-control {
+  border-color: #8a6d3b;
+}
+
+.has-warning .form-control:focus {
+  border-color: #66512c;
+}
+
+.has-warning .input-group-addon {
+  color: #8a6d3b;
+  border-color: #8a6d3b;
+  background-color: #fcf8e3;
+}

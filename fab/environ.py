@@ -30,6 +30,7 @@ __all__ = ['test', 'stage', 'prod',
 env.ENVS = dict(
   test={
     'org'          : 'flvnt',
+    'repo_id'      : 'web',
     'app_id'       : 'flvnt-web',
     'git_repo'     : 'FLVNT/FLVNT-web',
     'email_host'   : 'flvnt.com',
@@ -52,6 +53,7 @@ env.ENVS = dict(
   },
   local={
     'org'          : 'flvnt',
+    'repo_id'      : 'web',
     'app_id'       : 'flvnt-web',
     'git_repo'     : 'FLVNT/FLVNT-web',
     'email_host'   : 'flvnt.com',
@@ -74,6 +76,7 @@ env.ENVS = dict(
   },
   stage={
     'org'          : 'flvnt',
+    'repo_id'      : 'web',
     'app_id'       : 'flvnt-web',
     'git_repo'     : 'FLVNT/FLVNT-web',
     'email_host'   : 'flvnt.com',
@@ -96,6 +99,7 @@ env.ENVS = dict(
   },
   prod={
     'org'          : 'flvnt',
+    'repo_id'      : 'web',
     'app_id'       : 'flvnt-web',
     'git_repo'     : 'FLVNT/FLVNT-web',
     'email_host'   : 'flvnt.com',
@@ -217,6 +221,7 @@ def set_env():
 
   # TODO: move this back to meteor.py
   env.config['meteor_release_version'] = meteor_release_version()
+  env.config['meteor_app_id'] = meteor_app_id()
 
 
 def task(*a, **kw):
@@ -244,6 +249,16 @@ def meteor_release_version():
   with open('app/.meteor/release', 'r') as f:
     version = f.read().strip()
   return version
+
+
+def meteor_app_id():
+  """
+  reads the meteor app_id from `app/.meteor/.id`
+  """
+  val = ''
+  with open('app/.meteor/.id', 'r') as f:
+    val = f.read().strip()
+  return val
 
 
 # helpers to set the fabric.env.env_id

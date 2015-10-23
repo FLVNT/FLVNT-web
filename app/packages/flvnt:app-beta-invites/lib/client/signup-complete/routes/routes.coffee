@@ -1,5 +1,6 @@
 
 Router.map ->
+
   @route "invite/signup/complete",
     controller: PageTrackerController
     template: 'invite-signup-complete'
@@ -22,9 +23,9 @@ Router.map ->
       user = Meteor.user()
       if user? and not _.isNull user
         #: redirect to the user's groups list page
-        if user.completed_setup is true
+        if user.completed_setup == true
           logger.info "user logged in, and has already completed their setup.."
-          #: return @redirect '/groups'
+          # return @redirect '/groups'
 
         else
           logger.warn 'user has not completed their setup..'

@@ -3,7 +3,7 @@
   fab.npm
   ~~~~~~~
 
-  fabric context for node package manager.
+  fabric for node package manager.
 
 """
 from __future__ import unicode_literals
@@ -15,8 +15,8 @@ from fab.environ import get_host
 from fab.environ import task
 from fab.utils import execute
 from fab.utils import puts
-from fab import meteor
 from fab import notify
+from fab import meteor
 
 
 __all__ = ['install', 'install_node_inspector']

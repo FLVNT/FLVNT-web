@@ -1,0 +1,50 @@
+
+/* modal css component */
+
+/* @import modal-close.css */
+/* @import modal-fade.css */
+/* @import modal-backdrop.css */
+
+.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  display: none;
+  overflow: auto;
+  overflow-y: scroll;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+  z-index: 1050;
+}
+
+.modal-title {
+  margin: 0;
+  line-height: 1.428571429;
+}
+
+.modal-body {
+  position: relative;
+  padding: 36px 20px 0 20px;
+}
+
+/* @import modal-header.css */
+/* @import modal-content.css */
+/* @import modal-footer.css */
+
+@media screen and (min-width: 768px) {
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+}

@@ -1,8 +1,8 @@
 
 Package.describe({
-  name: 'node-btoa',
-  summary: 'node-btoa packaged for meteor',
-  version: '0.0.1',
+  name    : 'node-btoa',
+  summary : 'node-btoa packaged for meteor',
+  version : '0.0.1',
   documentation : 'README.md'
 });
 
@@ -27,6 +27,8 @@ Package.on_use(function (api, where) {
   ], where);
 
 
-  api.export('btoa');
+  api.export([
+    'btoa'
+  ]);
 
 });

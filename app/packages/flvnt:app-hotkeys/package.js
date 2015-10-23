@@ -29,7 +29,7 @@ Package.on_use(function (api, where) {
     'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',
     'flvnt:bootstrap@0.0.1',
-    'flvnt:jquery-touch-events@0.0.1',
+    // 'flvnt:jquery-touch-events@0.0.1',
     'flvnt:jquery-easing@0.0.1'
   ], where);
 
@@ -39,5 +39,8 @@ Package.on_use(function (api, where) {
     'lib/client/hotkeys.coffee'
   ], where);
 
+
+  api.export([
+  ]);
 
 });

@@ -1,0 +1,37 @@
+
+template(name="connect_services")
+  #signupConnect
+    .container
+      .page-title
+        h1 you're all signed up
+        p now it's time to hookup your music sources
+
+      .connect-services
+        .row
+          .col-sm-6
+            .connect-soundcloud.connect-box
+              .image
+                img(src="/images/connect-soundcloud-on.png")
+              h1 soundcloud
+              p we sync your music posts, reposts and likes. Lorem ipsum dolor sit amet, consectetur adipisicing elit
+              if currentUser.services.soundcloud
+                a.btn.disabled(data-event="service-disconnect", data-service="soundcloud") connected
+              else
+                a.btn(data-event="service-connect", data-service="soundcloud") connect
+
+          .col-sm-6
+            .connect-youtube.connect-box
+              .image
+                img(src="/images/connect-youtube-on.png")
+              h1 youtube
+              p we sync your music posts, reposts and likes. Lorem ipsum dolor sit amet, consectetur adipisicing elit
+              if currentUser.services.google
+                a.btn.disabled(data-event="service-disconnect", data-service="google") connected
+              else
+                a.btn(data-event="service-connect", data-service="google") connect
+
+    .page-container
+      .page-title
+        h2 tagline for hipsters
+        p create your first unvael group to share music
+      a.btn.easing connect to get started

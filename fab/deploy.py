@@ -54,6 +54,7 @@ def hotcodereload(*args, **kwargs):
   """
   updates app from github to quick deploy via meteor 'hot-code-reload'
   """
+  git.push()
   ensure_remote_host()
   puts(blue('\nhotcodereloading meteor-app..'))
 

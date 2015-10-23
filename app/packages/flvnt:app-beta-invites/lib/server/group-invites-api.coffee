@@ -1,5 +1,5 @@
 
-class @GroupInviteAPI
+class GroupInviteAPI
 
   @create: (opts)->
     logger.info "opts:", opts
@@ -28,8 +28,8 @@ class @GroupInviteAPI
     unless existing?
       logger.info "inviting new user to group.."
       return {
-        code: invite.code
-        url: "#{env.app_url}/invite/accept/#{invite.code}"
+        'code': invite.code
+        'url': "#{env.app_url}/invite/accept/#{invite.code}"
       }
 
     logger.info "adding invited user to group.."
@@ -40,7 +40,9 @@ class @GroupInviteAPI
 
     action =
       $addToSet:
-        'groups': {id: invite.group_id, status:'pending'}
+        'groups':
+          'id': invite.group_id
+          'status': 'pending'
 
     options =
       multi: true
@@ -48,6 +50,69 @@ class @GroupInviteAPI
     Meteor.users.upsert selector, action, options
 
     logger.debug "adding user to group.."
-    GroupsAPI.add_pending_member invite.group_id, opts.invitee_fbid
+    Groups.add_pending_member invite.group_id, opts.invitee_fbid
 
-    { code: invite.code, url: "#{env.app_url}/invite/accept/#{invite.code}" }
+    {
+      'code': invite.code
+      'url': "#{env.app_url}/invite/accept/#{invite.code}"
+    }
+
+
+  #: accept a group that you've been inited to
+  @accept = (options) ->
+    opts = _.extend(_.pick(options, "group_id", 'user_id'), {
+      # defaults / overrides
+    })
+
+    query =
+      '_id': opts.group_id
+      'members.id': opts.user_id
+    logger.info 'groups_api.coffee accept:', opts, 'query', query
+
+    update =
+      $set: {'members.$.status': 'active'}
+
+    #: set user to active on group
+    Groups.update query, update
+
+    #: set group on user to active
+    # TODO: implement this style of update / selector for working with post images
+    query  =
+      '_id': opts.user_id
+      'groups.id': opts.group_id
+
+    action =
+      set: {'groups.$.status': 'active'}
+
+    Meteor.users.update query, action
+
+
+  #: reject a group that you've been inited to
+  @reject = (options) ->
+    opts = _.extend(_.pick(options, "group_id"),
+      user_id: Meteor.userId()
+    )
+
+    logger.info 'groups_api.coffee reject:', opts
+
+    #: remove user from group
+    selector =
+      '_id': opts.group_id
+
+    update =
+      $pull:
+        'members': {'id': opts.user_id}
+        'member_ids': opts.user_id
+
+    Groups.update selector, update
+
+    # remove group from user
+    selector =
+      '_id': opts.user_id
+
+    update =
+      $pull:
+        'groups': {'id': opts.group_id}
+
+    Meteor.users.update selector, update
+

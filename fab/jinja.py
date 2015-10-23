@@ -3,7 +3,7 @@
   fab.jinja
   ~~~~~~~~~
 
-  user jinja2 for building configuration files.
+  fabric for rendering + writing jinja2 templates.
 
 """
 from __future__ import unicode_literals

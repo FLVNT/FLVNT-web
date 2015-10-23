@@ -1,0 +1,53 @@
+
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+
+  background: transparent;
+  background: none;
+
+  color: #fff;
+  border: 1px solid #fff;
+  white-space: nowrap;
+  padding: 14px 22px;
+  font-size: 10px;
+  line-height: 1.428571429;
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+
+.btn:hover,
+.btn:focus {
+  text-decoration: none;
+}
+
+
+.btn:active,
+.btn.active {
+  background-image: none;
+  opacity: 0.75;
+}
+
+
+.btn.disabled,
+.btn[disabled],
+fieldset[disabled] .btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  border-color: #aaa;
+  color: #aaa;
+}

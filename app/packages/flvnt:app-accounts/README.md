@@ -2,7 +2,7 @@ flvnt:app-accounts
 ==================
 
 flvnt-web bridge to the meteor-accounts framework. handles account creation,
-user authentication/logout, password reset, and mapping acocunt-oauths to
+user authentication/logout, password reset, and mapping account-oauths to
 user accounts.
 
 

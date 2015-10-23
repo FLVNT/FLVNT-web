@@ -3,7 +3,7 @@
   fab.apt
   ~~~~~~~
 
-  context for apt.
+  fabric for apt.
 
 """
 from __future__ import unicode_literals

@@ -1,5 +1,6 @@
 
 Router.map ->
+
   @route "invite/accept",
     controller: PageTrackerController
     path: "invite/accept/:_id?"
@@ -24,7 +25,7 @@ Router.map ->
       #: on change of this session var..
       Session.set 'accept_invite_code_id', invite_code_id
 
-      return [
+      [
         subs.subscribe("userData"),
         subs.subscribe('AcceptInviteCode', invite_code_id),
         subs.subscribe("UserAcceptedInviteCode"),

@@ -29,34 +29,8 @@ Package.on_use(function (api, where) {
   ], 'client');
 
 
-  api.export('ApiUtils');
-
-});
-
-
-Package.on_test(function (api, where) {
-  api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
-
-  // standard test helpers..
-  api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'flvnt:app-fixtures',
-  ], where);
-
-
-  // package specific..
-  api.use([
-  ], where);
-
-
-  // import the package..
-  api.imply('flvnt:api-utils', where, {bare: true});
-
-
-  api.add_files([
-    'tests/exports.coffee',
-    'tests/methods.coffee'
-  ], where);
+  api.export([
+    'ApiUtils'
+  ]);
 
 });

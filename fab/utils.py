@@ -18,7 +18,7 @@ from contextlib import nested
 from fabric.utils import puts
 
 
-__all__ = ['execute', 'print_command', 'log_call',
+__all__ = ['execute', 'print_command', 'log_call', 'local',
 'ensure_remote_host', 'ensure_test_environ', 'puts', 'log_call', 'print_command']
 
 

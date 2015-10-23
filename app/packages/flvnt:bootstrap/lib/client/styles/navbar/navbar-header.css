@@ -1,0 +1,22 @@
+
+.navbar-header:before,
+.navbar-header:after {
+  content: " ";
+  display: table;
+}
+.navbar-header:after {
+  clear: both;
+}
+.navbar-header:before,
+.navbar-header:after {
+  content: " ";
+  display: table;
+}
+.navbar-header:after {
+  clear: both;
+}
+@media (min-width: 768px) {
+  .navbar-header {
+    float: left;
+  }
+}

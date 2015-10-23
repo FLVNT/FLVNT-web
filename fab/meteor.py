@@ -3,7 +3,7 @@
   fab.meteor
   ~~~~~~~~~~
 
-  context for meteor.
+  fabric for meteor.
 
 """
 from __future__ import unicode_literals
@@ -42,8 +42,11 @@ def _default_meteor_env():
   set_env()
   return dict(
     ENV_ID=env.env_id,
+    APP_ID=env.config['meteor_app_id'],
     ROOT_URL=env.config['root_url'],
     MONGO_URL=env.config['mongo_url'],
+    # MOBILE_DDP_URL='',
+    # MOBILE_ROOT_URL='',
     # KADIRA_PROFILE_LOCALLY=1,
   )
 
@@ -177,7 +180,7 @@ def run_debug_inspector(*args, **kwargs):
   """
   with meteor_shell():
     shstr = '''
-    node-inspector &
+    node-inspector &&
     export NODE_OPTIONS='--debug-brk'
     meteor
     '''
@@ -187,7 +190,7 @@ def run_debug_inspector(*args, **kwargs):
 @task
 def run_local(*args, **kwargs):
   """
-  runs the meteor app locally with a local db.
+  runs the meteor app locally with a local dev db
   """
   supervisord.stop_meteor()
   supervisord.stop_mongod()
@@ -231,7 +234,7 @@ def run_local(*args, **kwargs):
 @task
 def run(*args, **kwargs):
   """
-  runs the meteor app locally with the remote development db.
+  runs the meteor app locally with the remote development db
   """
   supervisord.stop_meteor()
   supervisord.stop_mongod()

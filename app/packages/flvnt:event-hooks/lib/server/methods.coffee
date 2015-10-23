@@ -1,31 +1,26 @@
 
 Meteor.methods ->
 
+  #: fire the loseFocus event
   events_onLoseFocus: ()->
-    # fire the loseFocus event
     Hooks.onLoseFocus @userId
 
-
+  #: fire the gainFocus event
   events_onGainFocus: ()->
-    # fire the gainFocus event
     Hooks.onGainFocus @userId
 
-
+  #: fire the closeSession event
   events_onCloseSession: ()->
-    # fire the closeSession event
     Hooks.onCloseSession @userId
 
-
+  #: fire the loggedIn event
   events_onLoggedIn: ()->
-    # fire the loggedIn event
     Hooks.onLoggedIn @userId
 
-
+  #: fire the loggedOut event
   events_onLoggedOut: (userId)->
-    # fire the loggedOut event
     Hooks.onLoggedOut userId
 
-
+  #: fire the loggedOut event
   events_onUserReady: (userId)->
-    # fire the loggedOut event
     Hooks.onLoggedOut userId

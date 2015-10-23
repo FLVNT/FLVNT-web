@@ -3,7 +3,7 @@
   fab.cron
   ~~~~~~~~
 
-  fabric commands + context for working with crontabs.
+  fabric for working with crontabs.
 
 """
 from __future__ import unicode_literals

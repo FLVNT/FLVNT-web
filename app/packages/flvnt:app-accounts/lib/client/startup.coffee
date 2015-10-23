@@ -1,11 +1,7 @@
 
-#: init the accounts service config..
-Meteor.startup ->
-
-  Tracker.autorun ->
-    Accounts.service_config = {}
-    for ser in Accounts.loginServiceConfiguration.find().fetch()
-      Accounts.service_config[ser.service] = ser
-
-  #: TODO: BROKEN
-  # AppAccounts.init()
+#: setup the accounts service config stuff..
+#: pull the account configs out at startup, to avoid issues with waiting
+#: at runtime, causing popup blockers to fuck our legit clicks.
+Tracker.autorun =>
+  if Accounts.loginServicesConfigured()
+    AppAccounts.set_services_config()

@@ -1,0 +1,23 @@
+
+.has-error .help-block,
+.has-error .control-label,
+.has-error .radio,
+.has-error .checkbox,
+.has-error .radio-inline,
+.has-error .checkbox-inline {
+  color: #a94442;
+}
+
+.has-error .form-control {
+  border-color: #a94442;
+}
+
+.has-error .form-control:focus {
+  border-color: #843534;
+}
+
+.has-error .input-group-addon {
+  color: #a94442;
+  border-color: #a94442;
+  background-color: #f2dede;
+}

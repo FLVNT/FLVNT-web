@@ -1,0 +1,19 @@
+
+.collapse {
+  display: none;
+}
+.collapse.in {
+  display: block;
+}
+
+
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+
+  -webkit-transition: height 125ms cubic-bezier(0.1, 0.57, 0.1, 1);
+  -moz-transition:    height 125ms cubic-bezier(0.1, 0.57, 0.1, 1);
+  -o-transition:      height 125ms cubic-bezier(0.1, 0.57, 0.1, 1);
+  transition:         height 125ms cubic-bezier(0.1, 0.57, 0.1, 1);
+}

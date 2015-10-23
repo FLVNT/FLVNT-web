@@ -1,0 +1,65 @@
+
+/* blockquote css component */
+
+
+blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  border-left: 5px solid #eeeeee;
+}
+
+blockquote p {
+  font-size: 17.5px;
+  font-weight: 300;
+  line-height: 1.25;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+blockquote small,
+blockquote .small {
+  display: block;
+  line-height: 1.428571429;
+  color: #999999;
+}
+
+blockquote small:before,
+blockquote .small:before {
+  content: '\2014 \00A0';
+}
+
+blockquote.pull-right {
+  padding-right: 15px;
+  padding-left: 0;
+  border-right: 5px solid #eeeeee;
+  border-left: 0;
+}
+
+blockquote.pull-right p,
+blockquote.pull-right small,
+blockquote.pull-right .small {
+  text-align: right;
+}
+
+blockquote.pull-right small:before,
+blockquote.pull-right .small:before {
+  content: '';
+}
+
+blockquote.pull-right small:after,
+blockquote.pull-right .small:after {
+  content: '\00A0 \2014';
+}
+
+blockquote:before,
+blockquote:after {
+  content: "";
+}
+
+address {
+  margin-bottom: 20px;
+  font-style: normal;
+  line-height: 1.428571429;
+}

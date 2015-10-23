@@ -3,7 +3,7 @@
   fab.mongo
   ~~~~~~~~~
 
-  context for mongo-db.
+  fabric for mongodb.
 
 """
 from __future__ import unicode_literals

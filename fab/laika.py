@@ -3,7 +3,7 @@
   fab.laika
   ~~~~~~~~~
 
-  context for laika.
+  fabric for meteor laika.
 
 """
 from __future__ import unicode_literals

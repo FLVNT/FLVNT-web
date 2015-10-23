@@ -3,7 +3,7 @@
   fab.tinytest
   ~~~~~~~~~~~~
 
-  helpers for running meteor TinyTest.
+  fabric for meteor TinyTest.
 
 """
 from __future__ import unicode_literals

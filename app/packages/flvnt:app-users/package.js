@@ -21,6 +21,7 @@ Package.on_use(function (api, where) {
     'templating',
     'spacebars',
     'blaze',
+    // 'ui',
     'session',
     'check',
     'tracker',
@@ -33,15 +34,23 @@ Package.on_use(function (api, where) {
     'flvnt:app-iron-router@0.0.1',
     'flvnt:app-subs-manager@0.0.1',
     // 'flvnt:jquery-touch-events@0.0.1',
-    'flvnt:app-accounts@0.0.1'
+    'flvnt:app-accounts@0.0.1',
+    'unvael:lazyload@0.0.1'
   ], where);
 
 
   api.add_files([
-    'lib/collections/brands.coffee',
-    'lib/collections/influencers.coffee',
     'lib/schemas/brands.coffee',
     'lib/schemas/influencers.coffee'
+  ], where);
+
+  api.add_files([
+    'lib/collections/brands.coffee',
+    'lib/collections/influencers.coffee'
+  ], where);
+
+  api.add_files([
+    'lib/profile/client/modal.styl'
   ], where);
 
 

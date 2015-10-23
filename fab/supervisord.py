@@ -3,7 +3,7 @@
   fab.supervisord
   ~~~~~~~~~~~~~~~
 
-  context for supervisord.
+  fabric for supervisord.
 
 """
 from __future__ import unicode_literals

@@ -9,7 +9,7 @@ Router.map ->
     action: ->
       email = @request.body.email
       event = @request.body.event
-      return if event isnt 'unsubscribe'
+      return if event != 'unsubscribe'
 
       query =
         'emails.address': email

@@ -14,24 +14,29 @@ Package.on_use(function (api, where) {
 
   api.use([
     'coffeescript',
-    'stylus',
     'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
     'jquery',
     'templating',
     'blaze',
+    'session',
+    'tracker',
     'flvnt:event-hooks@0.0.1',
     'flvnt:env@0.0.1',
     'flvnt:logger@0.0.1',
     'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',
+    'flvnt:app-facebook@0.0.1',
     'flvnt:collection-schemas@0.0.1',
     'aldeed:simple-schema@1.3.2',
     'aldeed:collection2@2.3.3',
     'dburles:collection-helpers@1.0.3',
+    'iron:router',
+    // 'flvnt:app-iron-router@0.0.1',
+    // 'flvnt:mixpanel@0.0.1',
     'mongo',
     'http',
-    'tracker',
     'check',
     'oauth',
     'oauth2',
@@ -51,35 +56,47 @@ Package.on_use(function (api, where) {
 
 
   api.add_files([
-    'lib/app-accounts.coffee',
+    'lib/route-controller.coffee'
   ], where);
 
-
   api.add_files([
+    'lib/app-accounts.coffee',
     'lib/config.coffee',
-    'lib/startup.coffee',
-    'lib/collections/meteor-users.coffee'
+    'lib/collections/meteor-users-schema.coffee',
+    'lib/startup.coffee'
   ], where);
 
   api.add_files([
     'lib/server/app-accounts.coffee',
     'lib/server/config-api.coffee',
+    'lib/server/methods/methods.coffee',
     'lib/server/hooks.coffee',
-    'lib/server/publish/user-data.coffee'
-  ], 'server');
+    'lib/server/publish/publish-user-data.coffee',
+    'lib/server/startup.coffee'
+  ], ['server']);
 
   api.add_files([
     'lib/client/app-accounts.coffee',
+    'lib/client/init.coffee',
     'lib/client/hooks.coffee',
-    'lib/client/startup.coffee'
-  ], 'client');
+    'lib/client/startup.coffee',
+    'lib/client/login/route.coffee',
+    'lib/client/logout/route.coffee',
+    'lib/client/logout/logout.jade'
+  ], ['client']);
+
+
+  // user profile..
+  /*
+  api.add_files([
+  ], ['client']);
+  */
 
 
   api.export([
     'AppAccounts',
+    'PageTrackerController',
     'config'
   ], where);
-
-  // api.export('load_accounts_services_config');
 
 });

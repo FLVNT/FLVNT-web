@@ -3,7 +3,7 @@
   fab.virtualenv
   ~~~~~~~~~~~~~~
 
-  fabric context for virtualenv.
+  fabric for python virtualenv.
 
 """
 from __future__ import unicode_literals

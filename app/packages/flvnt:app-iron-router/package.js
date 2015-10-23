@@ -21,6 +21,7 @@ Package.on_use(function (api, where) {
     'templating',
     'spacebars',
     'blaze',
+    // 'ui',
     'session',
     'tracker',
     'check',
@@ -48,6 +49,9 @@ Package.on_use(function (api, where) {
 
 
   api.add_files([
+    'lib/routes/html-head.jade',
+    'lib/routes/route-loading.jade',
+    'lib/routes/route-not-found.jade',
     'lib/router-config.coffee',
     'lib/router-goto.coffee'
   ], where);

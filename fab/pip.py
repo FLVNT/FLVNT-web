@@ -3,7 +3,7 @@
   fab.pip
   ~~~~~~~
 
-  fabric context for python package manager.
+  fabric for python package manager.
 
 """
 from __future__ import unicode_literals

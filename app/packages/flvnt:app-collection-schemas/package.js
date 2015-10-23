@@ -38,6 +38,8 @@ Package.on_use(function (api, where) {
   ], where);
 
 
-  api.export('SchemaHelpers');
+  api.export([
+    'SchemaHelpers'
+  ]);
 
 });

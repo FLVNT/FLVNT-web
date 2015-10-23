@@ -8,10 +8,12 @@ Hooks = {
   //= OPTIONS
   //////////////////////////////////
 
-  // number of milliseconds to poll between checking window focus
-  updateFocusTimer: false,
-  // treat window close as logout event
-  treatCloseAsLogout: false,
+  options: {
+    // number of milliseconds to poll between checking window focus
+    updateFocusTimer: false,
+    // treat window close as logout event
+    treatCloseAsLogout: true,
+  },
 
   //////////////////////////////////
   //= INTERNAL STATES
@@ -25,56 +27,21 @@ Hooks = {
   lastUser: null,
 
 
-  //////////////////////////////////
-  //= METHODS
-  //////////////////////////////////
-  fire: function (eventFn, userId) {
-    if (! userId) {
-      userId = Hooks.lastUserId;
-    }
-
-    // fire the event on the client
-    _.isFunction(Hooks[eventFn]) && Hooks[eventFn](userId);
-
-    // fire the event on the server
-    Meteor.call('events_' + eventFn, userId);
-  },
-
-  checkFocus: function () {
-    // check if the window is currently focused
-    if (document.hasFocus() && Hooks.focused === false) {
-      Hooks.gainFocus();
-
-    } else if (! document.hasFocus() && Hooks.focused === true) {
-      Hooks.loseFocus();
-    }
-  },
-
-  gainFocus: function () {
-    Hooks.focused = true;
-    Hooks.fire('onGainFocus');
-  },
-
-  loseFocus: function () {
-    Hooks.focused = false;
-    Hooks.fire('onLoseFocus');
-  },
-
   init: function (options) {
     //////////////////////////////////
     //= BASIC INITIALIZATION
     //////////////////////////////////
 
     // initialize options
-    (options) && _.extend(Hooks.options, options);
+    (options) && _.extend(this.options, options);
 
     //////////////////////////////////
     //= INITIALIZE CLIENT EVENTS
     //////////////////////////////////
 
     // Start checking for focus if a truthy integer is given
-    if (Hooks.updateFocusTimer !== false) {
-      Meteor.setInterval(Hooks.checkFocus, Hooks.updateFocusTimer);
+    if (this.options.updateFocusTimer !== false) {
+      Meteor.setInterval(Hooks.checkFocus, this.options.updateFocusTimer);
     }
 
     // Close window/tab
@@ -82,7 +49,7 @@ Hooks = {
       Hooks.fire('onCloseSession');
 
       // if we're treating close as logout, fire the logout event as well
-      if (Hooks.treatCloseAsLogout === true) {
+      if (Hooks.options.treatCloseAsLogout === true) {
         Hooks.fire('onLoggedOut');
       }
     };
@@ -132,6 +99,42 @@ Hooks = {
         Hooks.userReady = false;
       }
     });
+  },
+
+
+  //////////////////////////////////
+  //= METHODS
+  //////////////////////////////////
+  fire: function (eventFn, userId) {
+    if (! userId) {
+      userId = Hooks.lastUserId;
+    }
+
+    // fire the event on the client
+    _.isFunction(Hooks[eventFn]) && Hooks[eventFn](userId);
+
+    // fire the event on the server
+    Meteor.call('events_' + eventFn, userId);
+  },
+
+  checkFocus: function () {
+    // check if the window is currently focused
+    if (document.hasFocus() && Hooks.focused === false) {
+      Hooks.gainFocus();
+
+    } else if (! document.hasFocus() && Hooks.focused === true) {
+      Hooks.loseFocus();
+    }
+  },
+
+  gainFocus: function () {
+    Hooks.focused = true;
+    Hooks.fire('onGainFocus');
+  },
+
+  loseFocus: function () {
+    Hooks.focused = false;
+    Hooks.fire('onLoseFocus');
   },
 
   //////////////////////////////////

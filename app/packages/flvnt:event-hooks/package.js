@@ -24,8 +24,8 @@ Package.on_use(function (api, where) {
     'oauth2',
     'mongo',
     'http',
-    'accounts-base',
     'check',
+    'accounts-base',
     'service-configuration',
     'aldeed:collection2@2.3.3',
     'aldeed:simple-schema@1.3.2',
@@ -42,7 +42,8 @@ Package.on_use(function (api, where) {
   api.add_files([
     'lib/server/event-hooks.coffee',
     'lib/server/user-observer.coffee',
-    'lib/server/methods.coffee'
+    'lib/server/methods.coffee',
+    'lib/server/hooks.js'
   ], 'server');
 
   api.add_files([

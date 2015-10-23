@@ -13,15 +13,20 @@ Package.on_use(function (api, where) {
 
 
   api.use([
-    'livedata',
     'coffeescript',
     'underscore',
-    'livedata',
+    'check',
+    'tracker',
+    'http',
+    'mongo',
+    'mrt:cron@0.0.1',
     'flvnt:env@0.0.1',
     'flvnt:logger@0.0.1',
-    'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',
-    'mrt:cron@0.0.1'
+    'flvnt:app-facebook@0.0.1',
+    'flvnt:app-db-migrations@0.0.1',
+    'flvnt:app-accounts@0.0.1',
+    'flvnt:app-beta-invites@0.0.1'
   ], where);
 
 

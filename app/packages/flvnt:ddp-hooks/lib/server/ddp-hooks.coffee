@@ -7,9 +7,9 @@
 # TODO: Accept context
 #
 # DDP.onConnect can be called anywhere on the server.
-# @params callback: (sessionId) ->
+# @params callback: (sessionId)->
 ###
-DDP.onConnect = (callback) ->
+DDP.onConnect = (callback)->
   unless _.isFunction callback
     throw new Meteor.Error "[DDP-hooks] Meteor.onConnect must be passed a function"
   connectCallbacks.push callback
@@ -23,9 +23,9 @@ DDP.onConnect = (callback) ->
 # XXX: this does not currently fire on server restarts (eg, hot-code-reloads).
 #
 # @param handle: either sessionId, session, or subscription.
-# @param callback: (sessionId) ->
+# @param callback: (sessionId)->
 ###
-DDP.onDisconnect = (handle, callback) ->
+DDP.onDisconnect = (handle, callback)->
   if _.isString handle
     sessionId = handle
 
@@ -50,11 +50,11 @@ DDP.onDisconnect = (handle, callback) ->
 
 #: internal: store callbacks
 connectCallbacks = []
-_invokeConnectCallbacks = (sessionId) ->
+_invokeConnectCallbacks = (sessionId)->
   callback(sessionId) for callback in connectCallbacks
 
 disconnectCallbacks = {}
-_invokeDisconnectCallbacks = (sessionId) ->
+_invokeDisconnectCallbacks = (sessionId)->
   callbacks = disconnectCallbacks[sessionId]
   return unless callbacks?.length
 
@@ -86,7 +86,7 @@ Meteor.setInterval (->
   if closed_session_ids.length
     logger.info "[DDP-hooks] closed-session-ids:", closed_session_ids
     for sessionId in closed_session_ids
-      _invokeDisconnectCallbacks sessionId
+      _invokeDisconnectCallbacks.call @, sessionId
 
   existing_session_ids = current_session_ids
 
