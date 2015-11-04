@@ -3,7 +3,8 @@
 # TODO: investigate pattern here: https://github.com/gadicc/meteor-accounts-merge/blob/master/accounts-merge.js
 Accounts.onCreateUser (options, user)->
   # logger.info "Accounts.onCreateUser options:", options
-  if not user.services.facebook? then return user  # skip other services
+  #: skip other services, and accept only facebook connects as new users..
+  return user unless user.services.facebook?  #: skip other services
 
   #: set the invite_code_id
   # if not options.query.invite_code?.length
@@ -27,9 +28,11 @@ Accounts.onCreateUser (options, user)->
 #: otherwise, return false so a new user isn't created for
 #: soundcloud + youtube providers.  then updates the user to
 #: append initial service data to the user.services[service] document.
-#
 Accounts.validateNewUser (user)->
   logger.info "Accounts.validateNewUser", "arguments:", arguments
+
+  # todo: how to get request headers in meteor?
+  # invite_code_id =
 
   #: is facebook oauth
   if user.services.facebook?
@@ -42,40 +45,38 @@ Accounts.validateNewUser (user)->
     #   return true
 
     # invite_code = InviteCodes.findOne _id: user.invite_code_id
-    # if not invite_code?
+    # unless invite_code?.length
     #   logger.warn "invite code not found for the user: #{fbid}"
     #   throw new Meteor.Error "invite code not found for the user: #{fbid}"
     # else
     #   return true
 
-    return true
+    true
 
   else
     #: update the user document with the secondary providers.
-    AppAccounts.add_service_connection user, (err, rv) =>
+    AppAccounts.merge_service_connection user, (err, rv)->
       logger.info "user connected to:", rv.service
       @on_connect_with_service rv
 
     #: return false, since we don't want a new user created for the service
-    return false
+    false
 
 
 #: copy a service's profile properties and update and existing user doc
-AppAccounts.add_service_connection = (user, callback) ->
+AppAccounts.merge_service_connection = (user, callback)->
   _id = Meteor.userId()
-  attrs = {}
+  service_doc = {}
 
-  # TODO: migrate to use underscore .find()
-  # TODO: where is config.accounts coming from .. ?
-  for provider in config.accounts.service_providers
-    if user.services[provider]?
-      service = provider
-      # todo: filter out unnecessary fields
-      _.each user.services[service], (value, key)->
-        attrs["services.#{service}.#{key}"] = value
-      break
+  service = _.find AppAccount.config.service_providers, (provider)=>
+    user.services[provider]?
 
-  Meteor.users.$set _id, attrs
+  #: filtering out unnecessary fields done from complete_account_setup()
+  _.each user.services[service], (value, key)->
+    service_doc["services.#{service}.#{key}"] = value
+
+  #: update the user document
+  Meteor.users.$set _id, service_doc
 
   result =
     '_id': _id

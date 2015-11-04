@@ -1,60 +1,72 @@
 
 Package.describe({
   name    : 'flvnt:google-sdk',
-  summary : 'google-sdk javascript loader',
+  summary : 'FLVNT-web meteor package + loader for the google javascript sdk',
   version : '0.0.1',
   documentation : 'README.md'
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
 
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
     'jquery',
+    'tracker',
+    'session',
+    'check',
+    'blaze',
+    'templating',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
+    'service-configuration',
+    'accounts-base',
+    'oauth',
+    'oauth2'
+  ], ['client', 'server']);
+
+  api.use([
+    'aldeed:collection2@2.3.3',
+    'aldeed:simple-schema@1.3.2',
+    'dburles:collection-helpers@1.0.3',
+    'meteorhacks:unblock@1.1.0',
+    'ccorcos:subs-cache@0.0.5',
+    "tmeasday:publish-counts@0.4.0"
+  ], ['client', 'server']);
+
+  api.use([
+    'flvnt:env@0.0.1',
     'flvnt:logger@0.0.1',
-    'flvnt:lazyload@0.0.1'
-  ], where);
+    'flvnt:api-utils@0.0.1',
+    'flvnt:app-features@0.0.1',
+    'flvnt:app-collection-schemas@0.0.1'
+  ], ['client', 'server']);
+
+  api.use([
+    // 'flvnt:jquery-touch-events@0.0.1'
+    'flvnt:lazyload@0.0.1',
+    'flvnt:app-handlebars@0.0.1',
+    'flvnt:bootstrap@0.0.1',
+    'flvnt:app-subs@0.0.1'
+  ], ['client']);
 
 
   api.add_files([
     'lib/client/google-sdk.coffee'
-  ], where);
+  ], ['client', 'server']);
 
 
-  api.export('load_google_sdk');
-});
-
-
-Package.on_test(function (api, where) {
-  api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
-
-  // standard test helpers..
-  api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'flvnt:app-fixtures'
+  api.export([
+    'load_google_sdk'
   ]);
-
-
-  // package specific..
-  api.use([
-    'ui',
-    'templating'
-  ], where);
-
-
-  // import the package..
-  api.imply('flvnt:google-sdk', where, {bare: true});
-
-
-  api.add_files([
-    'tests/exports.coffee',
-    'tests/methods.coffee'
-  ], where);
 
 });

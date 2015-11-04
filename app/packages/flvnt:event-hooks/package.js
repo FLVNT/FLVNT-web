@@ -7,53 +7,64 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
 
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
     'jquery',
-    'session',
-    'templating',
     'tracker',
+    'session',
+    'check',
     'blaze',
+    'templating',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
     'oauth',
     'oauth2',
-    'mongo',
-    'http',
-    'check',
-    'accounts-base',
     'service-configuration',
+    'accounts-base',
+    'accounts-password',
+    // TODO: can we remove accounts-ui-unstyled .. ?
+    'accounts-ui-unstyled'
+  ], ['client', 'server']);
+
+  api.use([
     'aldeed:collection2@2.3.3',
     'aldeed:simple-schema@1.3.2',
     'dburles:collection-helpers@1.0.3',
     'meteorhacks:unblock@1.1.0',
-    'meteorhacks:subs-manager@1.3.0'
-  ], where);
+    'ccorcos:subs-cache@0.0.5'
+  ], ['client', 'server']);
 
 
   api.add_files([
-    'lib/client/event-hooks.js'
-  ], 'client');
+    'lib/collections/event-hooks.coffee'
+  ], ['client', 'server']);
 
   api.add_files([
     'lib/server/event-hooks.coffee',
     'lib/server/user-observer.coffee',
     'lib/server/methods.coffee',
     'lib/server/hooks.js'
-  ], 'server');
+  ], ['server']);
 
   api.add_files([
-    'lib/collections/event-hooks.coffee'
-  ], where);
+    'lib/client/event-hooks.js'
+  ], ['client']);
 
 
   api.export([
     'Hooks',
     'EventHooksMonitoringCollection'
-  ], where);
+  ]);
 
 });

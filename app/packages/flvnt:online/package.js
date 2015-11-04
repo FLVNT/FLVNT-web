@@ -7,9 +7,8 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
 
 
   api.use([
@@ -18,13 +17,17 @@ Package.on_use(function (api, where) {
     'stylus',
     'underscore',
     'jquery',
-    'templating',
-    'session',
     'tracker',
-    'http',
-    'mongo',
-    'livedata',
+    'session',
     'check',
+    'blaze',
+    'templating',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
     'flvnt:env@0.0.1',
     'flvnt:logger@0.0.1',
     'flvnt:api-utils@0.0.1',
@@ -34,10 +37,14 @@ Package.on_use(function (api, where) {
 
   api.addFiles([
     'lib/client/online.coffee'
-  ], where);
+  ], ['client']);
 
   api.addFiles([
     'lib/server/mongo-client.coffee'
   ], ['server']);
+
+
+  api.export([
+  ])
 
 });

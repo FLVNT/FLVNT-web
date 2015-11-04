@@ -7,51 +7,58 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
 
 
   api.use([
     'coffeescript',
-    'stylus',
     'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
     'jquery',
-    'templating',
-    'spacebars',
-    'blaze',
-    // 'ui',
+    'tracker',
     'session',
     'check',
-    'tracker',
+    'blaze',
+    'templating',
+    'spacebars',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
+    'service-configuration',
+    'accounts-base',
+    'oauth',
+    'oauth2'
+  ], ['client', 'server']);
+
+  api.use([
+    'aldeed:collection2@2.3.3',
+    'aldeed:simple-schema@1.3.2',
+    'dburles:collection-helpers@1.0.3',
+    'meteorhacks:unblock@1.1.0',
+    'ccorcos:subs-cache@0.0.5'
+  ], ['client', 'server']);
+
+  api.use([
     'iron:router',
-    'meteorhacks:subs-manager@1.3.0',
+    'flvnt:app-iron-router@0.0.1',
     'flvnt:env@0.0.1',
     'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',
     'flvnt:logger@0.0.1',
-    'flvnt:app-iron-router@0.0.1',
-    'flvnt:app-subs-manager@0.0.1',
-    // 'flvnt:jquery-touch-events@0.0.1',
+    'flvnt:app-subs@0.0.1',
     'flvnt:app-accounts@0.0.1',
-    'unvael:lazyload@0.0.1'
-  ], where);
+    'flvnt:lazyload@0.0.1'
+  ], ['client', 'server']);
 
 
   api.add_files([
-    'lib/schemas/brands.coffee',
-    'lib/schemas/influencers.coffee'
-  ], where);
-
-  api.add_files([
-    'lib/collections/brands.coffee',
-    'lib/collections/influencers.coffee'
-  ], where);
-
-  api.add_files([
-    'lib/profile/client/modal.styl'
-  ], where);
+    // 'lib/profile/client/modal.styl'
+  ], ['client', 'server']);
 
 
   api.export([

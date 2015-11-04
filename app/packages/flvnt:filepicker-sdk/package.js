@@ -1,68 +1,67 @@
 
 Package.describe({
   name    : 'flvnt:filepicker-sdk',
-  summary : 'filepicker.io javascript sdk loader',
+  summary : 'FLVNT-web meteor package + loader for the filepicker.io javascript sdk',
   version : '0.0.1',
   documentation : 'README.md'
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
+
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
+    'jquery',
+    'tracker',
+    'session',
     'check',
+    'blaze',
+    'templating',
+    'spacebars',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
+    'service-configuration',
+    'accounts-base',
+    'oauth',
+    'oauth2'
+  ], ['client', 'server']);
+
+  api.use([
+    'aldeed:collection2@2.3.3',
+    'aldeed:simple-schema@1.3.2',
+    'dburles:collection-helpers@1.0.3',
+    'meteorhacks:unblock@1.1.0',
+    'ccorcos:subs-cache@0.0.5'
+  ], ['client', 'server']);
+
+  api.use([
+    "flvnt:event-hooks@0.0.1",
+    'flvnt:env@0.0.1',
+    'flvnt:logger@0.0.1',
+    'flvnt:app-features@0.0.1',
+    'flvnt:api-utils@0.0.1',
     'flvnt:lazyload@0.0.1',
-    'flvnt:logger@0.0.1'
-  ], where);
+    'flvnt:app-subs@0.0.1',
+    'flvnt:app-collection-schemas@0.0.1'
+  ], ['client', 'server']);
 
 
   api.add_files([
     'client/lib/filepicker-sdk.coffee'
-  ], where);
+  ], ['client']);
 
 
-  api.export('load_filepicker_sdk');
-});
-
-
-Package.on_test(function (api, where) {
-  api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
-
-  // standard test helpers..
-  api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'check',
-    'flvnt:app-fixtures'
-  ], where);
-
-
-  // package specific..
-  api.use([
-    'underscore',
-    'jquery',
-    'ui',
-    'blaze',
-    'templating',
-    'session',
-    'flvnt:logger@0.0.1',
-    'flvnt:lazyload@0.0.1'
-  ], where);
-
-
-  // import the package..
-  api.imply([
-    'flvnt:filepicker-sdk'
-  ], where, {bare: true});
-
-
-  api.add_files([
-    'tests/exports.coffee',
-    'tests/methods.coffee'
-  ], where);
+  api.export([
+    'load_filepicker_sdk'
+  ]);
 
 });

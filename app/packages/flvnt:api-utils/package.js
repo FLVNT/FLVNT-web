@@ -7,17 +7,29 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
 
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
+    'jquery',
+    'tracker',
+    'session',
     'check',
+    'blaze',
+    'templating',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
     'flvnt:logger@0.0.1'
-  ], where);
+  ], ['client', 'server']);
 
 
   api.add_files([

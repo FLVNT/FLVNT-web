@@ -3,7 +3,6 @@ Activity = new Mongo.Collection "activity", {}
 
 
 Activity.attachSchema new SimpleSchema
-
   created_at: SchemaHelpers.created_at()
   updated_at: SchemaHelpers.updated_at()
 
@@ -80,7 +79,7 @@ Activity.attachSchema new SimpleSchema
     ]
 
 
-Activity.helpers {}
+Activity.helpers
   route_action: ->
     logger.info '[ROUTE-ACTION]', @, @target, @object
     target_id   = @target?.id
@@ -192,7 +191,7 @@ Activity.query =
 
   notifications_count: (user)->
     find = Activity.query.notifications user,
-      'read_at': user.notification_read_at
+      'read_at': user.notifications_read_at
 
     # limit fields to only the _id since we're just running a count..
     find.options.fields =

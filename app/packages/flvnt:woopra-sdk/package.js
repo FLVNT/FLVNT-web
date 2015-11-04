@@ -12,78 +12,42 @@ Npm.depends({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || 'client';
+
 
   api.use([
     'coffeescript',
     'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
     'jquery',
+    'tracker',
+    'session',
+    'check',
+    'blaze',
     'templating',
     'spacebars',
-    'blaze',
     'ui',
-    'session',
-    'flvnt:logger@0.0.1',
-    'flvnt:api-utils@0.0.1',
-    'flvnt:lazyload@0.0.1',
-    'flvnt:app-features@0.0.1'
-  ], ['server', 'client']);
-
-
-  api.use([
-    'mquandalle:jade@0.4.2',
-    'jquery',
-    'templating',
-    'blaze',
-    'ui'
-  ], where);
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
 
 
   api.add_files([
     'lib/client/woopra-sdk.jade',
     'lib/client/woopra-sdk.js'
-  ], 'client');
+  ], ['client']);
 
   api.add_files([
     'lib/server/woopra-sdk.coffee'
-  ], 'server');
+  ], ['server']);
 
 
-  api.export('woopra', where);
-  api.export('Woopra', where);
-
-});
-
-
-Package.on_test(function (api, where) {
-  where = where || ['client'];
-
-  // standard test helpers..
-  api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'flvnt:app-fixtures'
+  api.export([
+    'woopra',
+    'Woopra'
   ]);
-
-
-  // package specific..
-  api.use([
-    'ui',
-    'templating'
-  ], where);
-
-
-  // import the package..
-  api.imply([
-    'flvnt:woopra-sdk'
-  ], where, {bare: true});
-
-
-  api.add_files([
-    'tests/exports.coffee',
-    'tests/methods.coffee'
-  ], where);
 
 });

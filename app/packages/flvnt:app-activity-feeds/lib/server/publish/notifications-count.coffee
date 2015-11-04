@@ -1,19 +1,15 @@
 
+#: publish un-read notifications count..
 #: see: https://atmospherejs.com/package/publish-counts
 Meteor.publish 'NotificationsCount', ->
   @unblock()
 
   unless @userId?
-    logger.info '@userId null in publish: NotificationCount, returning empty..'
+    logger.info '@userId null in publish: NotificationsCount, returning empty..'
     return @ready()
 
-  #: publish un-read notifications count
   user = Meteor.users.findOne '_id': @userId
-  # if user.notification_read_at?
-  #   read_at = user.notifications_read_at()
-  # else
-  #   read_at = null
+  query = Activity.query.notifications_count user
+  pub = Counts.publish @, 'notifications-count', query, {}
 
-  pub = Activity.query.notifications_count user
-  Counts.publish @, 'notification-count', pub, {}
   @ready()

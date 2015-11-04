@@ -1,5 +1,4 @@
 
 AppAccounts =
-  ui: {}
-  # config is for managing service-configs
+  #: config: for managing accounts-ui service-configs
   config: {}

@@ -7,34 +7,67 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
 
 
   api.use([
     'coffeescript',
-    'stylus',
     'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
     'jquery',
-    'templating',
-    'spacebars',
-    'blaze',
+    'tracker',
     'session',
     'check',
-    'tracker',
+    'blaze',
+    'templating',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
+    'oauth',
+    'oauth2',
+    'accounts-base',
+    'service-configuration'
+  ], ['client', 'server']);
+
+  api.use([
+    "aldeed:collection2@2.3.3",
+    "aldeed:simple-schema@1.3.2",
+    "dburles:collection-helpers@1.0.3",
+    "meteorhacks:unblock@1.1.0",
+    "ccorcos:subs-cache@0.0.5",
+    "tmeasday:publish-counts@0.4.0"
+  ], ['client', 'server']);
+
+  api.use([
     'iron:router',
     'flvnt:app-iron-router@0.0.1',
-    'flvnt:app-subs-manager@0.0.1',
-    'meteorhacks:subs-manager@1.3.0',
+    // 'flvnt:mixpanel@0.0.1',
     'flvnt:env@0.0.1',
     'flvnt:logger@0.0.1',
     'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',
+    'flvnt:event-hooks@0.0.1',
+    'flvnt:app-collection-schemas@0.0.1'
+  ], ['client', 'server']);
+
+  api.use([
+    // 'flvnt:jquery-touch-events@0.0.1'
+    'flvnt:app-subs@0.0.1',
+    'flvnt:app-handlebars@0.0.1',
     'flvnt:bootstrap@0.0.1',
-    'flvnt:jquery-touch-events@0.0.1'
-  ], where);
+    // chrome bug: https://github.com/meteor/meteor/issues/1004#issuecomment-68652474
+    // UA in Chrome iOS is same as Safari iOS, with CriOS/<ChromeRevision> addition
+    'awatson1978:browser-detection@1.0.4'
+  ], ['client']);
+
+  api.use([
+    'meteorhacks:fast-render@2.3.2'
+  ], ['server']);
 
 
   api.add_files([
@@ -44,7 +77,7 @@ Package.on_use(function (api, where) {
     'lib/client/route-loading.jade',
     // 'lib/client/route-loading.coffee',
     'lib/client/route-not-found.jade'
-  ], where);
+  ], ['client', 'server']);
 
 
   api.export([

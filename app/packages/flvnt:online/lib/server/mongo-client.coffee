@@ -2,11 +2,13 @@
 Meteor.startup ->
   # logger.info 'MongoInternals:', MongoInternals
   # logger.info 'MongoInternals:', MongoInternals.defaultRemoteCollectionDriver()
-  db_client = MongoInternals.defaultRemoteCollectionDriver().mongo.db
+  client = MongoInternals.defaultRemoteCollectionDriver().mongo.db
 
-  _connection_error = db_client.connectionError
-  logger.info 'db_client:', db_client
+  _connection_error = client.connectionError
+  # logger.info '[DEFAULT-REMOTE-COLLECTION-DRIVER]:',
+  #   '\n - client.connectionError:', client.connectionError
+  #   '\n -', client
 
-  db_client.connectionError = =>
+  client.connectionError = =>
     logger.warn '[db_client.connectionError]:', arguments
     _connection_error.apply @, arguments

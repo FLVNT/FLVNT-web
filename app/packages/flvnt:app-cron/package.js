@@ -7,27 +7,51 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['server'];
 
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
-    'check',
+    'jquery',
     'tracker',
-    'http',
+    'session',
+    'check',
+    'blaze',
+    'templating',
     'mongo',
+    'ddp',
+    'http'
+  ], ['server']);
+
+  api.use([
+    'oauth',
+    'oauth2',
+    'service-configuration',
+    'accounts-base'
+  ], ['server']);
+
+  api.use([
+    "aldeed:collection2@2.3.3",
+    "aldeed:simple-schema@1.3.2",
+    "dburles:collection-helpers@1.0.3",
+    "meteorhacks:unblock@1.1.0",
+    "tmeasday:publish-counts@0.4.0"
+  ], ['server']);
+
+  api.use([
     'mrt:cron@0.0.1',
     'flvnt:env@0.0.1',
     'flvnt:logger@0.0.1',
     'flvnt:app-features@0.0.1',
-    'flvnt:app-facebook@0.0.1',
+    'flvnt:app-facebook-sdk@0.0.1',
     'flvnt:app-db-migrations@0.0.1',
     'flvnt:app-accounts@0.0.1',
     'flvnt:app-beta-invites@0.0.1'
-  ], where);
+  ], ['server']);
 
 
   api.add_files([
@@ -41,7 +65,7 @@ Package.on_use(function (api, where) {
     // 'lib/server/tasks/send_daily_active_user_digest_emails.coffee',
 
     'lib/server/cron-definitions.coffee'
-  ], where);
+  ], ['server']);
 
 
   api.export([

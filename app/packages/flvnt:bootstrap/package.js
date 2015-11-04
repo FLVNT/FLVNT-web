@@ -14,9 +14,19 @@ Package.on_use(function (api, where) {
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
+    'stylus',
+    'underscore',
     'jquery',
-    'underscore'
-  ], where);
+    'tracker',
+    'session',
+    'check',
+    'blaze',
+    'templating',
+    'mongo',
+    'http'
+  ], ['client', 'server']);
+
 
 
   api.add_files([
@@ -32,7 +42,7 @@ Package.on_use(function (api, where) {
     // BOOTSTRAP CSS COMPONENTS
     // ------------------------
 
-    // 'lib/client/styles/definition-list.css',
+    // 'lib/client/styles/list/definition-list.css',
     // 'lib/client/styles/blockquote/blockquote.css',
 
 
@@ -110,7 +120,7 @@ Package.on_use(function (api, where) {
 
 
     // 'lib/client/styles/pager/pagination.css',
-    // 'lib/client/styles/pager.css',
+    // 'lib/client/styles/pager/pager.css',
 
 
     'lib/client/styles/form-control/label/label.css',
@@ -162,7 +172,7 @@ Package.on_use(function (api, where) {
     'lib/client/styles/bootstrap-post.css',
 
 
-    'lib/client/styles/meteor-overrides/boostrap.css'
+    'lib/client/styles/meteor-overrides/bootstrap.css'
   ], where);
 
 
@@ -172,7 +182,7 @@ Package.on_use(function (api, where) {
     // 'lib/client/scripts/alert.js',
     // 'lib/client/scripts/button.js',
     // 'lib/client/scripts/carousel.js',
-    'lib/client/scripts/collapse.js',
+    // 'lib/client/scripts/collapse.js',
     'lib/client/scripts/dropdown.js',
     'lib/client/scripts/modal.js',
     'lib/client/scripts/tooltip.js',

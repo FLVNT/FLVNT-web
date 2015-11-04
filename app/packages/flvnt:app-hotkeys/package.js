@@ -7,40 +7,48 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
+
 
   api.use([
     'coffeescript',
-    'stylus',
     'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
     'jquery',
-    'templating',
+    'tracker',
     'session',
     'check',
-    'tracker',
+    'blaze',
+    'templating',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
     'iron:router@1.0.7',
+    'flvnt:env@0.0.1',
     'flvnt:app-iron-router@0.0.1',
-    'flvnt:app-subs-manager@0.0.1',
-    'meteorhacks:subs-manager@1.3.0',
+    'flvnt:app-subs@0.0.1',
     'flvnt:logger@0.0.1',
     'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',
     'flvnt:bootstrap@0.0.1',
-    // 'flvnt:jquery-touch-events@0.0.1',
-    'flvnt:jquery-easing@0.0.1'
-  ], where);
+    "flvnt:event-hooks@0.0.1",
+    'flvnt:app-collection-schemas@0.0.1'
+  ], ['client']);
 
 
   api.add_files([
     'lib/client/hotkeys.jade',
     'lib/client/hotkeys.coffee'
-  ], where);
+  ], ['client']);
 
 
   api.export([
+    'Hotkeys'
   ]);
 
 });

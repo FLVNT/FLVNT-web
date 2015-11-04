@@ -8,26 +8,23 @@ Router.map ->
     data: ->
       show_header: false
 
-    waitOn: ->
-      [
-        # @subscribe("userData"),
-      ]
+    # waitOn: ->
+    #   [
+    #     @subscribe("userData"),
+    #   ]
 
     onBeforeAction: ->
-      unless @ready()
-        return @render 'route-loading'
-
       #: check user is already logged in..
       user = Meteor.user()
-      if user?
-        #: redirect to the user's groups list page
-        if user.completed_setup
-          logger.info "[ACCOUNTS] user logged in, and has completed their setup"
-          return @redirect 'groups'
+      return @next() unless user?
 
-        else
-          logger.warn '[ACCOUNTS] user logged in, but hasnt completed their account setup'
-          # return @redirect '/invite/signup/complete'
-          return @redirect 'groups'
+      #: redirect to the user's groups list page
+      if user.completed_setup
+        logger.info "[ACCOUNTS] user logged in, and has completed their setup"
+        @redirect 'groups/explore/100'
+
       else
-        @next()
+        logger.warn '[ACCOUNTS] user logged in, but hasnt completed their account setup'
+        # TODO: broken.. need to re-implement this screen..
+        # @redirect '/invite/signup/complete'
+        @redirect 'groups/explore/100'

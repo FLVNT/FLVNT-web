@@ -1,3 +1,4 @@
 
 Meteor.startup ->
-  AppAccounts.config.set reset: false
+  #: initialize the accounts-ui package
+  Accounts.ui?.config AppAccounts.config.ui

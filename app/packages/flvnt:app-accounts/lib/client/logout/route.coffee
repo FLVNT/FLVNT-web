@@ -5,17 +5,20 @@ Router.map ->
     # controller: PageTrackerController
     name: "logout"
 
-    waitOn: ->
-      [
-        # @subscribe("userData"),
-      ]
+    # waitOn: ->
+    #   [
+    #     @subscribe("userData"),
+    #   ]
 
     onBeforeAction: ->
-      unless @ready()
-        return @render 'route-loading'
-
       Meteor.logout ->
         logger.info "[ACCOUNTS] user is logged out.."
+
+        #: clear cache from subs-manager (see: https://github.com/kadirahq/subs-manager/issues/15)
+        subs.clear()
+        group_subs.clear()
+        notifications_subs.clear()
+        notifications_count_sub.clear()
       @redirect 'index'
 
 

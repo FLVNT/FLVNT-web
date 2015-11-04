@@ -13,7 +13,7 @@ AppAccounts.on_connect_with_service = (service)->
   logger.info "connected to service:", service
   u = Meteor.user()
   logger.info "on_connect_with_service:", service, u
-  # todo: move logic from RouteController to here..
+  # #: TODO: move logic from RouteController to here..
 
 
 #: callback when a user disconnected a third-party oauth provider account

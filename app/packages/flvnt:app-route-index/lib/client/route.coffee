@@ -10,15 +10,12 @@ Router.map ->
 
     waitOn: ->
       [
-        subs.subscribe("userData"),
+        # subs.subscribe("userData"),
         # subs.subscribe('AcceptInviteCode', invite_code_id),
         # subs.subscribe("UserAcceptedInviteCode"),
       ]
 
     onBeforeAction: ->
-      unless @ready()
-        return @render 'route-loading'
-
       #: check user is already logged in..
       user = Meteor.user()
       if user? and not _.isNull user

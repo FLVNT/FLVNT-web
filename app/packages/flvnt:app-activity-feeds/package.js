@@ -1,15 +1,14 @@
 
 Package.describe({
-  name    : 'flvnt:activity-feeds',
+  name    : 'flvnt:app-activity-feeds',
   summary : 'activity streams for meteor apps',
   version : '0.0.1',
   documentation : 'README.md'
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['server', 'client'];
 
 
   api.use([
@@ -18,31 +17,45 @@ Package.on_use(function (api, where) {
     'stylus',
     'underscore',
     'jquery',
-    'mongo',
-    'http',
-    'blaze',
-    'session',
     'tracker',
-    'templating',
+    'session',
     'check',
+    'blaze',
+    'templating',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
+    'oauth',
+    'oauth2',
+    'accounts-base',
+    'service-configuration'
+  ], ['client', 'server']);
+
+  api.use([
     'aldeed:collection2@2.3.3',
     'aldeed:simple-schema@1.3.2',
     'dburles:collection-helpers@1.0.3',
-    'tmeasday:publish-counts@0.4.0',
-    'meteorhacks:subs-manager@1.3.0',
     'meteorhacks:unblock@1.1.0',
-    'flvnt:collection-schemas@0.0.1',
+    'ccorcos:subs-cache@0.0.5',
+    'tmeasday:publish-counts@0.4.0'
+  ], ['client', 'server']);
+
+  api.use([
     'flvnt:env@0.0.1',
     'flvnt:logger@0.0.1',
     'flvnt:api-utils@0.0.1',
-    'flvnt:features@0.0.1'
-  ], where);
+    'flvnt:app-features@0.0.1',
+    'flvnt:app-collection-schemas@0.0.1'
+  ], ['client', 'server']);
 
 
   api.add_files([
     'lib/activity-feeds-api.coffee',
     'lib/collections/collections.coffee'
-  ], where);
+  ], ['client', 'server']);
 
   api.add_files([
     'lib/server/methods/methods.coffee',
@@ -57,9 +70,9 @@ Package.on_use(function (api, where) {
 
   api.export([
     'Activity',
-    'activity_api'
+    'activity_api',
     'notification_count_sub',
     'notifications_sub_handle'
-  ], where);
+  ]);
 
 });

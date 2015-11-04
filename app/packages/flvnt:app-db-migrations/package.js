@@ -14,23 +14,42 @@ Package.on_use(function (api, where) {
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
     'jquery',
-    'mongo',
-    'http',
     'tracker',
     'session',
+    'check',
+    'blaze',
+    'templating',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
+    'oauth',
+    'oauth2',
+    'service-configuration',
+    'accounts-base'
+  ], ['client', 'server']);
+
+  api.use([
     'aldeed:collection2@2.3.3',
     'aldeed:simple-schema@1.3.2',
     'dburles:collection-helpers@1.0.3',
-    'flvnt:logger@0.0.1',
-    'flvnt:env@0.0.1',
-    'flvnt:app-features@0.0.1',
-    'flvnt:collection-schemas@0.0.1',
-    'flvnt:api-utils@0.0.1',
-    'tmeasday:publish-counts@0.4.0',
-    'meteorhacks:subs-manager@1.3.0',
     'meteorhacks:unblock@1.1.0'
+    // 'tmeasday:publish-counts@0.4.0',
+  ], ['server', 'client']);
+
+  api.use([
+    'flvnt:env@0.0.1',
+    'flvnt:logger@0.0.1',
+    'flvnt:api-utils@0.0.1',
+    'flvnt:app-features@0.0.1',
+    'flvnt:app-collection-schemas@0.0.1',
+    'flvnt:app-subs@0.0.1'
   ], where);
 
 
@@ -39,44 +58,16 @@ Package.on_use(function (api, where) {
   ], where);
 
   api.add_files([
-    'lib/server/startup.coffee'
+    // 'lib/server/startup.coffee'
   ], 'server');
 
   api.add_files([
   ], 'client');
 
 
-  api.export('Migrations');
-  api.export('Migration');
-
-});
-
-
-Package.on_test(function (api, where) {
-  api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
-
-  // standard test helpers..
-  api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'flvnt:app-fixtures'
-  ], where);
-
-
-  // package specific..
-  api.use([
-  ], where);
-
-
-  // import the package..
-  api.imply([
-    'flvnt:app-db-migrations'
-  ], where, {bare: true});
-
-
-  api.add_files([
-    'tests/exports.coffee',
-    'tests/methods.coffee'
-  ], where);
+  api.export([
+    'Migrations',
+    'Migration'
+  ]);
 
 });

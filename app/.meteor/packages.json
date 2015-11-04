@@ -30,20 +30,20 @@
   },
 
   "pubsub": {
-      "meteorhacks:unblock"        : "1.1.0",
-      "tmeasday:publish-counts"    : "0.4.0",
-      "meteorhacks:subs-manager"   : "1.3.0",
-      "flvnt:app-subs-manager"     : "0.0.1",
-      "flvnt:ddp-hooks"            : "0.0.1"
+      "meteorhacks:unblock"     : "1.1.0",
+      "tmeasday:publish-counts" : "0.4.0",
+      "ccorcos:subs-cache"      : "0.0.5",
+      "flvnt:app-subs"          : "0.0.1",
+      "flvnt:ddp-hooks"         : "0.0.1"
   },
 
   "collections": {
-      "flvnt:app-db-migrations"    : "0.0.1",
-      "flvnt:event-hooks"          : "0.0.1",
-      "aldeed:collection2"         : "2.3.3",
-      "aldeed:simple-schema"       : "1.3.2",
-      "dburles:collection-helpers" : "1.0.3",
-      "flvnt:collection-schemas"   : "0.0.1"
+      "flvnt:app-db-migrations"      : "0.0.1",
+      "flvnt:event-hooks"            : "0.0.1",
+      "aldeed:collection2"           : "2.3.3",
+      "aldeed:simple-schema"         : "1.3.2",
+      "dburles:collection-helpers"   : "1.0.3",
+      "flvnt:app-collection-schemas" : "0.0.1"
   },
 
   "logging": {
@@ -107,18 +107,21 @@
       "accounts-password"  : null,
       "accounts-facebook"  : null,
       "accounts-google"    : null,
+      "accounts-twitter"   : null,
       "bozhao:accounts-instagram" : null,
       "flvnt:app-accounts" : "0.0.1"
   },
 
   "third_party_sdks": {
-      "flvnt:lazyload"     : "0.0.1",
-      "flvnt:filepicker-sdk"    : "0.0.1",
-      "flvnt:facebook-sdk"      : "0.0.1",
-      "flvnt:google-sdk"        : "0.0.1",
-      "flvnt:instagram-sdk"     : "0.0.1",
-      "flvnt:youtube-frame-sdk" : "0.0.1",
-      "flvnt:soundcloud-sdk"    : "0.0.1"
+      "flvnt:lazyload"         : "0.0.1",
+      "flvnt:filepicker-sdk"   : "0.0.1",
+      "flvnt:app-facebook-sdk" : "0.0.1",
+      "flvnt:facebook-sdk"     : "0.0.1",
+      "flvnt:google-sdk"       : "0.0.1",
+      "flvnt:instagram-sdk"    : "0.0.1",
+      "flvnt:youtube-sdk"      : "0.0.1",
+      "flvnt:soundcloud-sdk"   : "0.0.1",
+      "flvnt:twitter-sdk"      : "0.0.1"
   },
 
   "underscore_exts": {
@@ -129,37 +132,40 @@
       "jquery"                        : "1.10.2",
       "mrt:modernizr-meteor"          : "2.6.2",
       "awatson1978:browser-detection" : "1.0.4",
-      "flvnt:jquery-easing"           : "0.0.1",
       "flvnt:bootstrap"               : "0.0.1"
   },
 
 
   "server_libs": {
       "node-btoa"      : "0.0.1",
-      "percolate:synced-cron" : null,
       "flvnt:app-cron" : "0.0.1",
-      "flvnt:nodepkg"  : "0.0.1"
+      "flvnt:nodepkg"  : "0.0.1",
+      "percolate:synced-cron" : null
   },
 
   "flvnt_app_global": {
-      "flvnt:api-utils"       : "0.0.1",
-      "flvnt:app-features"    : "0.0.1",
-      "flvnt:app-activity-feeds" : "0.0.1",
-      "unvael:app-facebook"   : "0.0.1"
+      "flvnt:api-utils"    : "0.0.1",
+      "flvnt:app-features" : "0.0.1",
+      "flvnt:app-brands"   : "0.0.1",
+      "flvnt:app-talent"   : "0.0.1",
+      "flvnt:app-projects" : "0.0.1",
+      "flvnt:app-beta-invites"   : "0.0.1",
+      "flvnt:app-activity-feeds" : "0.0.1"
   },
 
   "flvnt_app_server": {
-      "flvnt:env"       : "0.0.1"
+      "flvnt:env" : "0.0.1"
   },
 
   "flvnt_app_client": {
+      "flvnt:app-handlebars" : "0.0.1",
       "flvnt:app-hotkeys" : "0.0.1",
-      "flvnt:handlebars"  : "0.0.1",
+      "flvnt:app-fonts"   : "0.0.1",
       "flvnt:online"      : "0.0.1"
   },
 
   "flvnt_app_routes": {
-    "flvnt:app-routes-index" : "0.0.1"
+      "flvnt:app-routes-index" : "0.0.1"
   }
 
 }

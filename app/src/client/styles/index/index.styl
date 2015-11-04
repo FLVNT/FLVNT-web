@@ -5,19 +5,26 @@
 .layer-2
   background url('/images/layer-02.jpg') no-repeat
 
-.txt-1
+
+logo-height = 75px
+
+
+.txt-1.logo
   width 400px
-  height 75px
+  height logo-height
+  line-height logo-height
   margin 0 auto
   // margin-top 210px
   margin-left -200px
-  background url('/images/txt-01-c.png') no-repeat center top
-  background-size contain
   margin-top 120px
-  position absolute
-  top 0
-  left 50%
+  // background url('/images/txt-01-c.png') no-repeat center top
+  // background-size contain
   z-index 10000
+  cursor pointer
+  color UNVAEL-GOLD
+  font-family FONT-SERIF
+  font-size 6em
+  letter-spacing 0.2em
 
 
 txt-2-width = 100px
@@ -34,20 +41,46 @@ txt-2-width = 100px
   left 50%
   z-index 10010
 
+.btn
+  font-family FONT-SANS-SERIF
+  font-size 8px
+  color #fff
+  letter-spacing 0.3em
+  margin 0 auto
+  transition all .12s ease-in-out
+  background-color #000
+  padding 22px 34px
+  margin-left 150px
+  margin-top 130px
+
+  &:hover
+    animation(WB-btn-flash 0.5s ease-in-out)
+    background-color #9a8d3c
+
+
 txt-3-width = 1046px
 
 .txt-3
-  width txt-3-width
+  // width txt-3-width
   height 38px
+  line-height 22px
   margin 0 auto
   // margin-top 1452px
   margin-left -(txt-3-width / 2)px
-  background url('/images/v2/txt-03.png') no-repeat center top
-  background-size contain
+  translate3dfn translate3d(0, -50%, 0px)
+  // background url('/images/v2/txt-03.png') no-repeat center top
+  // background-size contain
   position absolute
   top 560px
   left 50%
   z-index 10030
+  color #fff
+  font-family FONT-SERIF
+  font-size 1.7em
+  letter-spacing 0.4em
+  word-spacing 0.03em
+  text-align center
+
 
 .txt-4
   width 1600px
@@ -166,7 +199,13 @@ html
     &.d
       top 773px
       left 990px
-      background-image url('/images/artists-influencers/drake.jpg')
+      background-image url('/images/artists-influencers/nick-young.jpg')
+      background-size contain
+      background-repeat no-repeat
+    &.e
+      top 692px
+      left 122px
+      background-image url('/images/artists-influencers/neyo.jpg')
       background-size contain
       background-repeat no-repeat
 

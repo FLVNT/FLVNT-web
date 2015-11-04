@@ -27,14 +27,17 @@
   "db_pswd" : "aDSB.85xGw",
   "db_name" : "FLVNT-web",
 
+  "facebook_app_id"         : "1705830562981686",
   "facebook_client_id"      : "1705830562981686",
   "facebook_client_secret"  : "865f7e1bbde79da355d162557af9aa34",
   "instagram_client_id"     : "e5246b1daf44451abc4ce26eaeb771ff",
   "instagram_client_secret" : "97391696cdd74d498a8e3cb153f4cfa1",
   "twitter_client_id"       : "GzWOXMVeqzbuKZeX9DIcEpBsZ",
   "twitter_client_secret"   : "WQcR2l0tLbVC1q1q0MyW2b1XbgyWIDTiqBhalq8GO3IMSAtpsP",
+  "google_app_id"           : null,
   "google_client_id"        : "",
   "google_client_secret"    : "",
+  "vine_app_id"             : null,
   "vine_client_id"          : "",
   "vine_client_secret"      : "",
   "vimeo_client_id"         : "",
@@ -44,6 +47,7 @@
   "snapchat_client_secret"  : "",
   "pinterest_client_id"     : "",
   "pinterest_client_secret" : "",
+
   "loggly_input_token"      : "",
   "loggly_subdomain"        : "",
   "loggly_input_url"        : "",
@@ -56,14 +60,24 @@
     "filepicker": {
       "key": ""
     },
+
+    "facebook_app_id"     : "1705830562981686",
     "facebook_client_id"  : "1705830562981686",
+    "instagram_app_id"    : null,
     "instagram_client_id" : "e5246b1daf44451abc4ce26eaeb771ff",
+    "twitter_app_id"      : null,
     "twitter_client_id"   : "GzWOXMVeqzbuKZeX9DIcEpBsZ",
+    "google_app_id"       : null,
     "google_client_id"    : "",
+    "vimeo_app_id"        : null,
     "vimeo_client_id"     : "",
+    "vine_app_id"         : null,
     "vine_client_id"      : "",
+    "snapchat_app_id"     : null,
     "snapchat_client_id"  : "",
+    "pinterest_client_id" : null,
     "pinterest_client_id" : "",
+
     "app_url"             : "http://localhost:3300",
     "app_host"            : "localhost",
     "app_port"            : "3300"

@@ -18,4 +18,4 @@ TEST-API
 
 Tinytest.add 'exports: app-fonts', (test) ->
   test.isFalse _.isUndefined Activity,
-    "app-fonts should be exported in package: unvael:app-fonts"
+    "app-fonts should be exported in package: flvnt:app-fonts"

@@ -14,11 +14,22 @@ Package.on_use(function (api, where) {
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
+    'jquery',
+    'tracker',
+    'session',
+    'check',
+    'blaze',
+    'templating',
     'livedata',
     'mongo',
-    'ddp',
-    'check',
+    'http',
+    'ddp'
+  ], ['client', 'server']);
+
+  api.use([
     'flvnt:env@0.0.1',
     'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',

@@ -11,16 +11,21 @@ ApiUtils.get_meteor_user_or_invalidate = ->
 
 
 #: used to throw a Meteor.Error when an argument does not exist or is empty
-ApiUtils.validate_non_empty_field_exists = (name, value) ->
+ApiUtils.validate_non_empty_field_exists = (name, value)->
+  if type? and typeof value != type
+    throw new Meteor.Error "#{name} is required and must be a #{type}"
+
   unless value?.length
-    throw new Meteor.Error "#{name} is required and cannot be empty"
+    if type?
+      throw new Meteor.Error "#{name} is required and must be a #{type}"
+    else
 
 
-ApiUtils.int_or_default = (param, def) ->
-  if not param? or _.isNaN(parseInt(param, 10))
-    param = def
+ApiUtils.int_or_default = (param, def)->
+  if not value? or not _.isNumber parseInt(value, 10)
+    value = def
 
   else
-    param = parseInt param, 10
+    value = parseInt value, 10
 
-  param
+  value

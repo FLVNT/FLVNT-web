@@ -11,7 +11,7 @@ Meteor.users.attachSchema new SimpleSchema
 
   notifications_read_at:
     type: Date
-    label: "notification read-at date"
+    label: "notifications-read-at date"
     optional: true
 
   completed_setup:
@@ -81,6 +81,7 @@ Meteor.users.attachSchema new SimpleSchema
       min: 0
       optional : true
 
+  # TODO: deprecate, migrate -> stats.down
   'stats.downvotes':
       type  : Number
       label : "downvotes count"
@@ -89,7 +90,7 @@ Meteor.users.attachSchema new SimpleSchema
 
 
 Meteor.users.helpers
-  fb_graph_photo: (width) ->
+  fb_graph_photo: (width)->
     _id = @_id
     size = "type=large"
     if width?
@@ -101,9 +102,7 @@ Meteor.users.helpers
     _.pluck @groups, 'id'
 
   parseEmail: ->
-    if @emails
-
-    else if @services
+    if not @emails? and @services
       email = switch
         when services.facebook then services.facebook.email
         when services.github   then services.github.email
@@ -112,18 +111,29 @@ Meteor.users.helpers
         else null
       email
 
-  notifications_read_at: (read_at) ->
-    unless read_at?.valueOf?
-      if @notification_read_at?
-        read_at = @notification_read_at
+  #: updates the user document..
+  set_notifications_read_at: (read_at)->
+    user = ApiUtils.get_meteor_user_or_invalidate()
 
-    unless read_at?.valueOf?
-      read_at = new Date 1970, 1, 1
+    query =
+      '_id': user._id
 
-    if _.isString read_at
-      read_at = new Date read_at
+    action =
+      $set:
+        'notifications_read_at': read_at
 
-    read_at
+    Meteor.users.update query, action, (err, rv)->
+      if err?
+        logger.error 'error updating user "notifications_read_at":', {
+          err: err
+          err_stack: err.stack
+          user_id: user._id
+        }
+      else
+        logger.info 'notifications_read_at updated:', {
+          read_at: read_at
+          user_id: user._id
+        }
 
   #: called after a user confirms their invite and sets their email + password
   complete_account_setup: (options)->
@@ -159,33 +169,33 @@ Meteor.users.helpers
           'verified': options.verified
     Meteor.users.update user._id, update
 
-    # use the accounts-password built-in method to set the password + salt
+    #: use the accounts-password built-in method to set the password + salt..
     Accounts.setPassword user._id, options.password
 
-    # download facebook friend data
-    # TODO: move back to background jobs..
+    #: download facebook friend data
+    #: TODO: move back to background jobs..
     UserFacebook.download_fbfriends user
 
-    # create default ShepherdTour docs
-    if Features.ENABLE_SHEPHERD
-      ShepherdTours.new_user_signup user._id
+    # #: create default ShepherdTour docs
+    # if Features.ENABLE_SHEPHERD
+    #   ShepherdTours.new_user_signup user._id
 
 
 Meteor.users.allow
   # TODO: this might be broken!!
-  # allow users to edit their notification read_at marker
-  update: (userId, doc, fields, modifier) ->
+  # allow users to edit their `notifications_read_at`
+  update: (userId, doc, fields, modifier)->
     # deny users editing other users
     return false unless doc._id == userId
 
     allow = (
       ( fields?.length == 1 )                 and
-      ( fields[0] == 'notification_read_at'  )  and
-      ( modifier.$set?.notification_read_at? )  and
-      ( _.isDate modifier.$set.notification_read_at )
+      ( fields[0] == 'notifications_read_at'  )  and
+      ( modifier.$set?.notifications_read_at? )  and
+      ( _.isDate modifier.$set.notifications_read_at )
     )
 
-    logger.info '[USERS-UPDATE] allow', allow
+    logger.info '[USERS-UPDATE-ALLOW] notifications_read_at:', allow
     allow
   ,
   fetch: ['_id']
@@ -199,3 +209,100 @@ Meteor.users.$unset = (_id, attrs)->
 
 Meteor.users.$set = (_id, attrs)->
   Meteor.users.update _id, {$set: attrs}
+
+
+#: TODO: come up with a nity way for other packages to "register" fields to be
+#: included in the publish..
+Meteor.users.visible_fields = ->
+  'createdAt'       : 1
+  'completed_setup' : 1
+  'profile.name'    : 1
+  'notifications_read_at' : 1
+
+  'stats.posts' : 1
+  'stats.likes' : 1
+  'stats.down'  : 1
+
+  'groups.id'     : 1
+  'groups.admin'  : 1
+  'groups.status' : 1
+
+  #: facebook fields autopublished by accounts-facebook package
+  #: TODO: why gender..?  contribute a change to meteor-core to remove it ?
+  #: ---------------
+  # 'services.facebook.id': 1
+  # 'services.facebook.username': 1
+  # 'services.facebook.gender': 1
+
+  #: facebook fields
+  #: ---------------
+  # 'services.facebook.bio': 1
+  # 'services.facebook.birthday': 1
+  # 'services.facebook.email': 1
+  # 'services.facebook.expiresAt': 1
+  # 'services.facebook.link': 1
+  # 'services.facebook.locale': 1
+  # 'services.facebook.location': 1
+  # 'services.facebook.music.data': 1
+
+  # google fields
+  # -------------
+  # 'services.google.expiresAt': 1
+  # 'services.google.id': 1
+  # 'services.google.picture': 1
+
+  # soundcloud fields
+  # -----------------
+  # 'services.soundcloud.avatar_url': 1
+  # 'services.soundcloud.city': 1
+  # 'services.soundcloud.country': 1
+  # 'services.soundcloud.description': 1
+  # 'services.soundcloud.followers_count': 1
+  # 'services.soundcloud.followings_count': 1
+  # 'services.soundcloud.id': 1
+  # 'services.soundcloud.permalink_url': 1
+  # 'services.soundcloud.playlist_count': 1
+  # 'services.soundcloud.private_playlists_count': 1
+  # 'services.soundcloud.private_tracks_count': 1
+  # 'services.soundcloud.public_favorites_count': 1
+  # 'services.soundcloud.track_count': 1
+  # 'services.soundcloud.website': 1
+  # 'library.soundcloud_favorite_ids': 1
+
+
+Meteor.users.helpers
+  validate_fb_token: ->
+    if not user.services?.facebook? or not user.services.facebook.accessToken?.length
+      logger.warn("user #{user._id} doesn't have their facebook connected..")
+      return false
+
+    #: check + return if we're aware that the user's fb-auth-token is expired..
+    if user.services.facebook._expired == 1
+      logger.warn("user #{user._id}'s auth token is still expired..")
+      return false
+
+    #: check that the auth token has not expired...
+    #: TODO: if it has, set a property on the user-document or a new document
+    #: collection so we can re-engage "stale" users..
+    if user.services.facebook.expiresAt?.length
+      expires_at = user.services.facebook.expiresAt
+      #: currently saved as a string coming back from facebook-api..
+      if _.isString user.services.facebook.expiresAt
+        expires_at = parseInt(user.services.facebook.expiresAt, 10)
+
+      expires_at_date = new Date(expires_at)
+      now = (new Date())
+      if now > expires_at_date
+        logger.warn("user #{user.services.facebook.username}(id: #{user._id})'s fb-auth-token expired: #{expires_at_date}")
+
+        #: for now, update the user document to skip being re-run in task..
+        query =
+          '_id': user._id
+        action =
+          $set:
+            'services.facebook._expired': 1
+        Meteor.users.update selector, action
+        return false
+
+    true
+

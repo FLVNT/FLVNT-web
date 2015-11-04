@@ -40,39 +40,39 @@ Package.on_use(function (api, where) {
   // DIDOT
   // -----
   api.add_files([
-    'public/fonts/didot/didot-B96-bold/didot-B96-bold.eot',
-    'public/fonts/didot/didot-B96-bold/didot-B96-bold.otf',
-    'public/fonts/didot/didot-B96-bold/didot-B96-bold.svb',
-    'public/fonts/didot/didot-B96-bold/didot-B96-bold.ttf',
-    'public/fonts/didot/didot-B96-bold/didot-B96-bold.woff',
+    'public/fonts/didot/didot-B96/didot-B96.eot',
+    'public/fonts/didot/didot-B96/didot-B96.otf',
+    'public/fonts/didot/didot-B96/didot-B96.svg',
+    'public/fonts/didot/didot-B96/didot-B96.ttf',
+    'public/fonts/didot/didot-B96/didot-B96.woff',
 
     'public/fonts/didot/didot-B96-bold-ital/didot-B96-bold-ital.eot',
     'public/fonts/didot/didot-B96-bold-ital/didot-B96-bold-ital.otf',
-    'public/fonts/didot/didot-B96-bold-ital/didot-B96-bold-ital.svb',
+    'public/fonts/didot/didot-B96-bold-ital/didot-B96-bold-ital.svg',
     'public/fonts/didot/didot-B96-bold-ital/didot-B96-bold-ital.ttf',
     'public/fonts/didot/didot-B96-bold-ital/didot-B96-bold-ital.woff',
 
-    'public/fonts/didot/didot-L96-light/didot-L96-light.eot',
-    'public/fonts/didot/didot-L96-light/didot-L96-light.otf',
-    'public/fonts/didot/didot-L96-light/didot-L96-light.svb',
-    'public/fonts/didot/didot-L96-light/didot-L96-light.ttf',
-    'public/fonts/didot/didot-L96-light/didot-L96-light.woff',
+    'public/fonts/didot/didot-L96/didot-L96.eot',
+    'public/fonts/didot/didot-L96/didot-L96.otf',
+    'public/fonts/didot/didot-L96/didot-L96.svg',
+    'public/fonts/didot/didot-L96/didot-L96.ttf',
+    'public/fonts/didot/didot-L96/didot-L96.woff',
 
     'public/fonts/didot/didot-L96-light-ital/didot-L96-light-ital.eot',
     'public/fonts/didot/didot-L96-light-ital/didot-L96-light-ital.otf',
-    'public/fonts/didot/didot-L96-light-ital/didot-L96-light-ital.svb',
+    'public/fonts/didot/didot-L96-light-ital/didot-L96-light-ital.svg',
     'public/fonts/didot/didot-L96-light-ital/didot-L96-light-ital.ttf',
     'public/fonts/didot/didot-L96-light-ital/didot-L96-light-ital.woff',
 
     'public/fonts/didot/didot-M96-medium/didot-M96-medium.eot',
     'public/fonts/didot/didot-M96-medium/didot-M96-medium.otf',
-    'public/fonts/didot/didot-M96-medium/didot-M96-medium.svb',
+    'public/fonts/didot/didot-M96-medium/didot-M96-medium.svg',
     'public/fonts/didot/didot-M96-medium/didot-M96-medium.ttf',
     'public/fonts/didot/didot-M96-medium/didot-M96-medium.woff',
 
     'public/fonts/didot/didot-M96-medium-ital/didot-M96-medium-ital.eot',
     'public/fonts/didot/didot-M96-medium-ital/didot-M96-medium-ital.otf',
-    'public/fonts/didot/didot-M96-medium-ital/didot-M96-medium-ital.svb',
+    'public/fonts/didot/didot-M96-medium-ital/didot-M96-medium-ital.svg',
     'public/fonts/didot/didot-M96-medium-ital/didot-M96-medium-ital.ttf',
     'public/fonts/didot/didot-M96-medium-ital/didot-M96-medium-ital.woff'
   ], where, { isAsset: true });
@@ -81,13 +81,18 @@ Package.on_use(function (api, where) {
   // PROXIMANOVA
   // -----------
   api.add_files([
-  ])
+  ]);
 
 
   // HELVETICANUEUE
   // --------------
   api.add_files([
-  ])
+  ]);
+
+
+  api.add_files([
+    'lib/client/font-faces.styl'
+  ], where);
 
 
   // api.add_files([
