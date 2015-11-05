@@ -17,13 +17,16 @@ Package.on_use(function (api, where) {
     'mquandalle:jade@0.4.2',
     'stylus',
     'underscore',
-    'jquery',
+    'jquery'
+  ], ['client', 'server']);
+
+  api.use([
     'flvnt:env@0.0.1',
     'flvnt:app-features@0.0.1',
     'flvnt:api-utils@0.0.1',
     'flvnt:lazyload@0.0.1',
     'flvnt:logger@0.0.1'
-  ], where);
+  ], ['client', 'server']);
 
 
   // BOOTSTRAP-GLYPHICON
@@ -34,7 +37,7 @@ Package.on_use(function (api, where) {
     'public/fonts/bootstrap/glyphicons-halflings-regular.ttf',
     'public/fonts/bootstrap/glyphicons-halflings-regular.woff',
     'public/fonts/bootstrap/glyphicons-halflings-regular.woff2'
-  ], where, { isAsset: true });
+  ], ['client'], { isAsset: true });
 
 
   // DIDOT
@@ -75,29 +78,34 @@ Package.on_use(function (api, where) {
     'public/fonts/didot/didot-M96-medium-ital/didot-M96-medium-ital.svg',
     'public/fonts/didot/didot-M96-medium-ital/didot-M96-medium-ital.ttf',
     'public/fonts/didot/didot-M96-medium-ital/didot-M96-medium-ital.woff'
-  ], where, { isAsset: true });
+  ], ['client'], { isAsset: true });
 
 
   // PROXIMANOVA
   // -----------
   api.add_files([
-  ]);
+  ], ['client'], { isAsset: true });
 
 
   // HELVETICANUEUE
   // --------------
   api.add_files([
-  ]);
+  ], ['client'], { isAsset: true });
 
 
   api.add_files([
     'lib/client/font-faces.styl'
-  ], where);
+  ], ['client']);
 
 
+  // BOOTSTRAP GLYPHICON ASSETS
+  // --------------------------
   // api.add_files([
   //   'public/images/glyphicons-halflings.png',
   //   'public/images/glyphicons-halflings-white.png'
   // ], where, { isAsset: true });
 
+
+  api.export([
+  ]);
 });

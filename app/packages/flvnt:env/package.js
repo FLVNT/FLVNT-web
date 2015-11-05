@@ -7,9 +7,9 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['server'];
+
 
   api.use([
     'coffeescript',
@@ -24,7 +24,7 @@ Package.on_use(function (api, where) {
 
   api.add_files([
     'lib/env.coffee'
-  ], where);
+  ], ['server']);
 
 
   api.export([

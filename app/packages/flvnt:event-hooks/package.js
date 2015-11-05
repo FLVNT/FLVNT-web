@@ -66,5 +66,4 @@ Package.on_use(function (api) {
     'Hooks',
     'EventHooksMonitoringCollection'
   ]);
-
 });

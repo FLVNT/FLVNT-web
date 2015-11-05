@@ -22,6 +22,7 @@ Package.on_use(function (api) {
     'check',
     'blaze',
     'templating',
+    'spacebars',
     'mongo',
     'ddp',
     'http'
@@ -30,8 +31,8 @@ Package.on_use(function (api) {
   api.use([
     'oauth',
     'oauth2',
-    'service-configuration',
-    'accounts-base'
+    'accounts-base',
+    'service-configuration'
   ], ['client', 'server']);
 
   api.use([
@@ -45,21 +46,24 @@ Package.on_use(function (api) {
 
   api.use([
     'iron:router',
-    'flvnt:env@0.0.1',
-    'flvnt:logger@0.0.1',
-    'flvnt:app-features@0.0.1',
-    'flvnt:app-accounts@0.0.1',
     'flvnt:app-iron-router@0.0.1',
+    'flvnt:env@0.0.1',
     'flvnt:api-utils@0.0.1',
+    'flvnt:app-features@0.0.1',
+    'flvnt:logger@0.0.1',
     "flvnt:event-hooks@0.0.1",
-    'flvnt:app-collection-schemas@0.0.1'
+    'flvnt:app-collection-schemas@0.0.1',
+    'flvnt:app-accounts@0.0.1'
   ], ['client', 'server']);
 
   api.use([
     // 'flvnt:jquery-touch-events@0.0.1'
     'flvnt:app-subs@0.0.1',
     'flvnt:app-handlebars@0.0.1',
-    'flvnt:bootstrap@0.0.1'
+    'flvnt:bootstrap@0.0.1',
+    // chrome bug: https://github.com/meteor/meteor/issues/1004#issuecomment-68652474
+    // UA in Chrome iOS is same as Safari iOS, with CriOS/<ChromeRevision> addition
+    'awatson1978:browser-detection@1.0.4'
   ], ['client']);
 
 

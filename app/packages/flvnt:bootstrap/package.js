@@ -7,9 +7,8 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
 
 
   api.use([
@@ -173,7 +172,7 @@ Package.on_use(function (api, where) {
 
 
     'lib/client/styles/meteor-overrides/bootstrap.css'
-  ], where);
+  ], ['client']);
 
 
   // JAVASCRIPT COMPONENTS
@@ -190,13 +189,13 @@ Package.on_use(function (api, where) {
     // 'lib/client/scripts/scrollspy.js',
     // 'lib/client/scripts/tab.js',
     'lib/client/scripts/transition.js'
-  ], where);
+  ], ['client']);
 
 
   api.add_files([
     'public/images/bootstrap/glyphicons-halflings.png',
     'public/images/bootstrap/glyphicons-halflings-white.png'
-  ], where, { isAsset: true });
+  ], ['client'], { isAsset: true });
 
 
   // FONTS
@@ -207,6 +206,11 @@ Package.on_use(function (api, where) {
     'public/fonts/bootstrap/glyphicons-halflings-regular.ttf',
     'public/fonts/bootstrap/glyphicons-halflings-regular.woff',
     'public/fonts/bootstrap/glyphicons-halflings-regular.woff2'
-  ], where, {isAsset: true});
+  ], ['client'], {isAsset: true});
+
+
+
+  api.export([
+  ]);
 
 });

@@ -10,31 +10,42 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
 
 
   api.use([
     'coffeescript',
+    'mquandalle:jade@0.4.2',
+    'stylus',
     'underscore',
     'jquery',
+    'tracker',
+    'session',
+    'check',
     'blaze',
     'templating',
-    'session',
-    'tracker',
-    'check',
+    'livedata',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
     'flvnt:env@0.0.1',
     'flvnt:app-features@0.0.1',
     'flvnt:api-utils@0.0.1',
     'flvnt:logger@0.0.1',
-    'flvnt:online@0.0.1'
-  ], where);
+    'flvnt:online@0.0.1',
+    // chrome bug: https://github.com/meteor/meteor/issues/1004#issuecomment-68652474
+    // UA in Chrome iOS is same as Safari iOS, with CriOS/<ChromeRevision> addition
+    'awatson1978:browser-detection@1.0.4'
+  ], ['client']);
 
 
   api.add_files([
     'lib/client/lazyload.coffee'
-  ], where);
+  ], ['client']);
 
 
   api.export([

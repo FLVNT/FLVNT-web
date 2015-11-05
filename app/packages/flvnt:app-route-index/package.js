@@ -51,6 +51,7 @@ Package.on_use(function (api) {
     'flvnt:logger@0.0.1',
     'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',
+    'flvnt:event-hooks@0.0.1',
     'flvnt:app-collection-schemas@0.0.1'
   ], ['client', 'server']);
 
@@ -70,5 +71,9 @@ Package.on_use(function (api) {
     'lib/client/templates/route-index.jade',
     'lib/client/templates/route-index.coffee'
   ], ['client']);
+
+
+  api.export([
+  ]);
 
 });

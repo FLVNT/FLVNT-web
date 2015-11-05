@@ -1,25 +1,23 @@
 
-transports = []
+_transports = []
 
-# send to the console
-transports.push new Winston.transports.Console(
+
+#: sends to the console
+_transports.push new Winston.transports.Console
   colorize: true
   handleExceptions: true
   catchExceptions: false
-)
 
 
-if Meteor.settings.sentry_token? and Meteor.settings.sentry_token
-  # send to sentry
-  transports.push new WinstonSentry(
-    level: 'warn'
-    dsn: Meteor.settings.sentry_token
-    patchGlobal: true
-  )
+if Meteor.settings.sentry_token?.length
+  #s sends to sentry
+  _transports.push new WinstonSentry
+    dsn         : Meteor.settings.sentry_token
+    level       : 'warn'
+    patchGlobal : true
 
 
-### disable loggly
-# send to loggly
+### sends to loggly (DISABLED)
 if env_id isnt "test"
 
   transports.push new Winston.transports.Loggly(
@@ -34,10 +32,9 @@ if env_id isnt "test"
 ###
 
 
-logger = new Winston.Logger(
+logger = new Winston.Logger
   exitOnError: false
-  transports: transports
-)
+  transports: _transports
 
 
 # LOGGER PROPERTIES:
@@ -49,7 +46,7 @@ logger = new Winston.Logger(
 #   - sentry_client.captureQuery(query, engine, kwargs, cb)
 
 
-### disable loggly
+### sends to loggly (DISABLED)
 if env_id isnt "test" and logger.transports.loggly.client.config
   Object.defineProperty logger.transports.loggly.client.config, "inputUrl",
     value: "https://logs-01.loggly.com/inputs/"

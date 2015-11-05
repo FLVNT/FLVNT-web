@@ -1,7 +1,7 @@
 
 Router.map ->
 
-  @route "/brands/:_id/projects/create",
+  @route "/brands/projects/create",
     controller: PageTrackerController
     template: 'projects_create'
 

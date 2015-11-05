@@ -1,61 +1,34 @@
 
 Package.describe({
-  name    : 'flvnt:kadira',
+  name    : 'flvnt:app-kadira',
   summary : 'flvnt-web kadira integration package',
   version : '0.0.1',
   documentation : 'README.md'
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['server'];
+
 
   api.use([
     'coffeescript',
-    'underscore',
+    'underscore'
+  ], ['server']);
+
+  api.use([
     'meteorhacks:kadira',
     'meteorhacks:kadira-profiler',
     'meteorhacks:zones',
     'kadira:debug'
-  ], where);
+  ], ['server']);
+
 
   api.add_files([
     'server/lib/server.coffee'
-  ], where);
-
-});
+  ], ['server']);
 
 
-Package.on_test(function (api, where) {
-  api.versionsFrom('1.1.0.2');
-  where = where || ['server'];
-
-  // standard test helpers..
-  api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'check',
-    'flvnt:app-fixtures'
-  ], where);
-
-  // package specific..
-  api.use([
-    'underscore',
-    'jquery',
-    'ui',
-    'blaze',
-    'templating',
-    'session'
-  ], where);
-
-  // import the package..
-  api.imply([
-    'flvnt:kadira'
-  ], where, {bare: true});
-
-  api.add_files([
-    'tests/exports.coffee',
-    'tests/methods.coffee'
-  ], where);
-
+  api.export([
+  ]);
 });

@@ -1,4 +1,7 @@
 
+// TODO: this package is a bit heavy (900 lines)..  is there something with as
+// easy for usage without the bulk ?
+
 Package.describe({
   name    : 'flvnt:jquery-touch-events',
   summary : 'jquery-touch-events packaged for meteor',
@@ -7,53 +10,22 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
+
 
   api.use([
+    'coffeescript',
+    'underscore',
     'jquery'
-  ], where);
+  ], ['client']);
+
 
   api.add_files([
     'lib/client/jquery-touch-events.js'
-  ], where);
-
-});
+  ], ['client']);
 
 
-Package.on_test(function (api, where) {
-  api.versionsFrom('1.1.0.2');
-  where = where || ['client'];
-
-  // standard test helpers..
-  api.use([
-    'coffeescript', 'tinytest', 'test-helpers', 'coffeescript-test-helper',
-    'check',
-    'flvnt:app-fixtures'
-  ], where);
-
-
-  // package specific..
-  api.use([
-    'underscore',
-    'jquery',
-    'ui',
-    'blaze',
-    'templating',
-    'session'
-  ], where);
-
-
-  // import the package..
-  api.imply([
-    'flvnt:jquery-touch-events'
-  ], where, {bare: true});
-
-
-  api.add_files([
-    'tests/exports.coffee',
-    'tests/methods.coffee'
-  ], where);
-
+  api.export([
+  ]);
 });

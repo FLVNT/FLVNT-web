@@ -29,10 +29,10 @@ Package.on_use(function (api) {
   ], ['client', 'server']);
 
   api.use([
-    'service-configuration',
-    'accounts-base',
     'oauth',
-    'oauth2'
+    'oauth2',
+    'accounts-base',
+    'service-configuration'
   ], ['client', 'server']);
 
   api.use([
@@ -40,7 +40,8 @@ Package.on_use(function (api) {
     'aldeed:simple-schema@1.3.2',
     'dburles:collection-helpers@1.0.3',
     'meteorhacks:unblock@1.1.0',
-    'ccorcos:subs-cache@0.0.5'
+    'ccorcos:subs-cache@0.0.5',
+    "tmeasday:publish-counts@0.4.0"
   ], ['client', 'server']);
 
   api.use([
@@ -50,10 +51,19 @@ Package.on_use(function (api) {
     'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',
     'flvnt:logger@0.0.1',
-    'flvnt:app-subs@0.0.1',
     'flvnt:app-accounts@0.0.1',
     'flvnt:lazyload@0.0.1'
   ], ['client', 'server']);
+
+  api.use([
+    // 'flvnt:jquery-touch-events@0.0.1'
+    'flvnt:app-subs@0.0.1',
+    'flvnt:app-handlebars@0.0.1',
+    'flvnt:bootstrap@0.0.1',
+    // chrome bug: https://github.com/meteor/meteor/issues/1004#issuecomment-68652474
+    // UA in Chrome iOS is same as Safari iOS, with CriOS/<ChromeRevision> addition
+    'awatson1978:browser-detection@1.0.4'
+  ], ['client']);
 
 
   api.add_files([

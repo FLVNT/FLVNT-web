@@ -72,6 +72,7 @@ Package.on_use(function (api) {
     'awatson1978:browser-detection@1.0.4'
   ], ['client']);
 
+
   api.add_files([
     'lib/route-controller.coffee'
   ], ['client', 'server']);

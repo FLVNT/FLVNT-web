@@ -7,9 +7,8 @@ Package.describe({
 });
 
 
-Package.on_use(function (api, where) {
+Package.on_use(function (api) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['server'];
 
 
   api.use([
@@ -25,8 +24,8 @@ Package.on_use(function (api, where) {
     'templating',
     'livedata',
     'mongo',
-    'http',
-    'ddp'
+    'ddp',
+    'http'
   ], ['client', 'server']);
 
   api.use([
@@ -34,12 +33,12 @@ Package.on_use(function (api, where) {
     'flvnt:api-utils@0.0.1',
     'flvnt:app-features@0.0.1',
     'flvnt:logger@0.0.1'
-  ], where);
+  ], ['server']);
 
 
   api.add_files([
     'lib/server/ddp-hooks.coffee'
-  ], where);
+  ], ['server']);
 
 
   api.export([

@@ -22,6 +22,7 @@ Package.on_use(function (api) {
     'check',
     'blaze',
     'templating',
+    'spacebars',
     'mongo',
     'ddp',
     'http'
@@ -50,6 +51,17 @@ Package.on_use(function (api) {
     'flvnt:app-features@0.0.1',
     'flvnt:app-collection-schemas@0.0.1'
   ], ['client', 'server']);
+
+  api.use([
+    // 'flvnt:jquery-touch-events@0.0.1'
+    'flvnt:app-subs@0.0.1',
+    'flvnt:app-handlebars@0.0.1',
+    'flvnt:bootstrap@0.0.1',
+    // chrome bug: https://github.com/meteor/meteor/issues/1004#issuecomment-68652474
+    // UA in Chrome iOS is same as Safari iOS, with CriOS/<ChromeRevision> addition
+    'awatson1978:browser-detection@1.0.4'
+  ], ['client']);
+
 
 
   api.add_files([

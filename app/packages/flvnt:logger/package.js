@@ -9,30 +9,45 @@ Package.describe({
 
 Package.on_use(function (api, where) {
   api.versionsFrom('1.1.0.2');
-  where = where || ['client', 'server'];
+
 
   api.use([
     'coffeescript',
     'underscore',
     'logging',
     'ejson',
+    'json',
+    'check',
+    'livedata',
+    'mongo',
+    'ddp',
+    'http'
+  ], ['client', 'server']);
+
+  api.use([
     'flvnt:env@0.0.1'
-  ], where);
+  ], ['client', 'server']);
+
+  api.use([
+    'jquery'
+  ], ['client']);
 
   api.use([
     'meteor-winston-sentry'
-  ], 'server');
+  ], ['server']);
 
 
   api.add_files([
     'lib/server/logger.coffee'
-  ], 'server');
+  ], ['server']);
 
   api.add_files([
     'lib/client/logger.coffee'
-  ], 'client');
+  ], ['client']);
 
 
-  api.export('logger');
+  api.export([
+    'logger'
+  ]);
 
 });
