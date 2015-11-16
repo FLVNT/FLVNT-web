@@ -8,6 +8,24 @@
 
 logo-height = 75px
 
+fadeout-scale-shift = 0.95
+fadeout-top-shift = 1.05
+fadein-top-shift  = 1.2
+
+
+card-01-top  = 343px
+card-01-left = 821px
+
+card-02-top  = (card-01-top  + (165px + 3))
+card-02-left = (card-01-left - (334px + 5))
+card-03-top  = (card-02-top  + (165px + 3))
+card-03-left = (card-02-left - (334px + 5))
+
+card-04-top  = (card-01-top  + (415px + 3))
+card-04-left = (card-01-left + (165px + 5))
+card-05-top  = (card-02-top  + (415px + 3))
+card-05-left = (card-02-left + (165px + 5))
+
 
 .txt-1.logo
   width 400px
@@ -167,47 +185,44 @@ html
   width  tile-card-width
   height tile-card-height
   position absolute
-  transition all 0.5s ease-out
-  -webkit-transition all 0.5s ease-out
   opacity 0.5
+  transition(all 0.35s ease-out)
 
   &.default
     background-color rgba(154, 141, 60, 0.3)
-    box-shadow(0 0 15px rgba(0,0,0,0.95))
     z-index 1020
     perspective-origin center
     transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg)
+    box-shadow(0 0 15px rgba(0,0,0,0.95))
+
+    &.a,
+    &.b,
+    &.c,
+    &.d,
+    &.e
+      background-size cover
+      background-repeat no-repeat
 
     &.a
-      top 343px
-      left 821px
+      top card-01-top
+      left card-01-left
       background-image url('/images/artists-influencers/quincy.jpg')
-      background-size contain
-      background-repeat no-repeat
     &.b
-      top 517px
-      left 469px
+      top card-02-top
+      left card-02-left
       background-image url('/images/artists-influencers/margaux.jpg')
-      background-size contain
-      background-repeat no-repeat
     &.c
-      top 600px
-      left 1339px
+      top card-04-top
+      left card-04-left
       background-image url('/images/artists-influencers/drake.jpg')
-      background-size contain
-      background-repeat no-repeat
     &.d
-      top 773px
-      left 990px
+      top card-05-top
+      left card-05-left
       background-image url('/images/artists-influencers/nick-young.jpg')
-      background-size contain
-      background-repeat no-repeat
     &.e
-      top 692px
-      left 122px
+      top card-03-top
+      left card-03-left
       background-image url('/images/artists-influencers/neyo.jpg')
-      background-size contain
-      background-repeat no-repeat
 
   &.fadeout
     box-shadow(0 0 1px rgba(0,0,0,0.35))
@@ -215,39 +230,43 @@ html
     z-index 1010
     background-color rgba(255,255,255, 0.25)
 
+    &.a,
+    &.b,
+    &.c,
+    &.d,
+    &.e
+      opacity 0.3
+      transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg) scale(fadeout-scale-shift)
+
     &.a
-      opacity 0.3
-      top 343px * 1.01
-      transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg) scale(0.9)
+      top 343px * fadeout-top-shift
     &.b
-      opacity 0.3
-      top 517px * 1.01
-      transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg) scale(0.9)
+      top 517px * fadeout-top-shift
     &.c
-      opacity 0.3
-      top 600px * 1.01
-      transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg) scale(0.9)
+      top 600px * fadeout-top-shift
     &.d
-      opacity 0.3
-      top 773px * 1.01
-      transform rotateX(38deg) rotateY(-45deg) skewX(45deg) skewY(7deg) scale(0.9)
+      top 773px * fadeout-top-shift
+    &.e
+      top 692px * fadeout-top-shift
 
   &.fadein
     box-shadow(0 0 100px rgba(0,0,0,0.35))
 
+    &.a,
+    &.b,
+    &.c,
+    &.d,
+    &.e
+      opacity 0.01
+      transform rotateX(22deg) rotateY(-45deg) skewX(45deg) skewY(-3deg)
+
     &.a
-      opacity 0.01
-      top 343px -  (343px * 1.2)
-      transform rotateX(22deg) rotateY(-45deg) skewX(45deg) skewY(-3deg)
+      top 343px -  (343px * fadein-top-shift)
     &.b
-      opacity 0.01
-      top 517px - (517px * 1.2)
-      transform rotateX(22deg) rotateY(-45deg) skewX(45deg) skewY(-3deg)
+      top 517px - (517px * fadein-top-shift)
     &.c
-      opacity 0.01
-      top 600px - (600px * 1.2)
-      transform rotateX(22deg) rotateY(-45deg) skewX(45deg) skewY(-3deg)
+      top 600px - (600px * fadein-top-shift)
     &.d
-      opacity 0.01
-      top 773px - (773px * 1.2)
-      transform rotateX(22deg) rotateY(-45deg) skewX(45deg) skewY(-3deg)
+      top 773px - (773px * fadein-top-shift)
+    &.e
+      top 692px - (692px * fadein-top-shift)

@@ -22,6 +22,7 @@ Package.on_use(function (api) {
     'check',
     'blaze',
     'templating',
+    'spacebars',
     'mongo',
     'ddp',
     'http'
